@@ -1,10 +1,10 @@
-package com.is0.music2d.main.home.details
+package com.is0.music2d.main.home.details.album
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.is0.music2d.main.MainGraph
-import com.is0.music2d.main.home.details.use_case.WatchAlbumDetailsUseCase
-import com.is0.music2d.main.home.details.utils.data.domain.AlbumDetails
+import com.is0.music2d.main.home.details.album.use_case.WatchAlbumDetailsUseCase
+import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch

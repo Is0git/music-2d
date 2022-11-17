@@ -1,6 +1,6 @@
-package com.is0.music2d.main.home.details.utils.data.memory
+package com.is0.music2d.main.home.details.album.data.memory
 
-import com.is0.music2d.main.home.details.utils.data.domain.AlbumDetails
+import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.music.album.utils.data.memory.entity.InMemoryAlbum
 import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
 import dagger.hilt.android.scopes.ViewModelScoped

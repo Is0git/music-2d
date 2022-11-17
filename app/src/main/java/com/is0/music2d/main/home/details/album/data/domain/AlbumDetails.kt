@@ -1,4 +1,4 @@
-package com.is0.music2d.main.home.details.utils.data.domain
+package com.is0.music2d.main.home.details.album.data.domain
 
 import com.is0.music2d.music.song.utils.data.domain.Song
 

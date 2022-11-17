@@ -1,4 +1,4 @@
-package com.is0.music2d.main.home.details
+package com.is0.music2d.main.home.details.album
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.is0.music2d.main.home.details.utils.data.domain.AlbumDetails
+import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.toSize

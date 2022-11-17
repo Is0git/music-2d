@@ -15,7 +15,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.is0.music2d.main.home.HomeScreen
-import com.is0.music2d.main.home.details.AlbumDetailsScreen
+import com.is0.music2d.main.home.details.album.AlbumDetailsScreen
 import com.is0.music2d.music.song.utils.formatter.SongDurationFormatter
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.provider.AppProviders
