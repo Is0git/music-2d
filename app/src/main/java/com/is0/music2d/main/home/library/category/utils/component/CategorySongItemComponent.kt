@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.music.album.artist.utils.component.ArtistAvatarComponent
-import com.is0.music2d.music.album.artist.utils.data.domain.Artist
-import com.is0.music2d.music.album.artist.utils.data.domain.ArtistMock
+import com.is0.music2d.music.utils.component.ArtistAvatarComponent
+import com.is0.music2d.music.utils.data.domain.Artist
+import com.is0.music2d.music.utils.data.domain.ArtistMock
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent

@@ -1,4 +1,4 @@
-package com.is0.music2d.music.album.artist.utils.component
+package com.is0.music2d.music.utils.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

@@ -1,4 +1,4 @@
-package com.is0.music2d.music.album.artist.utils.data.domain
+package com.is0.music2d.music.utils.data.domain
 
 data class Artist(
     val id: String,

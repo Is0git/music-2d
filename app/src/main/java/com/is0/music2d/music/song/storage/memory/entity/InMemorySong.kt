@@ -1,6 +1,6 @@
 package com.is0.music2d.music.song.storage.memory.entity
 
-import com.is0.music2d.music.album.artist.utils.data.domain.Artist
+import com.is0.music2d.music.utils.data.domain.Artist
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 
 data class InMemorySong(

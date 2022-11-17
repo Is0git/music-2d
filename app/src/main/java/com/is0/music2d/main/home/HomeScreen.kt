@@ -127,11 +127,3 @@ private fun SongContentTypeTabRowComponent(
         }
     }
 }
-
-
-@Composable
-private fun HomeScreenContentComponent(
-    modifier: Modifier = Modifier,
-) {
-
-}
