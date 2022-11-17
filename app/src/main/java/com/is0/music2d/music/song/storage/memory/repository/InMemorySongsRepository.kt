@@ -3,9 +3,12 @@ package com.is0.music2d.music.song.storage.memory.repository
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
 import com.is0.music2d.music.song.storage.memory.store.InMemorySongsStore
+import com.is0.music2d.utils.di.qualifier.IO
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,17 +16,25 @@ import javax.inject.Singleton
 class InMemorySongsRepository @Inject constructor(
     private val inMemoryUserSongsMapper: InMemorySongsMapper,
     private val inMemorySongsStore: InMemorySongsStore,
+    @IO private val dispatcher: CoroutineDispatcher,
 ) : UserSongsRepository {
-
-    override suspend fun watchSongs(): Flow<List<Song>> =
+    override suspend fun watchSongs(): Flow<List<Song>> = withContext(dispatcher) {
         inMemorySongsStore.watchSongs()
             .map { songs -> songs.map(inMemoryUserSongsMapper::toSongDomain) }
             .distinctUntilChanged()
+    }
 
-    override suspend fun addSongs(songs: List<Song>) =
+    override suspend fun addSongs(songs: List<Song>) = withContext(dispatcher) {
         inMemorySongsStore.addSongs(songs.map(inMemoryUserSongsMapper::toSongEntity))
+    }
 
     override suspend fun addSong(song: Song) {
-        inMemorySongsStore.addSong(inMemoryUserSongsMapper.toSongEntity(song))
+        withContext(dispatcher) {
+            inMemorySongsStore.addSong(inMemoryUserSongsMapper.toSongEntity(song))
+        }
     }
+
+    override suspend fun getSongs(): List<Song> = withContext(dispatcher) {
+         inMemorySongsStore.getCurrentSongs().map(inMemoryUserSongsMapper::toSongDomain)
+     }
 }

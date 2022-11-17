@@ -9,4 +9,6 @@ interface SongsRepository {
     suspend fun addSongs(songs: List<Song>)
 
     suspend fun addSong(song: Song)
+
+    suspend fun getSongs(): List<Song>
 }

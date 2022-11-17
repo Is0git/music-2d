@@ -14,6 +14,7 @@ data class AppColors(
     val onSurfaceColorVariant: Color = Color.Unspecified,
     val onSurfaceColor: Color = Color.Unspecified,
     val imageScrimColor: Color = Color.Unspecified,
+    val positiveColor: Color = Color.Unspecified,
 )
 
 fun defaultAppColors(): AppColors = AppColors(
@@ -28,4 +29,5 @@ fun defaultAppColors(): AppColors = AppColors(
     onSurfaceColorVariant = AppColor.turbulence,
     imageScrimColor = AppColor.satinDeepBlack,
     secondaryColor = AppColor.sapphireGlitter,
+    positiveColor = AppColor.peppermintToad,
 )

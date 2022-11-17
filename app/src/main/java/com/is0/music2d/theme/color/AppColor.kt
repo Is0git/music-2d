@@ -9,4 +9,5 @@ object AppColor {
     val satinDeepBlack = Color (0xFF1C1D24)
     val shikon = Color(0xFF291b27)
     val sapphireGlitter = Color(0xFF9000ff)
+    val peppermintToad = Color(0xFF009a34)
 }

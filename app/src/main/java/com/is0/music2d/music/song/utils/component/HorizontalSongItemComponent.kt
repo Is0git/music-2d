@@ -31,6 +31,7 @@ fun HorizontalSongItemComponent(
     songDurationText: String,
     songSizeText: String,
     songImageUrl: String,
+    action: @Composable () -> Unit = {},
 ) {
     HorizontalSongItemContentComponent(
         modifier = modifier,
@@ -38,6 +39,7 @@ fun HorizontalSongItemComponent(
         songDurationText = songDurationText,
         songSizeText = songSizeText,
         songImageUrl = songImageUrl,
+        action = action,
     )
 }
 
@@ -48,6 +50,7 @@ private fun HorizontalSongItemContentComponent(
     songDurationText: String,
     songSizeText: String,
     songImageUrl: String,
+    action: @Composable () -> Unit = {},
 ) {
     Surface(modifier = modifier) {
         Row(
@@ -69,6 +72,7 @@ private fun HorizontalSongItemContentComponent(
                 songDurationText = songDurationText,
                 songSizeText = songSizeText,
             )
+            action()
         }
     }
 }
