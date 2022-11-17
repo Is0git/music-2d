@@ -8,4 +8,4 @@ import javax.inject.Inject
 @HiltViewModel
 class MemoryStorageDetailsViewModel @Inject constructor(
     getInMemoryStorageSongsUseCase: GetInMemoryStorageSongsUseCase,
-) : StorageDetailsViewModel(watchStorageSongsUseCase = getInMemoryStorageSongsUseCase)
+) : StorageDetailsViewModel(getStorageSongsUseCase = getInMemoryStorageSongsUseCase)
