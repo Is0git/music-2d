@@ -17,12 +17,6 @@ class CategorizedSongsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            onCreated()
-        }
-    }
-
-    override suspend fun onCreated() {
-        viewModelScope.launch {
             watchSongCategories()
         }
     }

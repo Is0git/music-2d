@@ -38,10 +38,6 @@ abstract class BaseViewModel : ViewModel() {
         setValue(newValue)
     }
 
-    protected open suspend fun onCreated() {
-        // Empty
-    }
-
     protected fun setError(error: Throwable) {
         if (error is CancellationException) {
             return
