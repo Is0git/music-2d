@@ -3,5 +3,5 @@
     <string name="song_size_icon_content_description">Song size</string>
     <string name="song_duration_image_content_description">Song Duration</string>
     <string name="home_screen_title">Hello, %s!</string>
-    <string name="horizontal_song_item_label_format">%s by %s</string>
+    <string name="horizontal_song_item_artist_format">by %s</string>
 </resources>

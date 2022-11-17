@@ -1,0 +1,164 @@
+package com.is0.music2d.music.song.utils.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.is0.music2d.R
+import com.is0.music2d.music.song.utils.data.domain.Song
+import com.is0.music2d.music.song.utils.data.domain.SongMock
+import com.is0.music2d.music.song.utils.data.domain.toSize
+import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.local.LocalDurationFormatter
+import com.is0.music2d.utils.composable.local.LocalSizeFormatter
+import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
+import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
+
+@Composable
+fun HorizontalSongItemComponent(
+    modifier: Modifier = Modifier,
+    song: Song,
+) {
+    val songDurationFormatter = LocalDurationFormatter.current
+    val songSizeFormatter = LocalSizeFormatter.current
+
+    HorizontalSongItemContentComponent(
+        modifier = modifier,
+        song = song,
+        songDurationText = songDurationFormatter.formatDuration(song.durationMillis),
+        songSizeText = songSizeFormatter.formatSize(size = song.songSize.toSize()),
+    )
+}
+
+@Composable
+private fun HorizontalSongItemContentComponent(
+    modifier: Modifier = Modifier,
+    song: Song,
+    songDurationText: String,
+    songSizeText: String,
+) {
+    Row(
+        modifier = modifier.padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            AppTheme.dimensions.largeComponentGap,
+        )
+    ) {
+        SmallSongCoverComponent()
+        SongItemInfoComponent(
+            modifier = Modifier.weight(1f).padding(vertical = 4.dp),
+            songName = song.title,
+            artistName = song.artist.name,
+            songDurationText = songDurationText,
+            songSizeText = songSizeText,
+        )
+    }
+}
+
+@Composable
+private fun SmallSongCoverComponent(
+    modifier: Modifier = Modifier,
+    songImageUrl: String = "",
+) {
+    SongCoverComponent(
+        modifier = modifier.requiredSize(AppTheme.dimensions.smallImageSize),
+        songImageUrl = songImageUrl,
+    )
+}
+
+@Composable
+private fun SongItemInfoComponent(
+    modifier: Modifier = Modifier,
+    artistName: String,
+    songName: String,
+    songDurationText: String,
+    songSizeText: String,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
+    ) {
+        SongItemLabelComponent(
+            songName = songName,
+            artistName = artistName,
+        )
+        SongItemSubtitleComponent(
+            durationText = songDurationText,
+            sizeText = songSizeText,
+        )
+    }
+}
+
+@Composable
+private fun SongItemLabelComponent(
+    modifier: Modifier = Modifier,
+    songName: String,
+    artistName: String,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        LabelLargeTextComponent(
+            modifier = modifier,
+            color = AppTheme.colors.onBackgroundColor,
+            text = songName,
+            overflow = TextOverflow.Ellipsis,
+            lines = 1,
+        )
+        LabelMediumTextComponent(
+            modifier = modifier,
+            color = AppTheme.colors.onBackgroundColorVariant,
+            text = stringResource(
+                id = R.string.horizontal_song_item_artist_format,
+                artistName,
+            ),
+            overflow = TextOverflow.Ellipsis,
+            lines = 1,
+        )
+    }
+}
+
+@Composable
+private fun SongItemSubtitleComponent(
+    modifier: Modifier = Modifier,
+    durationText: String = "",
+    sizeText: String = "",
+) {
+    CompositionLocalProvider(LocalContentColor provides AppTheme.colors.onBackgroundColorVariant) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumComponentGap),
+        ) {
+            val rowModifier = Modifier.weight(1f, false)
+            SongDurationComponent(
+                modifier = rowModifier,
+                durationText = durationText,
+            )
+            SongSizeComponent(
+                modifier = rowModifier,
+                sizeText = sizeText,
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun HorizontalSongItemContentComponentPreview() {
+    AppTheme {
+        HorizontalSongItemContentComponent(
+            song = SongMock.generateRandomSong(),
+            songDurationText = "3 h 2m",
+            songSizeText = "43.2MB",
+        )
+    }
+}
+

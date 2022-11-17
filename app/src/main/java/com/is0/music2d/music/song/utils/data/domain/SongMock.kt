@@ -49,7 +49,7 @@ object SongMock {
 
     fun generateSongs(count: Int = 5): List<Song> = (1..count).map { index -> generateRandomSong(index) }
 
-    private fun generateRandomSong(index: Int = 0) = Song(
+    fun generateRandomSong(index: Int = 1) = Song(
         id = UUID.randomUUID().toString(),
         title = songTitles.random(),
         songSize = randomSongSize,

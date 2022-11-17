@@ -116,7 +116,7 @@ private fun SongCoverInfoComponent(
         ) {
             SongDurationComponent(
                 modifier = Modifier.weight(1f),
-                duration = songDurationText,
+                durationText = songDurationText,
             )
             VerticalSpacerComponent(height = AppTheme.dimensions.smallComponentGap)
             Box(modifier = Modifier.weight(1f)) {

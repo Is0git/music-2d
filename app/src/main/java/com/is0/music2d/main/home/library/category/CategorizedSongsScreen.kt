@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,24 +23,21 @@ import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsC
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
-import com.is0.music2d.music.song.utils.formatter.SongDurationFormatter
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.local.LocalDurationFormatter
+import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.HeadlineMediumTextComponent
-import com.is0.music2d.utils.size.DefaultFileSizeFormatter
 
 @Composable
 fun CategorizedSongsScreen(
     modifier: Modifier = Modifier,
     categorizedSongsViewModel: CategorizedSongsViewModel = hiltViewModel(),
 ) {
-    val songDurationFormatter = remember {
-        SongDurationFormatter()
-    }
-    val songSizeFormatter = remember {
-        DefaultFileSizeFormatter()
-    }
+    val songDurationFormatter = LocalDurationFormatter.current
+    val songSizeFormatter = LocalSizeFormatter.current
+
     val songsCategories by categorizedSongsViewModel.songsCategories.observeAsState(emptyList())
 
     CategorizedSongsContentComponent(
