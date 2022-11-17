@@ -10,6 +10,7 @@ data class AppDimension(
     val mediumComponentGap: Dp = Dp.Unspecified,
     val smallComponentGap: Dp = Dp.Unspecified,
     val avatarSize: Dp = Dp.Unspecified,
+    val smallImageSize: Dp = Dp.Unspecified,
 )
 
 @Composable
@@ -19,4 +20,5 @@ fun defaultAppDimension() = AppDimension(
     mediumComponentGap = 12.dp,
     smallComponentGap = 8.dp,
     avatarSize = 42.dp,
+    smallImageSize = 100.dp,
 )
