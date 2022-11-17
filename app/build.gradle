@@ -128,6 +128,8 @@ dependencies {
     implementation libs.compose.navigation
     implementation libs.accompanist.navigation.animation
     implementation libs.hilt.navigation.compose
+    implementation libs.room
+    annotationProcessor libs.room.compiler
 
     debugImplementation libs.androidx.compose.ui.tooling
 

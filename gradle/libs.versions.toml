@@ -42,6 +42,7 @@ landscapist-coil = "2.1.0"
 kotlinx-collections-immutable = "0.3.5"
 compose-navigation = "2.5.3"
 accompanist-navigation-animation = "0.27.0"
+room = "2.4.3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -106,3 +107,5 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist-navigation-animation" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+room = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
