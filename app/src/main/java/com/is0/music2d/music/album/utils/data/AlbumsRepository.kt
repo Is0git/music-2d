@@ -9,5 +9,4 @@ interface AlbumsRepository {
     suspend fun addAlbums(albums: List<Album>)
 
     suspend fun addSongToAlbum(albumId: String, songId: String)
-
 }

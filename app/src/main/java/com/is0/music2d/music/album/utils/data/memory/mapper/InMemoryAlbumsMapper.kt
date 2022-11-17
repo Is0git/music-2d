@@ -2,33 +2,24 @@ package com.is0.music2d.music.album.utils.data.memory.mapper
 
 import com.is0.music2d.music.album.utils.data.domain.Album
 import com.is0.music2d.music.album.utils.data.memory.entity.InMemoryAlbum
-import com.is0.music2d.music.song.utils.data.domain.Song
+import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class InMemoryAlbumsMapper @Inject constructor() {
-    fun toAlbumDomain(songs: List<Song>, inMemoryAlbums: List<InMemoryAlbum>): List<Album> {
-        val songsMap: Map<String, Song> = songs.associateBy { songId -> songId.id }
+class InMemoryAlbumsMapper @Inject constructor(
+    private val inMemorySongsMapper: InMemorySongsMapper,
+) {
+    fun toAlbumDomain(inMemoryAlbum: InMemoryAlbum): Album = Album(
+        id = inMemoryAlbum.id,
+        name = inMemoryAlbum.name,
+        songs = inMemoryAlbum.songs.map(inMemorySongsMapper::toSongDomain),
+    )
 
-        return inMemoryAlbums.map { memoryAlbum ->
-            val domainSongs: List<Song> =
-                memoryAlbum.songsIds
-                    .filter { songId -> songsMap.contains(songId) }
-                    .map { songId -> songsMap[songId]!! }
-            Album(
-                id = memoryAlbum.id,
-                name = memoryAlbum.name,
-                songs = domainSongs,
-            )
-        }
-    }
-
-    fun toMemoryAlbum(albums: List<Album>): List<InMemoryAlbum> = albums.map { album ->
+    fun toMemoryAlbum(album: Album): InMemoryAlbum =
         InMemoryAlbum(
             id = album.id,
             name = album.name,
-            songsIds = album.songs.map { songs -> songs.id },
+            songs = album.songs.map(inMemorySongsMapper::toSongEntity),
         )
-    }
 }
