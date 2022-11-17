@@ -24,6 +24,7 @@ fun StorageSongItemComponent(
         songImageUrl = songImageUrl,
         action = {
             StorageSaveButtonComponent(
+                isSaved = detailsSong.isSaved,
                 onSaveClick = { isSaved -> onSongSaveClick(detailsSong.song.id, isSaved) },
             )
         }

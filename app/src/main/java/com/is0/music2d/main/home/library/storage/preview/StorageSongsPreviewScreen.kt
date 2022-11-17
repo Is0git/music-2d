@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.main.home.library.storage.preview.utils.component.StorageItemComponent
 import com.is0.music2d.main.home.library.storage.preview.utils.data.domain.StorageSongsPreview
+import com.is0.music2d.main.home.utils.OnSongStorageClick
 import com.is0.music2d.music.song.storage.composable.StorageProviders
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.utils.composable.error.handleSnackbarError
@@ -21,6 +22,7 @@ import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 fun StorageSongSelectionScreen(
     modifier: Modifier = Modifier,
     viewModel: StorageSongsPreviewScreenViewModel = hiltViewModel(),
+    onSongStorageClick: OnSongStorageClick = {},
 ) {
     val storageSongsPreviews by viewModel.storageSongsPreview.observeAsState(emptyList())
 
@@ -33,6 +35,7 @@ fun StorageSongSelectionScreen(
             modifier = modifier,
             storageSongsPreview = storageSongsPreviews,
             onTotalDurationFormat = durationFormatter::formatDuration,
+            onSongStorageClick = onSongStorageClick,
         )
     }
 }
@@ -42,6 +45,7 @@ private fun StorageSongSelectionContentComponent(
     modifier: Modifier = Modifier,
     storageSongsPreview: List<StorageSongsPreview> = emptyList(),
     onTotalDurationFormat: (totalDuration: Long) -> String = { "" },
+    onSongStorageClick: OnSongStorageClick = {},
 ) {
     Column(
         modifier = modifier
@@ -53,6 +57,7 @@ private fun StorageSongSelectionContentComponent(
                 modifier = Modifier.fillMaxWidth(),
                 durationText = onTotalDurationFormat(storageSongPreview.totalDurationMillis),
                 title = LocalSongStorageTypeFormatter.current.formatStorageType(storageSongPreview.songStorageType),
+                onClick = { onSongStorageClick(storageSongPreview.songStorageType) },
             )
         }
     }

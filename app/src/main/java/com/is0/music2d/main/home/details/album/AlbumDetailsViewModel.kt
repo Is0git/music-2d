@@ -2,7 +2,7 @@ package com.is0.music2d.main.home.details.album
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.is0.music2d.main.MainGraph
+import com.is0.music2d.main.MainScreen
 import com.is0.music2d.main.home.details.album.use_case.WatchAlbumDetailsUseCase
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.utils.viewmodel.BaseViewModel
@@ -16,7 +16,7 @@ class AlbumDetailsViewModel @Inject constructor(
     private val watchAlbumDetailsUseCase: WatchAlbumDetailsUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-    private val albumId get() = savedStateHandle.get<String>(MainGraph.AlbumDetails.ALBUM_ID)!!
+    private val albumId get() = savedStateHandle.get<String>(MainScreen.AlbumDetails.ALBUM_ID)!!
 
     val albumDetails = createMutableLiveData(AlbumDetails.empty())
 

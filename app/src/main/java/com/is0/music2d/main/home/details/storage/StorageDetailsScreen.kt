@@ -1,6 +1,7 @@
 package com.is0.music2d.main.home.details.storage
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -8,6 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.storage.utils.component.OnSongSaveClick
 import com.is0.music2d.main.home.details.storage.utils.component.StorageSongItemComponent
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
@@ -24,6 +27,7 @@ import com.is0.music2d.utils.size.FormatFileSize
 fun StorageDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: StorageDetailsViewModel,
+    navController: NavController = rememberNavController(),
 ) {
     val storageDetailsSongs by viewModel.storageSongs.observeAsState(emptyList())
 
@@ -33,8 +37,10 @@ fun StorageDetailsScreen(
     BaseScaffoldComponent(
         modifier = modifier,
         baseViewModel = viewModel,
-    ) {
+        onNavigateUp = navController::popBackStack,
+    ) { padding ->
         StorageDetailsContentComponent(
+            modifier = Modifier.padding(padding),
             songs = storageDetailsSongs,
             formatSongDuration = { duration -> songDurationFormatter.formatDuration(duration) },
             formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },

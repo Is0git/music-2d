@@ -11,5 +11,5 @@ data class StorageDetailsSong(
 fun Song.toStorageDetailsSong() = StorageDetailsSong(
     id = id,
     song = this,
-    isSaved = false,
+    isSaved = true,
 )

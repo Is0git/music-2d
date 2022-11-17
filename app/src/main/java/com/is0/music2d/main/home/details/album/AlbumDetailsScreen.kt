@@ -38,7 +38,7 @@ fun AlbumDetailsScreen(
         modifier = modifier,
         baseViewModel = viewModel,
         title = albumDetails.name,
-        onNavigateUp = { navController.popBackStack() }
+        onNavigateUp = navController::popBackStack,
     ) { padding ->
         AlbumDetailsContentComponent(
             modifier = Modifier.padding(padding),

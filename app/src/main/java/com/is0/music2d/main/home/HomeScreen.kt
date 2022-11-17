@@ -20,15 +20,18 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
-import com.is0.music2d.main.MainGraph
+import com.is0.music2d.main.MainScreen
 import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
 import com.is0.music2d.main.home.library.storage.preview.StorageSongSelectionScreen
+import com.is0.music2d.main.home.utils.OnSongStorageClick
 import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.main.home.utils.data.SongsContentType
+import com.is0.music2d.music.song.storage.SongStorageType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
 import com.is0.music2d.utils.composable.text.TitleSmallTextComponent
+import okhttp3.internal.format
 
 @Composable
 fun HomeScreen(
@@ -57,14 +60,8 @@ fun HomeScreen(
             contentTypes = homeViewModel.songContentTypes,
             onSongContentTypeSelect = homeViewModel::selectContentType,
             selectedSongContentType = selectedContentType,
-            onViewAllClick = { albumId ->
-                navController.navigate(
-                    String.format(
-                        MainGraph.AlbumDetails.routePattern,
-                        albumId,
-                    )
-                )
-            }
+            onViewAllClick = navController::navigateToAlbumDetails,
+            onSongStorageClick = navController::navigateToStorageDetails,
         )
     }
 }
@@ -77,6 +74,7 @@ private fun SongsLibraryPagerComponent(
     selectedSongContentType: SongsContentType,
     onSongContentTypeSelect: (contentType: SongsContentType) -> Unit,
     onViewAllClick: OnViewAllClick = {},
+    onSongStorageClick: OnSongStorageClick = {},
 ) {
     Column(modifier = modifier) {
         SongContentTypeTabRowComponent(
@@ -90,6 +88,7 @@ private fun SongsLibraryPagerComponent(
             contentTypes = contentTypes,
             pagerState = pagerState,
             onViewAllClick = onViewAllClick,
+            onSongStorageClick = onSongStorageClick,
         )
     }
 }
@@ -100,6 +99,7 @@ private fun SongsContentTypePagerComponent(
     contentTypes: List<SongsContentType>,
     pagerState: PagerState,
     onViewAllClick: OnViewAllClick = {},
+    onSongStorageClick: OnSongStorageClick = {},
 ) {
     HorizontalPager(
         modifier = modifier,
@@ -113,7 +113,9 @@ private fun SongsContentTypePagerComponent(
                 onViewAllClick = onViewAllClick,
             )
         } else {
-            StorageSongSelectionScreen()
+            StorageSongSelectionScreen(
+                onSongStorageClick = onSongStorageClick,
+            )
         }
     }
 }
@@ -144,4 +146,22 @@ private fun SongContentTypeTabRowComponent(
             )
         }
     }
+}
+
+private fun NavController.navigateToAlbumDetails(albumId: String) {
+    navigate(
+        format(
+            MainScreen.AlbumDetails.routePattern,
+            albumId,
+        )
+    )
+}
+
+private fun NavController.navigateToStorageDetails(songStorageType: SongStorageType) {
+    navigate(
+        format(
+            MainScreen.StorageDetails.routePattern,
+            songStorageType.name,
+        )
+    )
 }
