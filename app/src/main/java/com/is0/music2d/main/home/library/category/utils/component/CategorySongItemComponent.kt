@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -19,7 +18,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,11 +28,10 @@ import com.is0.music2d.R
 import com.is0.music2d.music.album.artist.utils.component.ArtistAvatarComponent
 import com.is0.music2d.music.album.artist.utils.data.domain.Artist
 import com.is0.music2d.music.album.artist.utils.data.domain.ArtistMock
+import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.theme.AppTheme
-import com.is0.music2d.utils.composable.gradient.scrim.ScrimComponent
-import com.is0.music2d.utils.composable.image.avatar.ImageComponent
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
@@ -76,7 +73,10 @@ private fun CategorySongItemContentComponent(
     artist: Artist,
 ) {
     Column(modifier = modifier) {
-        SongCoverComponent(
+        CategorySongCoverComponent(
+            modifier = Modifier
+                .heightIn(100.dp, 150.dp)
+                .aspectRatio(4 / 3f),
             songSizeText = songSizeText,
             songImageUrl = songImageUrl,
             songDurationText = songDurationText,
@@ -90,51 +90,24 @@ private fun CategorySongItemContentComponent(
 }
 
 @Composable
-private fun SongCoverComponent(
+private fun CategorySongCoverComponent(
     modifier: Modifier = Modifier,
     songSizeText: String = "",
     songImageUrl: String = "",
     songDurationText: String = "",
 ) {
-    Box(
-        modifier = modifier
-            .heightIn(100.dp, 150.dp)
-            .aspectRatio(4 / 3f)
-            .clip(AppTheme.shapes.songCoverShape)
-    ) {
-        SongImageComponent(
-            modifier = Modifier.fillMaxSize(),
-            songImageUrl = songImageUrl,
-        )
-        SongCoverScrimComponent()
-        SongCoverInfoComponent(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(8.dp),
-            songSizeText = songSizeText,
-            songDurationText = songDurationText,
-        )
-    }
-}
-
-@Composable
-private fun SongImageComponent(
-    modifier: Modifier = Modifier,
-    songImageUrl: String = "",
-) {
-    ImageComponent(
+    SongCoverComponent(
         modifier = modifier,
-        imageUrl = songImageUrl,
-    )
-}
-
-@Composable
-private fun SongCoverScrimComponent(
-    modifier: Modifier = Modifier,
-) {
-    ScrimComponent(
-        modifier = modifier,
-        color = AppTheme.colors.imageScrimColor,
+        songImageUrl = songImageUrl,
+        songInfoComponent = {
+            SongCoverInfoComponent(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(8.dp),
+                songSizeText = songSizeText,
+                songDurationText = songDurationText,
+            )
+        }
     )
 }
 
