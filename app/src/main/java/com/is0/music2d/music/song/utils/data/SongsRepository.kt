@@ -11,4 +11,8 @@ interface SongsRepository {
     suspend fun addSong(song: Song)
 
     suspend fun getSongs(): List<Song>
+
+    suspend fun removeSong(songId: String)
+
+    suspend fun toggleSavedSong(song: Song)
 }

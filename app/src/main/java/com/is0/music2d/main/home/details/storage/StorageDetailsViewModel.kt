@@ -2,6 +2,7 @@ package com.is0.music2d.main.home.details.storage
 
 import androidx.lifecycle.viewModelScope
 import com.is0.music2d.main.home.details.storage.use_case.GetStorageSongsUseCase
+import com.is0.music2d.main.home.details.storage.use_case.ToggleSavedSongUseCase
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.main.home.details.storage.utils.data.toStorageDetailsSong
 import com.is0.music2d.music.song.utils.data.domain.Song
@@ -13,6 +14,7 @@ import timber.log.Timber
 
 open class StorageDetailsViewModel(
     private val getStorageSongsUseCase: GetStorageSongsUseCase,
+    private val toggleSavedSongUseCase: ToggleSavedSongUseCase,
 ) : BaseViewModel() {
     val storageSongs = createMutableLiveData<List<StorageDetailsSong>>(emptyList())
 
@@ -52,6 +54,7 @@ open class StorageDetailsViewModel(
                     return@runCatching
                 }
 
+
                 updateToggledSong(
                     songs = songs,
                     toggledSongIndex = toggledSongIndex,
@@ -63,13 +66,15 @@ open class StorageDetailsViewModel(
         }
     }
 
-    private fun updateToggledSong(
+    private suspend fun updateToggledSong(
         songs: List<StorageDetailsSong>,
         toggledSongIndex: Int,
         isSaved: Boolean
     ) {
         val newSongs = songs.toPersistentList().mutate { persistentSongs ->
             val toggledSong = persistentSongs[toggledSongIndex]
+
+            toggleSavedSongUseCase.toggleSavedSong(toggledSong.song)
 
             persistentSongs[toggledSongIndex] = toggledSong.copy(isSaved = !isSaved)
         }

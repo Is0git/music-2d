@@ -35,6 +35,18 @@ class InMemorySongsRepository @Inject constructor(
     }
 
     override suspend fun getSongs(): List<Song> = withContext(dispatcher) {
-         inMemorySongsStore.getCurrentSongs().map(inMemoryUserSongsMapper::toSongDomain)
-     }
+        inMemorySongsStore.getCurrentSongs().map(inMemoryUserSongsMapper::toSongDomain)
+    }
+
+    override suspend fun removeSong(songId: String) {
+        withContext(dispatcher) {
+            inMemorySongsStore.removeSong(songId)
+        }
+    }
+
+    override suspend fun toggleSavedSong(song: Song) {
+        withContext(dispatcher) {
+            inMemorySongsStore.toggleSavedSong(inMemoryUserSongsMapper.toSongEntity(song))
+        }
+    }
 }
