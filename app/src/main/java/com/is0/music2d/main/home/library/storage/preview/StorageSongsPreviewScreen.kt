@@ -3,7 +3,6 @@ package com.is0.music2d.main.home.library.storage.preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -15,7 +14,7 @@ import com.is0.music2d.main.home.library.storage.preview.utils.component.Storage
 import com.is0.music2d.main.home.library.storage.preview.utils.data.domain.StorageSongsPreview
 import com.is0.music2d.music.song.storage.composable.StorageProviders
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
-import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.error.handleSnackbarError
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 
 @Composable
@@ -26,6 +25,8 @@ fun StorageSongSelectionScreen(
     val storageSongsPreviews by viewModel.storageSongsPreview.observeAsState(emptyList())
 
     val durationFormatter = LocalDurationFormatter.current
+
+    viewModel.error.handleSnackbarError()
 
     StorageProviders {
         StorageSongSelectionContentComponent(
