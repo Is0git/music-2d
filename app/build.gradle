@@ -115,8 +115,6 @@ dependencies {
     implementation libs.hilt.android
     kapt libs.hilt.compiler
     implementation libs.timber
-    implementation libs.navigation.reimagined
-    implementation libs.navigation.reimagined.hilt
     implementation libs.runtime.livedata
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.crashlytics
@@ -125,6 +123,11 @@ dependencies {
     implementation libs.retrofit
     implementation libs.retrofit.converter.gson
     implementation libs.logging.interceptor
+    implementation libs.landscapist.coil
+    implementation libs.kotlinx.collections.immutable
+    implementation libs.compose.navigation
+    implementation libs.accompanist.navigation.animation
+    implementation libs.hilt.navigation.compose
 
     debugImplementation libs.androidx.compose.ui.tooling
 

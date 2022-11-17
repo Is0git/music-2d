@@ -7,4 +7,5 @@ data class AppThemeData(
     val colors: AppColors,
     val typography: AppTypography,
     val shapes: AppShapes,
+    val dimension: AppDimension,
 )

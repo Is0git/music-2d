@@ -5,10 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import com.is0.music2d.theme.AppTheme
 
 @Composable
-fun HeadlineTextComponent(
+fun HeadlineLargeTextComponent(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     text: String,
@@ -16,8 +17,72 @@ fun HeadlineTextComponent(
     Text(
         modifier = modifier,
         text = text,
-        style = AppTheme.typography.headline,
+        style = AppTheme.typography.headlineLarge,
         color = color,
+    )
+}
+
+@Composable
+fun HeadlineMediumTextComponent(
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    text: String,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = AppTheme.typography.headlineMedium,
+        color = color,
+    )
+}
+
+@Composable
+fun LabelLargeTextComponent(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = Color.Unspecified,
+    lines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        color = color,
+        style = AppTheme.typography.labelLarge,
+        maxLines = lines,
+        overflow = overflow,
+    )
+}
+
+@Composable
+fun LabelMediumTextComponent(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = Color.Unspecified,
+    lines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        color = color,
+        style = AppTheme.typography.labelMedium,
+        maxLines = lines,
+        overflow = overflow,
+    )
+}
+
+@Composable
+fun LabelSmallTextComponent(
+    modifier: Modifier = Modifier,
+    text: String,
+    textAlign: TextAlign? = null,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = AppTheme.typography.labelSmall,
+        textAlign = textAlign,
     )
 }
 
@@ -25,11 +90,13 @@ fun HeadlineTextComponent(
 fun TitleLargeTextComponent(
     modifier: Modifier = Modifier,
     textAlign: TextAlign? = null,
+    color: Color = Color.Unspecified,
     text: String,
 ) {
     Text(
         modifier = modifier,
         text = text,
+        color = color,
         textAlign = textAlign,
         style = AppTheme.typography.titleLarge,
     )
@@ -44,17 +111,5 @@ fun TitleSmallTextComponent(
         modifier = modifier,
         text = text,
         style = AppTheme.typography.titleSmall,
-    )
-}
-
-@Composable
-fun LabelLargeTextComponent(
-    modifier: Modifier = Modifier,
-    text: String,
-) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = AppTheme.typography.labelLarge,
     )
 }

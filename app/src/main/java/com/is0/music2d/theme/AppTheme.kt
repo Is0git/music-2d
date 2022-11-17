@@ -1,5 +1,6 @@
 package com.is0.music2d.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -14,6 +15,7 @@ private val LocalAppThemeData = compositionLocalOf {
         colors = AppColors(),
         typography = AppTypography(),
         shapes = AppShapes(),
+        dimension = AppDimension(),
     )
 }
 
@@ -23,9 +25,18 @@ fun AppTheme(content: @Composable () -> Unit) {
         colors = defaultAppColors(),
         typography = defaultAppTypography(),
         shapes = defaultAppShapes(),
+        dimension = defaultAppDimension(),
     )
-    CompositionLocalProvider(LocalAppThemeData provides appThemeData) {
-        content()
+    MaterialTheme(
+        colorScheme = MaterialTheme.colorScheme.copy(
+            primary = appThemeData.colors.primaryColor,
+            surface = appThemeData.colors.surfaceColor,
+            onSurface = appThemeData.colors.onSurfaceColor,
+        ),
+    ) {
+        CompositionLocalProvider(LocalAppThemeData provides appThemeData) {
+            content()
+        }
     }
 }
 
@@ -40,13 +51,18 @@ object AppTheme {
         @ReadOnlyComposable
         get() = appThemeData.colors
 
+    val typography: AppTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = appThemeData.typography
+
     val shapes: AppShapes
         @Composable
         @ReadOnlyComposable
         get() = appThemeData.shapes
 
-    val typography: AppTypography
+    val dimensions: AppDimension
         @Composable
         @ReadOnlyComposable
-        get() = appThemeData.typography
+        get() = appThemeData.dimension
 }

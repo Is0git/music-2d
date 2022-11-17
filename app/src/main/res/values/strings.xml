@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Music2d</string>
+    <string name="song_size_icon_content_description">Song size</string>
+    <string name="song_duration_image_content_description">Song Duration</string>
+    <string name="home_screen_title">Hello, %s!</string>
 </resources>

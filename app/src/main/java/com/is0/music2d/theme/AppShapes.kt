@@ -11,6 +11,7 @@ data class AppShapes(
     val primaryButtonShape: Shape = defaultShape,
     val textFieldShape: Shape = defaultShape,
     val contentLabelShape: Shape = defaultShape,
+    val songCoverShape: Shape = defaultShape,
 )
 
 @Composable
@@ -18,4 +19,5 @@ fun defaultAppShapes(): AppShapes = AppShapes(
     primaryButtonShape = RoundedCornerShape(10.dp),
     textFieldShape = RoundedCornerShape(10.dp),
     contentLabelShape = RoundedCornerShape(42.dp),
+    songCoverShape = RoundedCornerShape(60f),
 )

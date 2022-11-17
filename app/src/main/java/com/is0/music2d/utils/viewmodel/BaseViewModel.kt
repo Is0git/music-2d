@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.is0.music2d.utils.observer.SingleLiveData
 import timber.log.Timber
+import java.util.concurrent.CancellationException
 
 abstract class BaseViewModel : ViewModel() {
     val isLoading = createMutableLiveData(false)
@@ -37,11 +38,14 @@ abstract class BaseViewModel : ViewModel() {
         setValue(newValue)
     }
 
-    open fun onCreated() {
+    protected open suspend fun onCreated() {
         // Empty
     }
 
     protected fun setError(error: Throwable) {
+        if (error is CancellationException) {
+            return
+        }
         this.error.postValue(error)
         Timber.e(error)
     }

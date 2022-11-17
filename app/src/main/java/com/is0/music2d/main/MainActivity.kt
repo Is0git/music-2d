@@ -1,4 +1,4 @@
-package com.is0.music2d
+package com.is0.music2d.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.is0.music2d.main.home.HomeScreen
+import com.is0.music2d.main.home.my_music.category.CategorizedSongsScreen
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.error.ErrorFormatterProvider
 import com.is0.music2d.utils.error.formatter.GeneralErrorFormatter
@@ -32,9 +34,7 @@ class MainActivity : ComponentActivity() {
     private fun Music2dApp() {
         ErrorFormatterProvider(errorFormatter = generalErrorFormatter) {
             AppTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
-                }
+                HomeScreen()
             }
         }
     }

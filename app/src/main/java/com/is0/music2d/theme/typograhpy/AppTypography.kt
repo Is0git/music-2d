@@ -5,24 +5,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 data class AppTypography(
-    val headline: TextStyle = TextStyle.Default,
+    val headlineLarge: TextStyle = TextStyle.Default,
+    val headlineMedium: TextStyle = TextStyle.Default,
     val titleLarge: TextStyle = TextStyle.Default,
     val titleSmall: TextStyle = TextStyle.Default,
     val labelLarge: TextStyle = TextStyle.Default,
+    val labelMedium: TextStyle = TextStyle.Default,
+    val labelSmall: TextStyle = TextStyle.Default,
     val bodyLarge: TextStyle = TextStyle.Default,
 )
 
 fun defaultAppTypography(): AppTypography = AppTypography(
-    headline = TextStyle(
+    headlineLarge = TextStyle(
         fontFamily = AppFonts.interRegular,
         fontSize = 36.sp,
         fontWeight = FontWeight.ExtraBold,
         lineHeight = 48.sp,
     ),
+    headlineMedium = TextStyle(
+        fontFamily = AppFonts.interRegular,
+        fontSize = 28.sp,
+        fontWeight = FontWeight.ExtraBold,
+        lineHeight = 36.sp,
+    ),
+
     titleLarge = TextStyle(
         fontFamily = AppFonts.interRegular,
         fontSize = 22.sp,
         lineHeight = 28.sp,
+        fontWeight = FontWeight.SemiBold,
     ),
     titleSmall = TextStyle(
         fontFamily = AppFonts.interRegular,
@@ -32,9 +43,21 @@ fun defaultAppTypography(): AppTypography = AppTypography(
     ),
     labelLarge = TextStyle(
         fontFamily = AppFonts.interRegular,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = AppFonts.interRegular,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+    ),
+    labelSmall = TextStyle(
+        fontFamily = AppFonts.interRegular,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp,
+        lineHeight = 16.sp,
     ),
     bodyLarge = TextStyle(
         fontFamily = AppFonts.interRegular,

@@ -16,9 +16,11 @@ import kotlinx.coroutines.launch
 fun BaseScaffoldComponent(
     modifier: Modifier = Modifier,
     baseViewModel: BaseViewModel,
-    title: String,
+    title: String = "",
     snackbarHostState: SnackbarHostState = rememberSnackBarHostState(),
     onNavigateUp: (() -> Unit)? = null,
+    navigationIcon: @Composable () -> Unit = {},
+    isAppBarCollapsable: Boolean = false,
     content: @Composable (paddingValues: PaddingValues) -> Unit = {},
 ) {
     val isBackButtonEnabled = onNavigateUp != null
@@ -43,8 +45,10 @@ fun BaseScaffoldComponent(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         title = title,
+        isAppBarCollapsable = isAppBarCollapsable,
         onBackClick = if (isBackButtonEnabled) baseViewModel::onBackSelected else null,
         isLoading = isLoading,
+        navigationIcon = navigationIcon,
         content = content
     )
 }
