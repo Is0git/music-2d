@@ -6,12 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -39,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             Music2dApp()
         }
@@ -51,45 +50,45 @@ class MainActivity : ComponentActivity() {
             durationFormatter = durationFormatter,
             sizeFormatter = sizeFormatter,
         ) {
-            val navController = rememberAnimatedNavController()
-
             AppTheme {
-                AnimatedNavHost(
-                    navController = navController,
-                    startDestination = MainGraph.Home.routeName,
-                ) {
-                    composable(MainGraph.Home.routeName) {
-                        HomeScreen(
-                            navController = navController,
-                        )
-                    }
-                    composable(
-                        route = MainGraph.AlbumDetails.routeName,
-                        arguments = listOf(
-                            navArgument(MainGraph.AlbumDetails.ALBUM_ID) {
-                                type = NavType.StringType
-                            }
-                        ),
-                    ) {
-                        AlbumDetailsScreen(
-                            navController = navController,
-                        )
-                    }
-                }
+                MainNavHost()
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+    @Composable
+    private fun MainNavHost() {
+        val navController = rememberAnimatedNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AppTheme {
-        Greeting("Android")
+        AnimatedNavHost(
+            navController = navController,
+            startDestination = MainGraph.Home.routeName,
+        ) {
+            homeScreen(navController)
+            albumDetails(navController)
+        }
+    }
+
+    private fun NavGraphBuilder.albumDetails(navController: NavHostController) {
+        composable(
+            route = MainGraph.AlbumDetails.routeName,
+            arguments = listOf(
+                navArgument(MainGraph.AlbumDetails.ALBUM_ID) {
+                    type = NavType.StringType
+                }
+            ),
+        ) {
+            AlbumDetailsScreen(
+                navController = navController,
+            )
+        }
+    }
+
+    private fun NavGraphBuilder.homeScreen(navController: NavHostController) {
+        composable(MainGraph.Home.routeName) {
+            HomeScreen(
+                navController = navController,
+            )
+        }
     }
 }
