@@ -1,0 +1,139 @@
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.hilt.plugin
+    alias libs.plugins.google.services
+    alias libs.plugins.firebase.crashlytics.gradle
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+apply from: "detekt.gradle"
+
+android {
+    namespace 'com.is0.music2d'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.is0.music2d"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        buildConfigField "String", "DAD_JOKES_REST_API_URL", "\"https://icanhazdadjoke.com/\""
+        buildConfigField "String", "CHUCK_NORRIS_FACTS_REST_API_URL", "\"https://api.chucknorris.io//\""
+    }
+    signingConfigs {
+        release
+    }
+
+    File signingPropertiesFile = rootProject.file("signing.properties")
+    if (signingPropertiesFile.exists()) {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(signingPropertiesFile))
+
+        signingConfigs.release.storeFile = new File(project.projectDir, properties['STORE_FILE'])
+        signingConfigs.release.storePassword = properties['STORE_PASSWORD']
+        signingConfigs.release.keyAlias = properties['KEY_ALIAS']
+        signingConfigs.release.keyPassword = properties['KEY_PASSWORD']
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    String appFlavorDimension = "app"
+    flavorDimensions appFlavorDimension
+
+    productFlavors {
+        dev {
+            dimension appFlavorDimension
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+        staging {
+            dimension appFlavorDimension
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+        }
+        production {
+            dimension appFlavorDimension
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation libs.androidx.appCompat
+    implementation libs.android.material
+    implementation libs.kotlin.stdlib
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.compose.runtime
+    implementation libs.androidx.compose.foundation
+    implementation libs.androidx.compose.foundation.layout
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.util
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.animation
+    implementation libs.androidx.compose.material.iconsExtended
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.accompanist.pager
+    implementation libs.kotlin.immutable.collections
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
+    implementation libs.timber
+    implementation libs.navigation.reimagined
+    implementation libs.navigation.reimagined.hilt
+    implementation libs.runtime.livedata
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.crashlytics
+    implementation libs.firebase.analytics
+    implementation libs.startup.runtime
+    implementation libs.retrofit
+    implementation libs.retrofit.converter.gson
+    implementation libs.logging.interceptor
+
+    debugImplementation libs.androidx.compose.ui.tooling
+
+    testImplementation libs.mockito.core
+    testImplementation libs.hamcrest
+    testImplementation libs.junit
+    testImplementation libs.androidx.test.core
+    testImplementation libs.arch.core
+    testImplementation libs.mockito.inline
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+}

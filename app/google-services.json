@@ -1,0 +1,121 @@
+{
+  "project_info": {
+    "project_number": "1019234425934",
+    "project_id": "music2d-94358",
+    "storage_bucket": "music2d-94358.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019234425934:android:00eb530396b54fd7fe371f",
+        "android_client_info": {
+          "package_name": "com.is0.music2d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019234425934-na6die1sakc81r058i5i2jc2di2g0sk6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.is0.music2d",
+            "certificate_hash": "6bd80cca912cf5825980b807dfe9b6a2daaba116"
+          }
+        },
+        {
+          "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6458dklJYSVSMALx7w_LtdjU6p631UJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019234425934:android:63c3366527d9a92ffe371f",
+        "android_client_info": {
+          "package_name": "com.is0.music2d.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019234425934-b2k06jb73mlfa68al5ki007649udantq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.is0.music2d.dev",
+            "certificate_hash": "6bd80cca912cf5825980b807dfe9b6a2daaba116"
+          }
+        },
+        {
+          "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6458dklJYSVSMALx7w_LtdjU6p631UJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019234425934:android:c3f0de1bff885057fe371f",
+        "android_client_info": {
+          "package_name": "com.is0.music2d.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019234425934-6mqjd1toha08im7l9isrfb0vbjubur63.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.is0.music2d.staging",
+            "certificate_hash": "6bd80cca912cf5825980b807dfe9b6a2daaba116"
+          }
+        },
+        {
+          "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6458dklJYSVSMALx7w_LtdjU6p631UJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019234425934-i717j9aaulmrnoudj621uohgoh7vpejj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

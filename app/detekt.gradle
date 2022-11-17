@@ -1,0 +1,19 @@
+configurations {
+    detekt
+}
+
+task detekt(type: JavaExec) {
+    mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
+    classpath = configurations.detekt
+    def config = "$rootDir/config/detekt/detekt.yml"
+    def params = ['-c', config]
+    println("PARAMS = $params")
+    args(params)
+}
+
+check.dependsOn detekt
+
+dependencies {
+    detekt libs.detekt.cli
+    detekt libs.detekt.formatting
+}
