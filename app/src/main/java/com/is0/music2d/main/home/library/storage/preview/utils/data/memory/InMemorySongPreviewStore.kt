@@ -8,9 +8,10 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 @ViewModelScoped
-class InMemorySongPreviewStore constructor(
+class InMemorySongPreviewStore @Inject constructor(
     private val inMemorySongsStore: InMemorySongsStore,
 ) : StorageSongPreviewStore<InMemorySongStoragePreview> {
     override suspend fun watchStorageSongsPreview(): Flow<InMemorySongStoragePreview> =

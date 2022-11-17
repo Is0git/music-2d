@@ -17,7 +17,7 @@ fun LabelLayoutComponent(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
+        horizontalArrangement = Arrangement.spacedBy(gap),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         icon()

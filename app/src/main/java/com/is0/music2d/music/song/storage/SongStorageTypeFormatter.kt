@@ -2,11 +2,11 @@ package com.is0.music2d.music.song.storage
 
 import android.content.Context
 import com.is0.music2d.R
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@HiltViewModel
+@Singleton
 class SongStorageTypeFormatter @Inject constructor(
     @ActivityContext private val context: Context,
 ) {

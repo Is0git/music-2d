@@ -13,7 +13,7 @@ import javax.inject.Inject
 class StorageSongsPreviewScreenViewModel @Inject constructor(
     private val watchStorageSongsPreviewsUseCase: WatchStorageSongsPreviewsUseCase,
 ) : BaseViewModel() {
-    val storageSongsPreview = createSingleLiveData<List<StorageSongsPreview>>()
+    val storageSongsPreview = createMutableLiveData<List<StorageSongsPreview>>(emptyList())
 
     init {
         viewModelScope.launch {

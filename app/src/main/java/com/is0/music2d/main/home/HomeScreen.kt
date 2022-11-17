@@ -19,11 +19,11 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
 import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
+import com.is0.music2d.main.home.library.storage.preview.StorageSongSelectionScreen
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
-import com.is0.music2d.utils.composable.text.HeadlineLargeTextComponent
 import com.is0.music2d.utils.composable.text.TitleSmallTextComponent
 
 @Composable
@@ -95,7 +95,7 @@ private fun SongsContentTypePagerComponent(
         if (contentType == SongsContentType.ALBUMS) {
             CategorizedSongsScreen()
         } else {
-            HeadlineLargeTextComponent(text = "Hello")
+            StorageSongSelectionScreen()
         }
     }
 }

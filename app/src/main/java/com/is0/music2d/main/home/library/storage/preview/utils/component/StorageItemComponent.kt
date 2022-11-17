@@ -5,6 +5,7 @@ package com.is0.music2d.main.home.library.storage.preview.utils.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Surface
@@ -14,11 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.is0.music2d.music.song.utils.component.icon.SongDurationIconComponent
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.utils.composable.icon.NextIconComponent
+import com.is0.music2d.utils.composable.layout.LabelLayoutComponent
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
+import com.is0.music2d.utils.composable.text.HeadlineLargeTextComponent
+import com.is0.music2d.utils.composable.text.HeadlineMediumTextComponent
+import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
 import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
+import com.is0.music2d.utils.composable.text.LabelSmallTextComponent
 
 @Composable
 fun StorageItemComponent(
@@ -32,7 +39,7 @@ fun StorageItemComponent(
         onClick = onClick,
     ) {
         Row(
-            modifier = modifier.padding(AppTheme.dimensions.containerMargin),
+            modifier = modifier.padding(AppTheme.dimensions.bodyMargin),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -48,7 +55,7 @@ private fun StorageItemTitleComponent(
     modifier: Modifier = Modifier,
     title: String,
 ) {
-    LabelMediumTextComponent(
+    HeadlineMediumTextComponent(
         modifier = modifier,
         text = title,
         color = AppTheme.colors.onSurfaceColor,
@@ -79,12 +86,22 @@ private fun StorageItemDurationComponent(
     modifier: Modifier = Modifier,
     durationText: String,
 ) {
-    CompositionLocalProvider(LocalContentColor provides AppTheme.colors.onSurfaceColorVariant) {
-        DurationComponent(
+    val contentColor = AppTheme.colors.onSurfaceColorVariant
+    CompositionLocalProvider(LocalContentColor provides contentColor) {
+        LabelLayoutComponent(
             modifier = modifier,
-            durationText = durationText,
-            gap = 2.dp,
-            textColor = AppTheme.colors.onSurfaceColorVariant,
+            text = {
+                LabelLargeTextComponent(
+                    modifier = modifier,
+                    color = contentColor,
+                    text = durationText,
+                )
+            },
+            icon = {
+                SongDurationIconComponent(
+                    modifier = modifier.requiredSize(32.dp),
+                )
+            },
         )
     }
 }
