@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -17,27 +18,26 @@ import androidx.compose.ui.unit.dp
 import com.is0.music2d.R
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongMock
-import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
-import com.is0.music2d.utils.composable.local.LocalDurationFormatter
-import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
 import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
+import com.is0.music2d.utils.data.mock.ImageMock
 
 @Composable
 fun HorizontalSongItemComponent(
     modifier: Modifier = Modifier,
     song: Song,
+    songDurationText: String,
+    songSizeText: String,
+    songImageUrl: String,
 ) {
-    val songDurationFormatter = LocalDurationFormatter.current
-    val songSizeFormatter = LocalSizeFormatter.current
-
     HorizontalSongItemContentComponent(
         modifier = modifier,
         song = song,
-        songDurationText = songDurationFormatter.formatDuration(song.durationMillis),
-        songSizeText = songSizeFormatter.formatSize(size = song.songSize.toSize()),
+        songDurationText = songDurationText,
+        songSizeText = songSizeText,
+        songImageUrl = songImageUrl,
     )
 }
 
@@ -47,22 +47,29 @@ private fun HorizontalSongItemContentComponent(
     song: Song,
     songDurationText: String,
     songSizeText: String,
+    songImageUrl: String,
 ) {
-    Row(
-        modifier = modifier.padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(
-            AppTheme.dimensions.largeComponentGap,
-        )
-    ) {
-        SmallSongCoverComponent()
-        SongItemInfoComponent(
-            modifier = Modifier.weight(1f).padding(vertical = 4.dp),
-            songName = song.title,
-            artistName = song.artist.name,
-            songDurationText = songDurationText,
-            songSizeText = songSizeText,
-        )
+    Surface(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                AppTheme.dimensions.largeComponentGap,
+            )
+        ) {
+            SmallSongCoverComponent(
+                songImageUrl = songImageUrl,
+            )
+            SongItemInfoComponent(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 4.dp),
+                songName = song.title,
+                artistName = song.artist.name,
+                songDurationText = songDurationText,
+                songSizeText = songSizeText,
+            )
+        }
     }
 }
 
@@ -159,6 +166,7 @@ fun HorizontalSongItemContentComponentPreview() {
             song = SongMock.generateRandomSong(),
             songDurationText = "3 h 2m",
             songSizeText = "43.2MB",
+            songImageUrl = ImageMock.randomImage,
         )
     }
 }

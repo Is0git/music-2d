@@ -1,5 +1,6 @@
 package com.is0.music2d.main.home.library.category
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongCategoryMock
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
+import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
@@ -35,6 +37,7 @@ import com.is0.music2d.utils.composable.text.HeadlineMediumTextComponent
 fun CategorizedSongsScreen(
     modifier: Modifier = Modifier,
     categorizedSongsViewModel: CategorizedSongsViewModel = hiltViewModel(),
+    onViewAllClick: OnViewAllClick = {},
 ) {
     val songDurationFormatter = LocalDurationFormatter.current
     val songSizeFormatter = LocalSizeFormatter.current
@@ -48,6 +51,7 @@ fun CategorizedSongsScreen(
         songsCategories = songsCategories,
         onSongSizeFormat = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
         onSongDurationFormat = songDurationFormatter::formatDuration,
+        onViewAllClick = onViewAllClick,
     )
 }
 
@@ -57,6 +61,7 @@ private fun CategorizedSongsContentComponent(
     songsCategories: List<SongsCategory> = emptyList(),
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
+    onViewAllClick: OnViewAllClick = {},
 ) {
     LazyColumn(
         modifier = modifier,
@@ -68,6 +73,7 @@ private fun CategorizedSongsContentComponent(
                     songsCategory = songsCategory,
                     onSongDurationFormat = onSongDurationFormat,
                     onSongSizeFormat = onSongSizeFormat,
+                    onViewAllClick = onViewAllClick,
                 )
             }
         }
@@ -79,9 +85,15 @@ private fun SongCategoryItemComponent(
     songsCategory: SongsCategory,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
+    onViewAllClick: OnViewAllClick = {},
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.categoryTitleGap)) {
-        CategoryTitleComponent(titleText = songsCategory.name)
+        CategoryTitleComponent(
+            modifier = Modifier.clickable {
+                onViewAllClick(songsCategory.id)
+            },
+            titleText = songsCategory.name
+        )
         CategorySongsListComponent(
             songs = songsCategory.songs,
             onSongSizeFormat = onSongSizeFormat,

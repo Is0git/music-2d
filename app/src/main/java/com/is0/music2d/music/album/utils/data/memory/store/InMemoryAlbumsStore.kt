@@ -11,6 +11,9 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,4 +56,7 @@ class InMemoryAlbumsStore @Inject constructor(
             }
         }
     }
+
+    suspend fun watchAlbumById(albumId: String): Flow<InMemoryAlbum> =
+        watchAlbums().map { it.firstOrNull { album -> album.id == albumId } }.filterNotNull()
 }

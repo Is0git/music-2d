@@ -13,13 +13,17 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
+import com.is0.music2d.main.MainGraph
 import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
 import com.is0.music2d.main.home.library.storage.preview.StorageSongSelectionScreen
+import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent
@@ -29,6 +33,7 @@ import com.is0.music2d.utils.composable.text.TitleSmallTextComponent
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController(),
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val selectedContentType by homeViewModel.selectedSongContentType.observeAsState(SongsContentType.ALBUMS)
@@ -52,6 +57,14 @@ fun HomeScreen(
             contentTypes = homeViewModel.songContentTypes,
             onSongContentTypeSelect = homeViewModel::selectContentType,
             selectedSongContentType = selectedContentType,
+            onViewAllClick = { albumId ->
+                navController.navigate(
+                    String.format(
+                        MainGraph.AlbumDetails.routePattern,
+                        albumId,
+                    )
+                )
+            }
         )
     }
 }
@@ -63,6 +76,7 @@ private fun SongsLibraryPagerComponent(
     pagerState: PagerState = rememberPagerState(),
     selectedSongContentType: SongsContentType,
     onSongContentTypeSelect: (contentType: SongsContentType) -> Unit,
+    onViewAllClick: OnViewAllClick = {},
 ) {
     Column(modifier = modifier) {
         SongContentTypeTabRowComponent(
@@ -75,6 +89,7 @@ private fun SongsLibraryPagerComponent(
             modifier = Modifier.weight(1f),
             contentTypes = contentTypes,
             pagerState = pagerState,
+            onViewAllClick = onViewAllClick,
         )
     }
 }
@@ -83,7 +98,8 @@ private fun SongsLibraryPagerComponent(
 private fun SongsContentTypePagerComponent(
     modifier: Modifier = Modifier,
     contentTypes: List<SongsContentType>,
-    pagerState: PagerState
+    pagerState: PagerState,
+    onViewAllClick: OnViewAllClick = {},
 ) {
     HorizontalPager(
         modifier = modifier,
@@ -93,7 +109,9 @@ private fun SongsContentTypePagerComponent(
     ) { page ->
         val contentType = contentTypes[page]
         if (contentType == SongsContentType.ALBUMS) {
-            CategorizedSongsScreen()
+            CategorizedSongsScreen(
+                onViewAllClick = onViewAllClick,
+            )
         } else {
             StorageSongSelectionScreen()
         }

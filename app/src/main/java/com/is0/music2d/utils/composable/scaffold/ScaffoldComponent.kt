@@ -41,7 +41,13 @@ fun ScaffoldComponent(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.then(
+            if (isAppBarCollapsable) {
+                Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+            } else {
+                Modifier
+            },
+        ),
         containerColor = AppTheme.colors.imageScrimColor,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         content = { paddingValues ->
