@@ -20,7 +20,7 @@ import com.is0.music2d.music.album.artist.utils.component.ArtistAvatarComponent
 import com.is0.music2d.music.album.artist.utils.data.domain.Artist
 import com.is0.music2d.music.album.artist.utils.data.domain.ArtistMock
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
-import com.is0.music2d.music.song.utils.component.SongDurationComponent
+import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
@@ -114,7 +114,7 @@ private fun SongCoverInfoComponent(
             modifier = modifier.padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            SongDurationComponent(
+            DurationComponent(
                 modifier = Modifier.weight(1f),
                 durationText = songDurationText,
             )

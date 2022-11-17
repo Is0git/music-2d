@@ -19,6 +19,7 @@ import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
@@ -138,7 +139,7 @@ private fun SongItemSubtitleComponent(
             horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumComponentGap),
         ) {
             val rowModifier = Modifier.weight(1f, false)
-            SongDurationComponent(
+            DurationComponent(
                 modifier = rowModifier,
                 durationText = durationText,
             )
