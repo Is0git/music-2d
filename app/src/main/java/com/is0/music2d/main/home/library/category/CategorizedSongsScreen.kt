@@ -24,6 +24,7 @@ import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.error.handleSnackbarError
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
@@ -39,6 +40,8 @@ fun CategorizedSongsScreen(
     val songSizeFormatter = LocalSizeFormatter.current
 
     val songsCategories by categorizedSongsViewModel.songsCategories.observeAsState(emptyList())
+
+    categorizedSongsViewModel.error.handleSnackbarError()
 
     CategorizedSongsContentComponent(
         modifier = modifier,
