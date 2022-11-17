@@ -1,8 +1,8 @@
-package com.is0.music2d.music.song.utils.data.memory.repository
+package com.is0.music2d.music.song.storage.memory.repository
 
 import com.is0.music2d.music.song.utils.data.domain.Song
-import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
-import com.is0.music2d.music.song.utils.data.memory.store.InMemorySongsStore
+import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
+import com.is0.music2d.music.song.storage.memory.store.InMemorySongsStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

@@ -1,6 +1,6 @@
-package com.is0.music2d.music.song.utils.data.memory.mapper
+package com.is0.music2d.music.song.storage.memory.mapper
 
-import com.is0.music2d.music.song.utils.data.memory.entity.InMemorySong
+import com.is0.music2d.music.song.storage.memory.entity.InMemorySong
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.mapper.SongsMapper
 import javax.inject.Inject

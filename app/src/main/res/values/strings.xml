@@ -4,4 +4,6 @@
     <string name="song_duration_image_content_description">Song Duration</string>
     <string name="home_screen_title">Hello, %s!</string>
     <string name="horizontal_song_item_artist_format">by %s</string>
+    <string name="song_storage_type_memory">Memory</string>
+    <string name="song_storage_type_filesystem">Filesystem</string>
 </resources>

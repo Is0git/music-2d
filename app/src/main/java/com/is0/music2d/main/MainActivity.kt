@@ -9,8 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.is0.music2d.main.home.HomeScreen
 import com.is0.music2d.music.song.utils.formatter.SongDurationFormatter
 import com.is0.music2d.theme.AppTheme
-import com.is0.music2d.utils.composable.error.AppProviders
-import com.is0.music2d.utils.duration.DurationFormatter
+import com.is0.music2d.utils.composable.provider.AppProviders
 import com.is0.music2d.utils.error.formatter.GeneralErrorFormatter
 import com.is0.music2d.utils.size.DefaultFileSizeFormatter
 import dagger.hilt.android.AndroidEntryPoint

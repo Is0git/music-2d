@@ -1,6 +1,6 @@
-package com.is0.music2d.music.song.utils.data.memory.store
+package com.is0.music2d.music.song.storage.memory.store
 
-import com.is0.music2d.music.song.utils.data.memory.entity.InMemorySong
+import com.is0.music2d.music.song.storage.memory.entity.InMemorySong
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList

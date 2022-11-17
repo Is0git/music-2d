@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.is0.music2d.main.home.library.storage.utils.component
+package com.is0.music2d.main.home.library.storage.preview.utils.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
