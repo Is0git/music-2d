@@ -3,15 +3,10 @@ package com.is0.music2d.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.is0.music2d.main.home.HomeScreen
-import com.is0.music2d.main.home.my_music.category.CategorizedSongsScreen
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.error.ErrorFormatterProvider
 import com.is0.music2d.utils.error.formatter.GeneralErrorFormatter

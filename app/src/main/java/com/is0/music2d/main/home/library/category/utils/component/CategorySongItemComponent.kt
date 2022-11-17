@@ -1,4 +1,4 @@
-package com.is0.music2d.main.home.my_music.category.utils.component
+package com.is0.music2d.main.home.library.category.utils.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,7 +41,6 @@ import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
 import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
 import com.is0.music2d.utils.composable.text.LabelSmallTextComponent
 import com.is0.music2d.utils.data.mock.ImageMock
-import com.is0.music2d.utils.size.FileSizeFormatter
 
 @Composable
 fun CategorySongItemComponent(

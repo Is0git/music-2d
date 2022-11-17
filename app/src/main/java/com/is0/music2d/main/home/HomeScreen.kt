@@ -18,7 +18,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
-import com.is0.music2d.main.home.my_music.category.CategorizedSongsScreen
+import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent

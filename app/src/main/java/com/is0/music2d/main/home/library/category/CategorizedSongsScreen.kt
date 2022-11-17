@@ -1,4 +1,4 @@
-package com.is0.music2d.main.home.my_music.category
+package com.is0.music2d.main.home.library.category
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.is0.music2d.main.home.my_music.category.utils.component.CategorySongItemComponent
-import com.is0.music2d.main.home.my_music.category.utils.data.presentation.SongCategoryMock
-import com.is0.music2d.main.home.my_music.category.utils.data.presentation.SongsCategory
+import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
+import com.is0.music2d.main.home.library.category.utils.data.presentation.SongCategoryMock
+import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
