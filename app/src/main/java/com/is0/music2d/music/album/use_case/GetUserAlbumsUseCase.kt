@@ -1,4 +1,4 @@
-package com.is0.music2d.music.album.usecase
+package com.is0.music2d.music.album.use_case
 
 import com.is0.music2d.music.album.utils.data.database.DatabaseAlbumsRepository
 import com.is0.music2d.music.album.utils.data.domain.Album
