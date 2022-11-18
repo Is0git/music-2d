@@ -17,9 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.is0.music2d.R
 import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongCategoryMock
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
@@ -129,11 +131,10 @@ private fun CategoryRowComponent(
             modifier = Modifier.weight(1f),
             titleText = songsCategory.name
         )
-        TextButton(
-            onClick = { onViewAllClick(songsCategory.id) },
-        ) {
-            LabelMediumTextComponent(text = "VIEW ALL")
-        }
+        ViewAllButtonComponent(
+            onViewAllClick = onViewAllClick,
+            songsCategory = songsCategory,
+        )
     }
 }
 
@@ -147,6 +148,22 @@ private fun CategoryTitleComponent(
         color = AppTheme.colors.onBackgroundColor,
         text = titleText,
     )
+}
+
+@Composable
+private fun ViewAllButtonComponent(
+    modifier: Modifier = Modifier,
+    onViewAllClick: OnViewAllClick,
+    songsCategory: SongsCategory
+) {
+    TextButton(
+        modifier = modifier,
+        onClick = { onViewAllClick(songsCategory.id) },
+    ) {
+        LabelMediumTextComponent(
+            text = stringResource(R.string.categorized_songs_view_all_button_label),
+        )
+    }
 }
 
 @Composable
