@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PopulateMemoryMusicUseCase @Inject constructor(
+class PopulateMusicUseCase @Inject constructor(
     private val albumsRepository: InMemoryAlbumsRepository,
     private val songsRepository: InMemorySongsRepository,
     private val databaseAlbumsRepository: DatabaseAlbumsRepository,
