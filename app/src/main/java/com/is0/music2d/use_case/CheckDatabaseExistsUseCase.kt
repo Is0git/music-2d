@@ -1,4 +1,4 @@
-package com.is0.music2d.music.use_case
+package com.is0.music2d.use_case
 
 import android.content.Context
 import com.is0.music2d.utils.database.AppDatabase

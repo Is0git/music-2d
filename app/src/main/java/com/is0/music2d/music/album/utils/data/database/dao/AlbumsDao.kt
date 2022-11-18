@@ -1,4 +1,4 @@
-package com.is0.music2d.music.album.utils.data.database
+package com.is0.music2d.music.album.utils.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

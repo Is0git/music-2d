@@ -2,9 +2,9 @@ package com.is0.music2d.utils.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.is0.music2d.music.album.utils.data.database.AlbumsDao
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsDao
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumEntity
-import com.is0.music2d.music.album.utils.data.database.entity.AlbumsWithSongsDao
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.music.song.storage.database.data.SongsDao
 import com.is0.music2d.music.song.storage.memory.repository.entity.SongEntity
 

@@ -2,8 +2,9 @@ package com.is0.music2d.music.album.utils.data.database
 
 import androidx.room.withTransaction
 import com.is0.music2d.music.album.utils.data.AlbumsRepository
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsDao
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumWithSongsEntity
-import com.is0.music2d.music.album.utils.data.database.entity.AlbumsWithSongsDao
 import com.is0.music2d.music.album.utils.data.database.entity.toAlbum
 import com.is0.music2d.music.album.utils.data.database.entity.toEntity
 import com.is0.music2d.music.album.utils.data.domain.Album

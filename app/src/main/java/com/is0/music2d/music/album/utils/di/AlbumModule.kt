@@ -1,7 +1,7 @@
 package com.is0.music2d.music.album.utils.di
 
-import com.is0.music2d.music.album.utils.data.database.AlbumsDao
-import com.is0.music2d.music.album.utils.data.database.entity.AlbumsWithSongsDao
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsDao
+import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.utils.database.AppDatabase
 import dagger.Module
 import dagger.Provides
