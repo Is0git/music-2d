@@ -13,12 +13,14 @@ fun HeadlineMediumTextComponent(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     text: String,
+    textAlign: TextAlign? = null,
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = AppTheme.typography.headlineMedium,
         color = color,
+        textAlign = textAlign,
     )
 }
 

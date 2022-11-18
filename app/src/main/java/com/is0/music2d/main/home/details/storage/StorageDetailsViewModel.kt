@@ -14,7 +14,7 @@ open class StorageDetailsViewModel(
     private val getStorageSongsDetailsUseCase: GetStorageSongsDetailsUseCase,
     private val toggleSavedSongUseCase: ToggleSavedSongUseCase,
 ) : BaseViewModel() {
-    val storageSongs = createMutableLiveData<List<StorageDetailsSong>>(emptyList())
+    val storageSongs = createMutableLiveData<List<StorageDetailsSong>?>(null)
 
     init {
         viewModelScope.launch {
@@ -29,7 +29,9 @@ open class StorageDetailsViewModel(
             getStorageSongsDetailsUseCase.getStorageSongs()
         }
             .onFailure { error -> setError(error) }
-            .onSuccess { storageDetailsSongs -> storageSongs.postValue(storageDetailsSongs) }
+            .onSuccess { storageDetailsSongs ->
+                storageSongs.postValue(storageDetailsSongs)
+            }
 
         isLoading.postValue(false)
     }
@@ -63,9 +65,7 @@ open class StorageDetailsViewModel(
     }
 
     private suspend fun updateToggledSong(
-        songs: List<StorageDetailsSong>,
-        toggledSongIndex: Int,
-        isSaved: Boolean
+        songs: List<StorageDetailsSong>, toggledSongIndex: Int, isSaved: Boolean
     ) {
         val newSongs = songs.toPersistentList().mutate { persistentSongs ->
             val toggledSong = persistentSongs[toggledSongIndex]

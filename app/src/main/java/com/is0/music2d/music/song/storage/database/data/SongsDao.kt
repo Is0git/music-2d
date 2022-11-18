@@ -24,7 +24,7 @@ interface SongsDao {
     @Query("DELETE FROM SongEntity WHERE songId == :songId")
     suspend fun removeSong(songId: String)
 
-    @Query("SELECT SUM(durationMillis) FROM SongEntity WHERE isSaved")
+    @Query("SELECT COALESCE(SUM(durationMillis), 0) FROM SongEntity WHERE isSaved")
     fun watchTotalSongDuration(): Flow<Long>
 
     @Query("UPDATE SongEntity SET isSaved = NOT isSaved WHERE songId=:songId")
