@@ -1,5 +1,6 @@
 package com.is0.music2d.music.song.storage.memory.mapper
 
+import com.is0.music2d.music.song.storage.SongStorageType
 import com.is0.music2d.music.song.storage.memory.entity.InMemorySong
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.mapper.SongsMapper
@@ -13,6 +14,7 @@ class InMemorySongsMapper @Inject constructor() : SongsMapper<InMemorySong> {
         artist = song.artist,
         durationMillis = song.durationMillis,
         imageUrl = song.imageUrl,
+        songStorageType = SongStorageType.MEMORY,
     )
 
     override fun toSongEntity(song: Song): InMemorySong = InMemorySong(
@@ -22,5 +24,6 @@ class InMemorySongsMapper @Inject constructor() : SongsMapper<InMemorySong> {
         artist = song.artist,
         durationMillis = song.durationMillis,
         imageUrl = song.imageUrl,
+        isSaved = true,
     )
 }

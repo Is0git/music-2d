@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.is0.music2d.theme.AppTheme
@@ -15,6 +16,7 @@ fun SongCoverComponent(
     modifier: Modifier = Modifier,
     songImageUrl: String = "",
     songInfoComponent: @Composable BoxScope.() -> Unit = {},
+    icon: @Composable () -> Unit = {},
 ) {
     Box(
         modifier = modifier.clip(AppTheme.shapes.songCoverShape)
@@ -25,6 +27,9 @@ fun SongCoverComponent(
         )
         SongCoverScrimComponent()
         songInfoComponent()
+        Box(modifier = Modifier.align(Alignment.TopEnd)) {
+            icon()
+        }
     }
 }
 

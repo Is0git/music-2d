@@ -9,15 +9,14 @@ import javax.inject.Singleton
 @Singleton
 class DefaultFileSizeFormatter @Inject constructor() : FileSizeFormatter {
     override fun formatSize(size: FileSize): String = runCatching {
-         format(
-             FILE_SIZE_FORMAT,
-             size.quantity,
-             size.sizeUnit.name,
-         )
-     }
-         .onFailure(Timber::e)
-         .getOrNull()
-         .orEmpty()
+        format(
+            FILE_SIZE_FORMAT,
+            size.quantity,
+            size.sizeUnit.name,
+        )
+    }.onFailure(Timber::e)
+        .getOrNull()
+        .orEmpty()
 
     companion object {
         const val FILE_SIZE_FORMAT = "%.1f %s"

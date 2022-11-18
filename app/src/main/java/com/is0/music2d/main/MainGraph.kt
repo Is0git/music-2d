@@ -2,11 +2,11 @@ package com.is0.music2d.main
 
 import okhttp3.internal.format
 
-sealed class MainScreen {
+sealed class MainGraph {
     abstract val routePattern: String
     abstract val routeName: String
 
-    object Home : MainScreen() {
+    object Home : MainGraph() {
         override val routePattern: String
             get() = routeName
 
@@ -14,7 +14,7 @@ sealed class MainScreen {
             get() = "home"
     }
 
-    object AlbumDetails : MainScreen() {
+    object AlbumDetails : MainGraph() {
         const val ALBUM_ID: String = "albumId"
 
         override val routePattern: String
@@ -24,7 +24,7 @@ sealed class MainScreen {
             get() = formatRoute("{$ALBUM_ID}")
     }
 
-    object StorageDetails : MainScreen() {
+    object StorageDetails : MainGraph() {
         const val STORAGE_TYPE: String = "storageType"
 
         override val routePattern: String
@@ -35,7 +35,7 @@ sealed class MainScreen {
     }
 }
 
-fun MainScreen.formatRoute(vararg args: Any): String = format(
+fun MainGraph.formatRoute(vararg args: Any): String = format(
     routePattern,
     *args,
 )

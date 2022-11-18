@@ -3,7 +3,6 @@ package com.is0.music2d.main.home
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

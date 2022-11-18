@@ -3,10 +3,8 @@ package com.is0.music2d.utils.composable.scaffold
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.SnackbarHost
@@ -19,9 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
 import com.is0.music2d.theme.AppTheme
-import com.is0.music2d.theme.color.AppColor
 import com.is0.music2d.utils.composable.button.BackButtonComponent
 import com.is0.music2d.utils.composable.gradient.scrim.ScrimComponent
 import com.is0.music2d.utils.composable.gradient.scrim.verticalGradientScrim

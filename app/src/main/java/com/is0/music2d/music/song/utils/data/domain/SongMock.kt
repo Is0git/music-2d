@@ -53,7 +53,7 @@ object SongMock {
         id = UUID.randomUUID().toString(),
         title = songTitles.random(),
         songSize = randomSongSize,
-        artist = ArtistMock.randomArtist,
+        artist = ArtistMock.getRandomArist(index * 10),
         durationMillis = randomSongDurationRangeMillis,
         imageUrl = ImageMock.getRandomImageById(index),
     )

@@ -10,7 +10,5 @@ import javax.inject.Inject
 class ToggleInMemorySavedSongUseCase @Inject constructor(
     private val inMemorySongsRepository: InMemorySongsRepository,
 ) : ToggleSavedSongUseCase {
-    override suspend fun toggleSavedSong(song: Song) {
-        inMemorySongsRepository.toggleSavedSong(song)
-    }
+    override suspend fun toggleSavedSong(song: Song) = inMemorySongsRepository.toggleSavedSong(song)
 }

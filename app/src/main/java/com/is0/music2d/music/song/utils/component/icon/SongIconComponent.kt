@@ -1,4 +1,4 @@
-package com.is0.music2d.music.song.utils.component
+package com.is0.music2d.music.song.utils.component.icon
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable

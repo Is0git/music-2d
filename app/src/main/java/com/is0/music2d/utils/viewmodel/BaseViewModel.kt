@@ -17,7 +17,7 @@ abstract class BaseViewModel : ViewModel() {
     protected fun <T> createMutableLiveData(initialValue: T): LiveData<T> =
         MutableLiveData(initialValue)
 
-    protected fun <T> createSingleLiveData(): LiveData<T> = SingleLiveData<T>()
+    private fun <T> createSingleLiveData(): LiveData<T> = SingleLiveData<T>()
 
     protected fun <T> LiveData<T>.postValue(value: T) {
         when (this) {

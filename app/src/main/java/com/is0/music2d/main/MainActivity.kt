@@ -19,6 +19,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.is0.music2d.main.home.HomeScreen
 import com.is0.music2d.main.home.details.album.AlbumDetailsScreen
 import com.is0.music2d.main.home.details.storage.StorageDetailsScreen
+import com.is0.music2d.main.home.details.storage.filesystem.FileSystemStorageDetailsViewModel
 import com.is0.music2d.main.home.details.storage.memory.MemoryStorageDetailsViewModel
 import com.is0.music2d.music.song.storage.SongStorageType
 import com.is0.music2d.music.song.utils.formatter.SongDurationFormatter
@@ -67,7 +68,7 @@ class MainActivity : ComponentActivity() {
 
         AnimatedNavHost(
             navController = navController,
-            startDestination = MainScreen.Home.routeName,
+            startDestination = MainGraph.Home.routeName,
         ) {
             homeScreen(navController)
             albumDetails(navController)
@@ -77,9 +78,9 @@ class MainActivity : ComponentActivity() {
 
     private fun NavGraphBuilder.albumDetails(navController: NavHostController) {
         composable(
-            route = MainScreen.AlbumDetails.routeName,
+            route = MainGraph.AlbumDetails.routeName,
             arguments = listOf(
-                navArgument(MainScreen.AlbumDetails.ALBUM_ID) {
+                navArgument(MainGraph.AlbumDetails.ALBUM_ID) {
                     type = NavType.StringType
                 }
             ),
@@ -91,7 +92,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun NavGraphBuilder.homeScreen(navController: NavHostController) {
-        composable(route = MainScreen.Home.routeName) {
+        composable(route = MainGraph.Home.routeName) {
             HomeScreen(
                 navController = navController,
             )
@@ -100,20 +101,21 @@ class MainActivity : ComponentActivity() {
 
     private fun NavGraphBuilder.storageDetails(navController: NavHostController) {
         composable(
-            route = MainScreen.StorageDetails.routeName,
+            route = MainGraph.StorageDetails.routeName,
             arguments = listOf(
-                navArgument(MainScreen.StorageDetails.STORAGE_TYPE) {
+                navArgument(MainGraph.StorageDetails.STORAGE_TYPE) {
                     type = NavType.StringType
                 }
             )
         ) { navBackStackEntry: NavBackStackEntry ->
-            val storageTypeString = navBackStackEntry.arguments?.getString(MainScreen.StorageDetails.STORAGE_TYPE)
+            val storageTypeString = navBackStackEntry.arguments?.getString(MainGraph.StorageDetails.STORAGE_TYPE)
             if (storageTypeString != null) {
                 val songStorageType: SongStorageType = SongStorageType.valueOf(storageTypeString)
 
                 StorageDetailsScreen(
                     viewModel = createStorageDetailsViewModel(songStorageType),
                     navController = navController,
+                    storageType = songStorageType,
                 )
             }
         }
@@ -123,6 +125,7 @@ class MainActivity : ComponentActivity() {
     private fun createStorageDetailsViewModel(songStorageType: SongStorageType) =
         when (songStorageType) {
             SongStorageType.MEMORY -> hiltViewModel<MemoryStorageDetailsViewModel>()
-            SongStorageType.FILESYSTEM -> hiltViewModel()
+            SongStorageType.FILESYSTEM -> hiltViewModel<FileSystemStorageDetailsViewModel>()
+            SongStorageType.NONE -> error("Song storage type not provided")
         }
 }

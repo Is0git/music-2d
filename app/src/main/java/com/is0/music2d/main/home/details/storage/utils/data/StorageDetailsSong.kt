@@ -7,9 +7,3 @@ data class StorageDetailsSong(
     val song: Song,
     val isSaved: Boolean,
 )
-
-fun Song.toStorageDetailsSong() = StorageDetailsSong(
-    id = id,
-    song = this,
-    isSaved = true,
-)

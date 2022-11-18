@@ -9,20 +9,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.is0.music2d.theme.AppTheme
 
 @Composable
-fun HeadlineLargeTextComponent(
-    modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
-    text: String,
-) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = AppTheme.typography.headlineLarge,
-        color = color,
-    )
-}
-
-@Composable
 fun HeadlineMediumTextComponent(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,

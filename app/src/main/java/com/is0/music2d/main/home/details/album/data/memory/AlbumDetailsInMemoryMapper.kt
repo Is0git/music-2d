@@ -12,7 +12,6 @@ class AlbumDetailsInMemoryMapper @Inject constructor(
 ) {
     fun toAlbumDetails(inMemoryAlbum: InMemoryAlbum): AlbumDetails = AlbumDetails(
         name = inMemoryAlbum.name,
-        totalDuration = inMemoryAlbum.songs.sumOf { it.durationMillis },
         songs = inMemoryAlbum.songs.map(inMemorySongsMapper::toSongDomain),
     )
 }

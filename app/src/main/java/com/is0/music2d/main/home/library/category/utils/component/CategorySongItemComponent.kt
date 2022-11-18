@@ -16,15 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.music.utils.component.ArtistAvatarComponent
-import com.is0.music2d.music.utils.data.domain.Artist
-import com.is0.music2d.music.utils.data.domain.ArtistMock
+import com.is0.music2d.music.song.storage.SongStorageType
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
-import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
+import com.is0.music2d.music.utils.component.ArtistAvatarComponent
+import com.is0.music2d.music.utils.data.domain.Artist
+import com.is0.music2d.music.utils.data.domain.ArtistMock
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.duration.DurationComponent
+import com.is0.music2d.utils.composable.icon.StorageIconComponent
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
@@ -52,6 +54,7 @@ fun CategorySongItemComponent(
         songImageUrl = song.imageUrl,
         songName = song.title,
         artist = song.artist,
+        songStorageType = song.songStorageType,
     )
 }
 
@@ -63,6 +66,7 @@ private fun CategorySongItemContentComponent(
     songDurationText: String,
     songName: String,
     artist: Artist,
+    songStorageType: SongStorageType = SongStorageType.NONE,
 ) {
     Column(modifier = modifier) {
         CategorySongCoverComponent(
@@ -72,6 +76,7 @@ private fun CategorySongItemContentComponent(
             songSizeText = songSizeText,
             songImageUrl = songImageUrl,
             songDurationText = songDurationText,
+            songStorageType = songStorageType,
         )
         VerticalSpacerComponent(height = 8.dp)
         SongInfoComponent(
@@ -87,6 +92,7 @@ private fun CategorySongCoverComponent(
     songSizeText: String = "",
     songImageUrl: String = "",
     songDurationText: String = "",
+    songStorageType: SongStorageType,
 ) {
     SongCoverComponent(
         modifier = modifier,
@@ -99,6 +105,11 @@ private fun CategorySongCoverComponent(
                 songSizeText = songSizeText,
                 songDurationText = songDurationText,
             )
+        },
+        icon = {
+            Box(modifier = Modifier.padding(8.dp)) {
+                StorageIconComponent(storageType = songStorageType)
+            }
         }
     )
 }
@@ -147,8 +158,7 @@ private fun SongInfoComponent(
         SongInfoLiteralComponent(
             songName = songName,
             songArtistName = artist.name,
-
-            )
+        )
     }
 }
 
@@ -202,7 +212,7 @@ private fun SongAristNameComponent(
     LabelMediumTextComponent(
         modifier = modifier,
         text = artistName,
-        color = AppTheme.colors.onBackgroundColorVariant,
+        color = AppTheme.colors.onSurfaceColor,
         lines = 1,
         overflow = TextOverflow.Ellipsis,
     )

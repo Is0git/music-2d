@@ -4,10 +4,8 @@ import com.is0.music2d.music.album.utils.data.memory.entity.InMemoryAlbum
 import com.is0.music2d.music.song.storage.memory.entity.InMemorySong
 import com.is0.music2d.music.song.storage.memory.event.InMemorySongEvent
 import com.is0.music2d.music.song.storage.memory.event.InMemorySongEventBus
-import com.is0.music2d.music.song.storage.memory.store.InMemorySongsStore
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.mutate
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,13 +19,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class InMemoryAlbumsStore @Inject constructor(
-    private val inMemorySongsStore: InMemorySongsStore,
     private val inMemorySongEventBus: InMemorySongEventBus,
     @IO private val dispatcher: CoroutineDispatcher,
 ) {
@@ -43,43 +39,24 @@ class InMemoryAlbumsStore @Inject constructor(
 
     private suspend fun handleInMemorySongEvent(inMemorySongEvent: InMemorySongEvent) {
         when (inMemorySongEvent) {
-            is InMemorySongEvent.SongDeleted -> {
-                deleteSong(inMemorySongEvent.songId)
-            }
+            is InMemorySongEvent.SongDeleted -> deleteSong(inMemorySongEvent.songId)
+            is InMemorySongEvent.UpdateSong -> updateSong(inMemorySongEvent.inMemorySong)
         }
     }
 
-    suspend fun watchAlbums(): Flow<List<InMemoryAlbum>> = withContext(dispatcher) {
-        inMemoryAlbums
+    suspend fun watchAlbums(count: Int = -1): Flow<List<InMemoryAlbum>> = withContext(dispatcher) {
+        inMemoryAlbums.map { albums ->
+            albums.map { album ->
+                val filteredSongs = album.songs.filter { song -> song.isSaved }
+                album.copy(songs = if (count > 0) filteredSongs.take(count) else filteredSongs)
+            }
+        }
     }
 
     suspend fun addAlbums(inMemoryAlbums: List<InMemoryAlbum>) {
         withContext(dispatcher) {
             this@InMemoryAlbumsStore.inMemoryAlbums.value.addAll(inMemoryAlbums)
                 .also { newAlbums -> this@InMemoryAlbumsStore.inMemoryAlbums.emit(newAlbums) }
-        }
-    }
-
-    suspend fun addSongToAlbum(albumId: String, songId: String) {
-        withContext(dispatcher) {
-            val oldMemoryAlbums = inMemoryAlbums.value
-            val albumIndex = oldMemoryAlbums.indexOfFirst { memoryAlbum -> memoryAlbum.id == albumId }
-
-            if (albumIndex != -1) {
-                val inMemoryAlbum: InMemoryAlbum = oldMemoryAlbums[albumIndex]
-
-                val updatedAlbums = oldMemoryAlbums.mutate { memoryAlbums ->
-                    val song = inMemorySongsStore.getSongById(songId)
-                    val updatedAlbumSongs: List<InMemorySong> = inMemoryAlbum.songs
-                        .toPersistentList()
-                        .add(song)
-                        .distinct()
-
-                    memoryAlbums[albumIndex] = inMemoryAlbum.copy(songs = updatedAlbumSongs)
-                }
-
-                inMemoryAlbums.emit(updatedAlbums)
-            }
         }
     }
 
@@ -101,5 +78,25 @@ class InMemoryAlbumsStore @Inject constructor(
                 }
             }
         }.also { newAlbums -> inMemoryAlbums.emit(newAlbums.toPersistentList()) }
+    }
+
+    private suspend fun updateSong(inMemorySong: InMemorySong) {
+        withContext(dispatcher) {
+            val albums = inMemoryAlbums.value
+            val albumToUpdateIndex = albums.indexOfFirst { it.songs.any { songs -> songs.id == inMemorySong.id } }
+            if (albumToUpdateIndex != -1) {
+                val albumToUpdate = albums[albumToUpdateIndex]
+                val newAlbum = albums[albumToUpdateIndex].copy(songs = albumToUpdate.songs.map { song ->
+                    if (song.id == inMemorySong.id) {
+                        inMemorySong
+                    } else {
+                        song
+                    }
+                })
+                val newAlbums = albums.set(albumToUpdateIndex, newAlbum)
+
+                inMemoryAlbums.emit(newAlbums)
+            }
+        }
     }
 }

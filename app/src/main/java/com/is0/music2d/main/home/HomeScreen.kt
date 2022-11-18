@@ -20,9 +20,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
-import com.is0.music2d.main.MainScreen
+import com.is0.music2d.main.MainGraph
 import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
-import com.is0.music2d.main.home.library.storage.preview.StorageSongSelectionScreen
+import com.is0.music2d.main.home.library.storage_preview.StorageSongSelectionScreen
 import com.is0.music2d.main.home.utils.OnSongStorageClick
 import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.main.home.utils.data.SongsContentType
@@ -151,7 +151,7 @@ private fun SongContentTypeTabRowComponent(
 private fun NavController.navigateToAlbumDetails(albumId: String) {
     navigate(
         format(
-            MainScreen.AlbumDetails.routePattern,
+            MainGraph.AlbumDetails.routePattern,
             albumId,
         )
     )
@@ -160,7 +160,7 @@ private fun NavController.navigateToAlbumDetails(albumId: String) {
 private fun NavController.navigateToStorageDetails(songStorageType: SongStorageType) {
     navigate(
         format(
-            MainScreen.StorageDetails.routePattern,
+            MainGraph.StorageDetails.routePattern,
             songStorageType.name,
         )
     )

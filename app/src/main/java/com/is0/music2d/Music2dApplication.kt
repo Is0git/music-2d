@@ -4,6 +4,7 @@ package com.is0.music2d
 
 import android.app.Application
 import com.is0.music2d.music.use_case.PopulateMemoryMusicUseCase
+import com.is0.music2d.utils.di.qualifier.IO
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope

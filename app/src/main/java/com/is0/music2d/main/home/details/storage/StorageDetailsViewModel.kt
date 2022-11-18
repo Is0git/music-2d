@@ -1,11 +1,9 @@
 package com.is0.music2d.main.home.details.storage
 
 import androidx.lifecycle.viewModelScope
-import com.is0.music2d.main.home.details.storage.use_case.GetStorageSongsUseCase
+import com.is0.music2d.main.home.details.storage.use_case.GetStorageSongsDetailsUseCase
 import com.is0.music2d.main.home.details.storage.use_case.ToggleSavedSongUseCase
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
-import com.is0.music2d.main.home.details.storage.utils.data.toStorageDetailsSong
-import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import kotlinx.collections.immutable.mutate
 import kotlinx.collections.immutable.toPersistentList
@@ -13,7 +11,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 open class StorageDetailsViewModel(
-    private val getStorageSongsUseCase: GetStorageSongsUseCase,
+    private val getStorageSongsDetailsUseCase: GetStorageSongsDetailsUseCase,
     private val toggleSavedSongUseCase: ToggleSavedSongUseCase,
 ) : BaseViewModel() {
     val storageSongs = createMutableLiveData<List<StorageDetailsSong>>(emptyList())
@@ -28,8 +26,7 @@ open class StorageDetailsViewModel(
         runCatching {
             isLoading.postValue(true)
 
-            getStorageSongsUseCase.getStorageSongs()
-                .map(Song::toStorageDetailsSong)
+            getStorageSongsDetailsUseCase.getStorageSongs()
         }
             .onFailure { error -> setError(error) }
             .onSuccess { storageDetailsSongs -> storageSongs.postValue(storageDetailsSongs) }
@@ -53,7 +50,6 @@ open class StorageDetailsViewModel(
                     Timber.e("Toggled saved song not was not found")
                     return@runCatching
                 }
-
 
                 updateToggledSong(
                     songs = songs,

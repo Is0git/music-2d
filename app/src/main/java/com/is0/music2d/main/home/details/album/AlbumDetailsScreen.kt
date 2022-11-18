@@ -79,7 +79,6 @@ private fun AlbumDetailsContentComponentPreview() {
             albumDetails = AlbumDetails(
                 "Test",
                 songs = SongMock.generateSongs(40),
-                totalDuration = 2323232,
             ),
             formatSongDuration = { "2h 3m" },
             formatFileSize = { "12MB" },

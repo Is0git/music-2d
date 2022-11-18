@@ -4,27 +4,27 @@ package com.is0.music2d.main.home.details.storage.utils.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.is0.music2d.music.song.storage.SongStorageType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.CheckmarkIconComponent
-
+import com.is0.music2d.utils.composable.icon.StorageIconComponent
 
 @Composable
 fun StorageSaveButtonComponent(
     modifier: Modifier = Modifier,
     onSaveClick: (isSaved: Boolean) -> Unit = {},
+    storageType: SongStorageType = SongStorageType.FILESYSTEM,
     isSaved: Boolean = true,
 ) {
     SaveStorageIconButtonComponent(
         modifier = modifier,
         isSaved = isSaved,
         onSaveClick = onSaveClick,
+        storageType = storageType,
     )
 }
 
@@ -32,6 +32,7 @@ fun StorageSaveButtonComponent(
 private fun SaveStorageIconButtonComponent(
     modifier: Modifier = Modifier,
     onSaveClick: (isSaved: Boolean) -> Unit,
+    storageType: SongStorageType,
     isSaved: Boolean,
 ) {
     IconButton(
@@ -42,22 +43,12 @@ private fun SaveStorageIconButtonComponent(
             if (saved) {
                 CheckmarkIconComponent()
             } else {
-                StorageIconComponent()
+                StorageIconComponent(
+                    storageType = storageType,
+                )
             }
         }
     }
-}
-
-@Composable
-private fun StorageIconComponent(
-    modifier: Modifier = Modifier,
-) {
-    Icon(
-        modifier = modifier,
-        imageVector = Icons.Filled.Storage,
-        contentDescription = "",
-        tint = AppTheme.colors.onSurfaceColor,
-    )
 }
 
 @Composable

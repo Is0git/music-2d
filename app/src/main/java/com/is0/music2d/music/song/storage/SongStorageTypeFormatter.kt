@@ -14,6 +14,7 @@ class SongStorageTypeFormatter @Inject constructor(
         return when (storageType) {
             SongStorageType.MEMORY -> context.getString(R.string.song_storage_type_memory)
             SongStorageType.FILESYSTEM -> context.getString(R.string.song_storage_type_filesystem)
+            SongStorageType.NONE -> ""
         }
     }
 }

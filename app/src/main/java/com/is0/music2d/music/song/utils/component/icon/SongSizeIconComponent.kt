@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.is0.music2d.R
-import com.is0.music2d.music.song.utils.component.SongIconComponent
 
 @Composable
 fun SongSizeIconComponent(modifier: Modifier = Modifier) {

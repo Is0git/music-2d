@@ -15,6 +15,9 @@ import com.is0.music2d.main.home.details.storage.utils.component.OnSongSaveClick
 import com.is0.music2d.main.home.details.storage.utils.component.StorageSongItemComponent
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSongMock
+import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.composable.StorageProviders
+import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.music.song.utils.formatter.FormatSongDuration
 import com.is0.music2d.theme.AppTheme
@@ -27,6 +30,7 @@ import com.is0.music2d.utils.size.FormatFileSize
 fun StorageDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: StorageDetailsViewModel,
+    storageType: SongStorageType,
     navController: NavController = rememberNavController(),
 ) {
     val storageDetailsSongs by viewModel.storageSongs.observeAsState(emptyList())
@@ -34,18 +38,22 @@ fun StorageDetailsScreen(
     val songDurationFormatter = LocalDurationFormatter.current
     val songSizeFormatter = LocalSizeFormatter.current
 
-    BaseScaffoldComponent(
-        modifier = modifier,
-        baseViewModel = viewModel,
-        onNavigateUp = navController::popBackStack,
-    ) { padding ->
-        StorageDetailsContentComponent(
-            modifier = Modifier.padding(padding),
-            songs = storageDetailsSongs,
-            formatSongDuration = { duration -> songDurationFormatter.formatDuration(duration) },
-            formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
-            onSongSaveClick = viewModel::toggleSavedSong,
-        )
+    StorageProviders {
+        BaseScaffoldComponent(
+            modifier = modifier,
+            baseViewModel = viewModel,
+            onNavigateUp = navController::popBackStack,
+            title = LocalSongStorageTypeFormatter.current.formatStorageType(storageType)
+        ) { padding ->
+            StorageDetailsContentComponent(
+                modifier = Modifier.padding(padding),
+                songs = storageDetailsSongs,
+                formatSongDuration = { duration -> songDurationFormatter.formatDuration(duration) },
+                formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
+                onSongSaveClick = viewModel::toggleSavedSong,
+                storageType = storageType,
+            )
+        }
     }
 }
 
@@ -55,6 +63,7 @@ fun StorageDetailsContentComponent(
     songs: List<StorageDetailsSong>,
     formatSongDuration: FormatSongDuration,
     formatFileSize: FormatFileSize,
+    storageType: SongStorageType = SongStorageType.NONE,
     onSongSaveClick: OnSongSaveClick = { _, _ -> },
 ) {
     LazyColumn(
@@ -68,6 +77,7 @@ fun StorageDetailsContentComponent(
                 songSizeText = formatFileSize(detailsSong.song.songSize.toSize()),
                 songImageUrl = detailsSong.song.imageUrl,
                 onSongSaveClick = onSongSaveClick,
+                storageType = storageType,
             )
         }
     }

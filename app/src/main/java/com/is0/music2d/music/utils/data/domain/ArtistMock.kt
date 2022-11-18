@@ -20,4 +20,12 @@ object ArtistMock {
             name = artistNames.random(),
             artistImageUrl = ImageMock.randomImage
         )
+
+    fun getRandomArist(id: Int): Artist {
+        return Artist(
+            id = UUID.randomUUID().toString(),
+            name = artistNames.random(),
+            artistImageUrl = ImageMock.getRandomImageById(id)
+        )
+    }
 }
