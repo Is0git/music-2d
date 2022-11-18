@@ -25,9 +25,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-
-        buildConfigField "String", "DAD_JOKES_REST_API_URL", "\"https://icanhazdadjoke.com/\""
-        buildConfigField "String", "CHUCK_NORRIS_FACTS_REST_API_URL", "\"https://api.chucknorris.io//\""
     }
     signingConfigs {
         release
