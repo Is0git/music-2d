@@ -50,4 +50,9 @@ class InMemorySongsRepository @Inject constructor(
             inMemorySongsStore.toggleSavedSong(inMemoryUserSongsMapper.toSongEntity(song))
         }
     }
+
+    override suspend fun getSongsByIds(songIds: List<String>): List<Song> =
+        withContext(dispatcher) {
+            getSongs().takeWhile { song -> songIds.contains(song.id) }
+        }
 }
