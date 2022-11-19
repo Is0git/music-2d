@@ -20,7 +20,7 @@ open class StorageDetailsViewModel(
         }
     }
 
-    private suspend fun watchStorageSongs() {
+    suspend fun watchStorageSongs() {
         runCatching {
             isLoading.postValue(true)
 
