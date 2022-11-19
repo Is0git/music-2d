@@ -17,7 +17,6 @@ interface AlbumsDao {
     @Insert
     suspend fun addAlbum(album: AlbumEntity)
 
-
     @Query("SELECT EXISTS(SELECT * FROM AlbumEntity)")
     fun exists(): Boolean
 }

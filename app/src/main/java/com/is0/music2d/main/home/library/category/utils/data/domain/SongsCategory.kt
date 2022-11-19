@@ -8,15 +8,13 @@ data class SongsCategory(
     val songs: List<CategorizedSong>,
 )
 
-fun Album.toSongCategory(): SongsCategory {
-    return SongsCategory(
-        id = id,
-        name = name,
-        songs = songs.map { song ->
-            CategorizedSong(
-                song = song,
-                songStorageType = emptyList(),
-            )
-        }
-    )
-}
+fun Album.toSongCategory(): SongsCategory = SongsCategory(
+    id = id,
+    name = name,
+    songs = songs.map { song ->
+        CategorizedSong(
+            song = song,
+            songStorageType = emptyList(),
+        )
+    }
+)

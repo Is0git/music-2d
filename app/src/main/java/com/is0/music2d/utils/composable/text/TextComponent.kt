@@ -24,7 +24,6 @@ fun HeadlineLargeTextComponent(
     )
 }
 
-
 @Composable
 fun HeadlineMediumTextComponent(
     modifier: Modifier = Modifier,

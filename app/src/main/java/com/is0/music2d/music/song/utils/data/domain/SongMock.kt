@@ -1,9 +1,8 @@
 package com.is0.music2d.music.song.utils.data.domain
 
 import com.is0.music2d.music.utils.data.domain.ArtistMock
-import com.is0.music2d.utils.data.mock.ImageMock
 import com.is0.music2d.utils.data.size.SizeUnit
-import java.util.UUID
+import java.util.*
 
 object SongMock {
     private val songTitles = listOf(
@@ -61,6 +60,7 @@ object SongMock {
         get() {
             val min = 4.20f
             val max = 68f
+
             return SongSize(
                 quantity = min + Math.random().toFloat() * (max - min),
                 unit = SizeUnit.MB
