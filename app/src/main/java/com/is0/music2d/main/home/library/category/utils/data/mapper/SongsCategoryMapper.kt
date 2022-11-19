@@ -15,18 +15,16 @@ class SongsCategoryMapper @Inject constructor() {
         album: Album,
     ): SongsCategory {
         return when (songsMergeResult) {
-            is SongsMergeResult.Merged -> {
-                SongsCategory(
-                    id = album.id,
-                    name = album.name,
-                    songs = songsMergeResult.songsWithStorageType.map { songStorageTypePair ->
-                        CategorizedSong(
-                            song = songStorageTypePair.first,
-                            songStorageType = songStorageTypePair.second,
-                        )
-                    }
-                )
-            }
+            is SongsMergeResult.Merged -> SongsCategory(
+                id = album.id,
+                name = album.name,
+                songs = songsMergeResult.songsWithStorageType.map { songStorageTypePair ->
+                    CategorizedSong(
+                        song = songStorageTypePair.first,
+                        songStorageType = songStorageTypePair.second,
+                    )
+                }
+            )
             else -> album.toSongCategory()
         }
     }

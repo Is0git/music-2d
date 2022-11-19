@@ -36,10 +36,6 @@ class DatabaseAlbumsRepository @Inject constructor(
             albumWithSongs.map(AlbumWithSongsEntity::toAlbum)
         }
 
-
-    fun watchAlbum(albumId: String): Flow<Album> = albumsWithSongsDao.watchAlbumWithSongs(albumId)
-        .map(AlbumWithSongsEntity::toAlbum)
-
     override suspend fun addAlbums(albums: List<Album>) {
         appDatabase.withTransaction {
             albums.forEach { album ->

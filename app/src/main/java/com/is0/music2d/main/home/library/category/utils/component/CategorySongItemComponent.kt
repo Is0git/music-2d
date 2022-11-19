@@ -29,7 +29,6 @@ import com.is0.music2d.music.utils.data.domain.Artist
 import com.is0.music2d.music.utils.data.domain.ArtistMock
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
-import com.is0.music2d.utils.composable.icon.MemoryIconComponent
 import com.is0.music2d.utils.composable.icon.StorageIconComponent
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
