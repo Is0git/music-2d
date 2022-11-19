@@ -1,5 +1,6 @@
 package com.is0.music2d.main.home.library.category.utils.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,12 +8,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import com.is0.music2d.music.utils.data.domain.Artist
 import com.is0.music2d.music.utils.data.domain.ArtistMock
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
+import com.is0.music2d.utils.composable.icon.MemoryIconComponent
 import com.is0.music2d.utils.composable.icon.StorageIconComponent
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
@@ -41,7 +45,7 @@ fun CategorySongItemComponent(
     onSongDurationFormat: (durationMillis: Long) -> String,
 ) {
     val song = categorizedSong.song
-    
+
     val formattedSongSize = remember(song.songSize) {
         onSongSizeFormat(song.songSize)
     }
@@ -56,7 +60,7 @@ fun CategorySongItemComponent(
         songImageUrl = song.imageUrl,
         songName = song.title,
         artist = song.artist,
-        songStorageType = categorizedSong.songStorageType,
+        songStorageTypes = categorizedSong.songStorageType,
     )
 }
 
@@ -68,7 +72,7 @@ private fun CategorySongItemContentComponent(
     songDurationText: String,
     songName: String,
     artist: Artist,
-    songStorageType: SongStorageType = SongStorageType.NONE,
+    songStorageTypes: List<SongStorageType> = emptyList(),
 ) {
     Column(modifier = modifier) {
         CategorySongCoverComponent(
@@ -78,7 +82,7 @@ private fun CategorySongItemContentComponent(
             songSizeText = songSizeText,
             songImageUrl = songImageUrl,
             songDurationText = songDurationText,
-            songStorageType = songStorageType,
+            songStorageTypes = songStorageTypes,
         )
         VerticalSpacerComponent(height = 8.dp)
         SongInfoComponent(
@@ -94,7 +98,7 @@ private fun CategorySongCoverComponent(
     songSizeText: String = "",
     songImageUrl: String = "",
     songDurationText: String = "",
-    songStorageType: SongStorageType,
+    songStorageTypes: List<SongStorageType> = emptyList(),
 ) {
     SongCoverComponent(
         modifier = modifier,
@@ -109,8 +113,17 @@ private fun CategorySongCoverComponent(
             )
         },
         icon = {
-            Box(modifier = Modifier.padding(8.dp)) {
-                StorageIconComponent(storageType = songStorageType)
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(AppTheme.colors.surfaceColor.copy(alpha = 0.40f))
+                    .padding(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
+            ) {
+                songStorageTypes.forEach { type ->
+                    StorageIconComponent(storageType = type)
+                }
             }
         }
     )

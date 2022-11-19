@@ -20,14 +20,14 @@ class SavedSongsMerger @Inject constructor() {
     private fun getSongsWithStorageType(
         savedSongs: List<SavedSong>,
         song: Song
-    ): Pair<Song, SongStorageType> {
-        val savedSongIndex = savedSongs.indexOfFirst { savedSong -> song.id == savedSong.songId }
+    ): Pair<Song, List<SongStorageType>> {
+        val savedSongsGrouped = savedSongs.groupBy { savedSong -> savedSong.songId }
 
-        if (savedSongIndex == -1) {
-            return song to SongStorageType.NONE
+        if (savedSongsGrouped.isEmpty()) {
+            return song to emptyList()
         }
 
-        return song to savedSongs[savedSongIndex].songStorageType
+        return song to savedSongsGrouped[song.id]?.map { savedSong -> savedSong.songStorageType }.orEmpty()
     }
 }
 
@@ -35,6 +35,6 @@ sealed class SongsMergeResult {
     object NotMerged : SongsMergeResult()
 
     data class Merged(
-        val songsWithStorageType: List<Pair<Song, SongStorageType>>,
+        val songsWithStorageType: List<Pair<Song, List<SongStorageType>>>,
     ) : SongsMergeResult()
 }

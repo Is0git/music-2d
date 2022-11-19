@@ -27,7 +27,7 @@ open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
                     mergeResult.songsWithStorageType.map { songStorageTypePair ->
                         StorageDetailsSong(
                             song = songStorageTypePair.first,
-                            isSaved = songStorageTypePair.second.isSaved(),
+                            isSaved = songStorageTypePair.second.isNotEmpty(),
                         )
                     }
                 }

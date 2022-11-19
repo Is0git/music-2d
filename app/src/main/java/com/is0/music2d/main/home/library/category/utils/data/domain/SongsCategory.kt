@@ -17,7 +17,7 @@ fun Album.toSongCategory(): SongsCategory {
         songs = songs.map { song ->
             CategorizedSong(
                 song = song,
-                songStorageType = SongStorageType.NONE,
+                songStorageType = emptyList(),
             )
         }
     )
