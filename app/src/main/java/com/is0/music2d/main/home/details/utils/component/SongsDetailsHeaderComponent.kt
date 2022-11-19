@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -62,11 +64,13 @@ fun SongsDetailsHeaderComponent(
                 }
             }
         }
+        HeaderOverlayComponent()
         AlbumTitleComponent(
-            modifier = Modifier.align(Alignment.BottomStart),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .scale(4f),
             title = title,
         )
-        HeaderOverlayComponent()
     }
 }
 
@@ -76,10 +80,10 @@ private fun AlbumTitleComponent(
     title: String,
 ) {
     HeadlineLargeTextComponent(
-        modifier = modifier
-            .padding(AppTheme.dimensions.bodyMargin),
+        modifier = modifier.padding(AppTheme.dimensions.bodyMargin),
         text = title.uppercase(),
-        color = AppTheme.colors.onSurfaceColor,
+        color = AppTheme.colors.onSurfaceColor.copy(0.1f),
+        textAlign = TextAlign.Center,
     )
 }
 
