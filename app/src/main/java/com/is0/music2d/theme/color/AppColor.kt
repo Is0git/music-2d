@@ -8,6 +8,6 @@ object AppColor {
     val turbulence = Color(0xFF4F555A)
     val satinDeepBlack = Color (0xFF1C1D24)
     val shikon = Color(0xFF291b27)
-    val sapphireGlitter = Color(0xFF9000ff)
+    val sapphireGlitter = Color(0xFF55AAD2)
     val peppermintToad = Color(0xFF009a34)
 }

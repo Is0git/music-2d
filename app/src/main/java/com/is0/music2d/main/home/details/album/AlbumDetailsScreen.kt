@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
+import com.is0.music2d.main.home.details.utils.component.SongsDetailsHeaderComponent
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.toSize
@@ -59,6 +60,12 @@ private fun AlbumDetailsContentComponent(
     LazyColumn(
         modifier = modifier,
     ) {
+        item {
+            SongsDetailsHeaderComponent(
+                images = albumDetails.songs.take(5).map { it.imageUrl },
+                title = albumDetails.name
+            )
+        }
         items(albumDetails.songs) { song ->
             HorizontalSongItemComponent(
                 modifier = Modifier.fillMaxWidth(),

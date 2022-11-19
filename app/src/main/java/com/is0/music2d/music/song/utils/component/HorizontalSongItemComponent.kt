@@ -34,7 +34,7 @@ fun HorizontalSongItemComponent(
     action: @Composable () -> Unit = {},
 ) {
     HorizontalSongItemContentComponent(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 2.dp),
         song = song,
         songDurationText = songDurationText,
         songSizeText = songSizeText,
