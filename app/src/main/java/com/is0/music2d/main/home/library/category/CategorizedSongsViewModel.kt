@@ -23,7 +23,7 @@ class CategorizedSongsViewModel @Inject constructor(
     }
 
     private suspend fun watchSongCategories() {
-        watchSongsCategoriesUseCase.watchSongCategoriesUseCase()
+        watchSongsCategoriesUseCase.watchSongCategories()
             .catch { error -> setError(error) }
             .onStart { isLoading.postValue(true) }
             .collect { newSongCategories ->

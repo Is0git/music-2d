@@ -11,6 +11,6 @@ import javax.inject.Inject
 class WatchSongsCategoriesUseCase @Inject constructor(
     private val getUserAlbumsUseCase: GetUserAlbumsUseCase,
 ) {
-    suspend fun watchSongCategoriesUseCase(): Flow<List<SongsCategory>> =
+    suspend fun watchSongCategories(): Flow<List<SongsCategory>> =
         getUserAlbumsUseCase.watchUserAlbums(5).map { albums -> albums.map { album -> SongsCategory.fromAlbum(album) } }
 }
