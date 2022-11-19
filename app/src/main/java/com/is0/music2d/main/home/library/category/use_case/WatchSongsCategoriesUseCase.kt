@@ -1,8 +1,8 @@
 package com.is0.music2d.main.home.library.category.use_case
 
+import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
+import com.is0.music2d.main.home.library.category.utils.data.domain.toSongCategory
 import com.is0.music2d.main.home.library.category.utils.data.mapper.SongsCategoryMapper
-import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
-import com.is0.music2d.main.home.library.category.utils.data.presentation.toSongCategory
 import com.is0.music2d.music.album.use_case.WatchUserAlbumsUseCase
 import com.is0.music2d.music.album.utils.data.domain.Album
 import com.is0.music2d.music.song.storage.filesystem.utils.data.FilesystemSongsRepository

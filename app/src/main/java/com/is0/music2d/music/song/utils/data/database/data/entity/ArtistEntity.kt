@@ -1,4 +1,4 @@
-package com.is0.music2d.music.song.utils.data.memory.repository.entity
+package com.is0.music2d.music.song.utils.data.database.data.entity
 
 import com.is0.music2d.music.utils.data.domain.Artist
 

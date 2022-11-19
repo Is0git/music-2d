@@ -1,4 +1,4 @@
-package com.is0.music2d.music.song.utils.data.memory.repository.entity
+package com.is0.music2d.music.song.utils.data.database.data.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -19,7 +19,6 @@ data class SongEntity(
     val artist: ArtistEntity,
     val durationMillis: Long,
     val imageUrl: String,
-    val isSaved: Boolean,
 )
 
 fun SongEntity.toSong(): Song = Song(
@@ -39,5 +38,4 @@ fun Song.toEntity(albumId: String): SongEntity = SongEntity(
     durationMillis = durationMillis,
     imageUrl = imageUrl,
     albumId = albumId,
-    isSaved = true,
 )

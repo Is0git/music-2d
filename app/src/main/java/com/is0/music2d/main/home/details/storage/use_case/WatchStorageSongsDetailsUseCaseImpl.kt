@@ -5,7 +5,7 @@ import com.is0.music2d.music.song.storage.utils.data.SavedSongsRepository
 import com.is0.music2d.music.song.storage.utils.data.domain.isSaved
 import com.is0.music2d.music.song.storage.utils.merge.SavedSongsMerger
 import com.is0.music2d.music.song.storage.utils.merge.SongsMergeResult
-import com.is0.music2d.music.song.utils.data.memory.repository.InMemorySongsRepository
+import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSongsRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -13,16 +13,16 @@ import javax.inject.Inject
 
 @ViewModelScoped
 open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
-    private val inMemorySongsRepository: InMemorySongsRepository,
+    private val databaseSongsRepository: DatabaseSongsRepository,
     private val savedSongsRepository: SavedSongsRepository,
     private val savedSongsMerger: SavedSongsMerger,
 ) : WatchStorageSongsDetailsUseCase {
     override suspend fun watchStorageSongsDetails(): Flow<List<StorageDetailsSong>> {
         return combine(
             savedSongsRepository.watchSavedSongs(),
-            inMemorySongsRepository.watchSongs()
-        ) { savedSongs, inMemorySongs ->
-            when (val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(inMemorySongs, savedSongs)) {
+            databaseSongsRepository.watchSongs()
+        ) { savedSongs, databaseSongs ->
+            when (val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)) {
                 is SongsMergeResult.Merged -> {
                     mergeResult.songsWithStorageType.map { songStorageTypePair ->
                         StorageDetailsSong(
@@ -31,7 +31,7 @@ open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
                         )
                     }
                 }
-                else -> inMemorySongs.map { song ->
+                else -> databaseSongs.map { song ->
                     StorageDetailsSong(
                         song = song,
                         isSaved = false,

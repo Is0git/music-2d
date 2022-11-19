@@ -2,7 +2,7 @@ package com.is0.music2d.main.home.library.category
 
 import androidx.lifecycle.viewModelScope
 import com.is0.music2d.main.home.library.category.use_case.WatchSongsCategoriesUseCase
-import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
+import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch

@@ -13,6 +13,9 @@ interface FilesystemSongsDao {
     @Query("SELECT * FROM FilesystemSongEntity")
     fun watchSongs(): Flow<List<FilesystemSongEntity>>
 
+    @Query("SELECT EXISTS(SELECT * FROM FilesystemSongEntity WHERE songId = :songId)")
+    suspend fun exists(songId: String): Boolean
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addSong(song: FilesystemSongEntity)
 

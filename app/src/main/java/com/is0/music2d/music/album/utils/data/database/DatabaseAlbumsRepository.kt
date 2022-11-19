@@ -9,7 +9,7 @@ import com.is0.music2d.music.album.utils.data.database.entity.toAlbum
 import com.is0.music2d.music.album.utils.data.database.entity.toEntity
 import com.is0.music2d.music.album.utils.data.domain.Album
 import com.is0.music2d.music.song.utils.data.database.data.SongsDao
-import com.is0.music2d.music.song.utils.data.memory.repository.entity.toEntity
+import com.is0.music2d.music.song.utils.data.database.data.entity.toEntity
 import com.is0.music2d.utils.database.AppDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -26,12 +26,19 @@ class DatabaseAlbumsRepository @Inject constructor(
     override suspend fun watchAlbums(count: Int): Flow<List<Album>> =
         albumsWithSongsDao.watchAlbumsWithSongs().map { albumsWithSongs ->
             albumsWithSongs.map { album ->
-                val filteredSongs = album.songs.filter { song -> song.isSaved }
-                album.copy(songs = if (count > 0) filteredSongs.take(count) else filteredSongs)
+                if (count > 0) {
+                    album.copy(songs = album.songs.take(count))
+                } else {
+                    album
+                }
             }
         }.map { albumWithSongs ->
             albumWithSongs.map(AlbumWithSongsEntity::toAlbum)
         }
+
+
+    fun watchAlbum(albumId: String): Flow<Album> = albumsWithSongsDao.watchAlbumWithSongs(albumId)
+        .map(AlbumWithSongsEntity::toAlbum)
 
     override suspend fun addAlbums(albums: List<Album>) {
         appDatabase.withTransaction {

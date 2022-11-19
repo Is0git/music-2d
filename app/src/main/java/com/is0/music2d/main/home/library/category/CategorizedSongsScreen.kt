@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.R
 import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
-import com.is0.music2d.main.home.library.category.utils.data.presentation.SongCategoryMock
-import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
+import com.is0.music2d.main.home.library.category.utils.data.domain.CategorizedSong
+import com.is0.music2d.main.home.library.category.utils.data.domain.SongCategoryMock
+import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
 import com.is0.music2d.main.home.utils.OnViewAllClick
-import com.is0.music2d.music.song.preview.CategorizedSong
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
