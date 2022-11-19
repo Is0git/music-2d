@@ -23,12 +23,16 @@ class CategorizedSongsViewModel @Inject constructor(
     }
 
     private suspend fun watchSongCategories() {
-        watchSongsCategoriesUseCase.watchSongCategories()
+        watchSongsCategoriesUseCase.watchSongCategories(CATEGORY_COUNT)
             .catch { error -> setError(error) }
             .onStart { isLoading.postValue(true) }
             .collect { newSongCategories ->
                 isLoading.postValue(false)
                 songsCategories.setValue(newSongCategories)
             }
+    }
+
+    companion object {
+        const val CATEGORY_COUNT = 5
     }
 }

@@ -7,12 +7,10 @@ data class SongsCategory(
     val id: String,
     val name: String,
     val songs: List<Song>,
-) {
-    companion object {
-        fun fromAlbum(album: Album): SongsCategory = SongsCategory(
-            id = album.id,
-            name = album.name,
-            songs = album.songs,
-        )
-    }
-}
+)
+
+fun Album.toSongCategory() = SongsCategory(
+    id = id,
+    name = name,
+    songs = songs,
+)
