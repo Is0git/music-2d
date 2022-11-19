@@ -1,8 +1,8 @@
 package com.is0.music2d.main.home.details.storage.memory.utils
 
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
-import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
-import com.is0.music2d.music.song.storage.memory.store.InMemorySongsStore
+import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
+import com.is0.music2d.music.song.utils.data.memory.store.InMemorySongsStore
 import com.is0.music2d.utils.di.qualifier.IO
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher

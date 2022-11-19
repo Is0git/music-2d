@@ -26,7 +26,7 @@ import com.is0.music2d.main.home.library.storage_preview.StorageSongSelectionScr
 import com.is0.music2d.main.home.utils.OnSongStorageClick
 import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.main.home.utils.data.SongsContentType
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent

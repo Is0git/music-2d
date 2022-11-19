@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
 import com.is0.music2d.music.song.utils.data.domain.Song

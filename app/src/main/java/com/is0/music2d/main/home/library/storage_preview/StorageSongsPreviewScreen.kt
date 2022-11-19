@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.main.home.library.storage_preview.utils.component.StorageItemComponent
 import com.is0.music2d.main.home.library.storage_preview.utils.data.domain.StorageSongsPreview
 import com.is0.music2d.main.home.utils.OnSongStorageClick
-import com.is0.music2d.music.song.storage.composable.StorageProviders
+import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.utils.composable.error.handleSnackbarError
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter

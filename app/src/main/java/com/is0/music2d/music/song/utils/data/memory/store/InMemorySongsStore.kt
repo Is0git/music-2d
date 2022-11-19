@@ -1,8 +1,8 @@
-package com.is0.music2d.music.song.storage.memory.store
+package com.is0.music2d.music.song.utils.data.memory.store
 
-import com.is0.music2d.music.song.storage.memory.entity.InMemorySong
-import com.is0.music2d.music.song.storage.memory.event.InMemorySongEvent
-import com.is0.music2d.music.song.storage.memory.event.InMemorySongEventBus
+import com.is0.music2d.music.song.utils.data.memory.entity.InMemorySong
+import com.is0.music2d.music.song.utils.data.memory.event.InMemorySongEvent
+import com.is0.music2d.music.song.utils.data.memory.event.InMemorySongEventBus
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf

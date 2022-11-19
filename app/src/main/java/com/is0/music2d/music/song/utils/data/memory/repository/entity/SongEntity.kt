@@ -1,9 +1,9 @@
-package com.is0.music2d.music.song.storage.memory.repository.entity
+package com.is0.music2d.music.song.utils.data.memory.repository.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 

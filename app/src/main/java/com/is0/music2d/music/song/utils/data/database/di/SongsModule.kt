@@ -1,4 +1,4 @@
-package com.is0.music2d.music.song.storage.database.di
+package com.is0.music2d.music.song.utils.data.database.di
 
 import com.is0.music2d.utils.database.AppDatabase
 import dagger.Module

@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase
 import com.is0.music2d.music.album.utils.data.database.dao.AlbumsDao
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumEntity
 import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
-import com.is0.music2d.music.song.storage.database.data.SongsDao
-import com.is0.music2d.music.song.storage.memory.repository.entity.SongEntity
+import com.is0.music2d.music.song.utils.data.database.data.SongsDao
+import com.is0.music2d.music.song.utils.data.memory.repository.entity.SongEntity
 
 @Database(entities = [SongEntity::class, AlbumEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.icon.SongDurationIconComponent
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.NextIconComponent

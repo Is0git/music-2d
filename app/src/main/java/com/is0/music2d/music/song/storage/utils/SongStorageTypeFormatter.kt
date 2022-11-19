@@ -1,7 +1,8 @@
-package com.is0.music2d.music.song.storage
+package com.is0.music2d.music.song.storage.utils
 
 import android.content.Context
 import com.is0.music2d.R
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 import javax.inject.Singleton

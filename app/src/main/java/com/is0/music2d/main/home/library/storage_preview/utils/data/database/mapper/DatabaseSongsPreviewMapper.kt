@@ -3,7 +3,7 @@ package com.is0.music2d.main.home.library.storage_preview.utils.data.database.ma
 import com.is0.music2d.main.home.library.storage_preview.utils.data.database.entity.SongsPreviewEntity
 import com.is0.music2d.main.home.library.storage_preview.utils.data.domain.StorageSongsPreview
 import com.is0.music2d.main.home.library.storage_preview.utils.data.repository.StorageSongsPreviewMapper
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

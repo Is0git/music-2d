@@ -2,7 +2,7 @@ package com.is0.music2d.main.home.library.storage_preview.utils.data.database.st
 
 import com.is0.music2d.main.home.library.storage_preview.utils.data.database.entity.SongsPreviewEntity
 import com.is0.music2d.main.home.library.storage_preview.utils.data.repository.StorageSongPreviewStore
-import com.is0.music2d.music.song.storage.database.data.SongsDao
+import com.is0.music2d.music.song.utils.data.database.data.SongsDao
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

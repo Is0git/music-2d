@@ -22,8 +22,8 @@ import com.is0.music2d.main.home.details.storage.utils.component.OnSongSaveClick
 import com.is0.music2d.main.home.details.storage.utils.component.StorageSongItemComponent
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSongMock
-import com.is0.music2d.music.song.storage.SongStorageType
-import com.is0.music2d.music.song.storage.composable.StorageProviders
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
+import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.music.song.utils.formatter.FormatSongDuration

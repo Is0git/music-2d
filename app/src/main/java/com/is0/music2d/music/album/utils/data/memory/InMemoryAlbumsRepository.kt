@@ -19,11 +19,10 @@ class InMemoryAlbumsRepository @Inject constructor(
     private val inMemoryAlbumsMapper: InMemoryAlbumsMapper,
     @Default private val dispatcher: CoroutineDispatcher,
 ) : AlbumsRepository {
-    override suspend fun watchAlbums(count: Int): Flow<List<Album>> = withContext(dispatcher) {
+    override suspend fun watchAlbums(count: Int): Flow<List<Album>> =
         inMemoryAlbumStore.watchAlbums(count)
             .map { albums -> albums.map(inMemoryAlbumsMapper::toAlbumDomain) }
             .flowOn(dispatcher)
-    }
 
     override suspend fun addAlbums(albums: List<Album>) = withContext(dispatcher) {
         inMemoryAlbumStore.addAlbums(albums.map(inMemoryAlbumsMapper::toMemoryAlbum))

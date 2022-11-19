@@ -8,7 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.CheckmarkIconComponent
 import com.is0.music2d.utils.composable.icon.StorageIconComponent

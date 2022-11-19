@@ -1,10 +1,10 @@
-package com.is0.music2d.music.song.storage.database.data
+package com.is0.music2d.music.song.utils.data.database.data
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.is0.music2d.music.song.storage.memory.repository.entity.SongEntity
+import com.is0.music2d.music.song.utils.data.memory.repository.entity.SongEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,7 +1,7 @@
-package com.is0.music2d.music.song.storage.memory.repository
+package com.is0.music2d.music.song.utils.data.memory.repository
 
-import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
-import com.is0.music2d.music.song.storage.memory.store.InMemorySongsStore
+import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
+import com.is0.music2d.music.song.utils.data.memory.store.InMemorySongsStore
 import com.is0.music2d.music.song.utils.data.MemorySongsRepository
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.utils.di.qualifier.IO

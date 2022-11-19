@@ -2,7 +2,7 @@ package com.is0.music2d.main.home.details.album.data.memory
 
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.music.album.utils.data.memory.entity.InMemoryAlbum
-import com.is0.music2d.music.song.storage.memory.mapper.InMemorySongsMapper
+import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

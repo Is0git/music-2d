@@ -3,7 +3,7 @@ package com.is0.music2d.music.use_case
 import com.is0.music2d.music.album.utils.data.database.DatabaseAlbumsRepository
 import com.is0.music2d.music.album.utils.data.domain.AlbumMock
 import com.is0.music2d.music.album.utils.data.memory.InMemoryAlbumsRepository
-import com.is0.music2d.music.song.storage.memory.repository.InMemorySongsRepository
+import com.is0.music2d.music.song.utils.data.memory.repository.InMemorySongsRepository
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.use_case.CheckDatabaseExistsUseCase
 import kotlinx.coroutines.coroutineScope

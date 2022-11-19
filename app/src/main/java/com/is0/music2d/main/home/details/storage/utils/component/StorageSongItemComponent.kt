@@ -3,7 +3,7 @@ package com.is0.music2d.main.home.details.storage.utils.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 
 typealias OnSongSaveClick = (songId: String, isSaved: Boolean) -> Unit

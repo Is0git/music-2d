@@ -21,7 +21,7 @@ import com.is0.music2d.main.home.details.album.AlbumDetailsScreen
 import com.is0.music2d.main.home.details.storage.StorageDetailsScreen
 import com.is0.music2d.main.home.details.storage.filesystem.FileSystemStorageDetailsViewModel
 import com.is0.music2d.main.home.details.storage.memory.MemoryStorageDetailsViewModel
-import com.is0.music2d.music.song.storage.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.formatter.SongDurationFormatter
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.provider.AppProviders
