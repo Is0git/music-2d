@@ -19,8 +19,8 @@ fun defaultAppTypography(): AppTypography = AppTypography(
     headlineLarge = TextStyle(
         fontFamily = AppFonts.interRegular,
         fontSize = 40.sp,
-        fontWeight = FontWeight.ExtraBold,
-        lineHeight = 56.sp,
+        fontWeight = FontWeight.Black,
+        lineHeight = 24.sp,
     ),
     headlineMedium = TextStyle(
         fontFamily = AppFonts.interRegular,

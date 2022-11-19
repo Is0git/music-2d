@@ -7,4 +7,6 @@ interface AlbumsRepository {
     suspend fun watchAlbums(count: Int): Flow<List<Album>>
 
     suspend fun addAlbums(albums: List<Album>)
+
+    suspend fun exists(): Boolean
 }

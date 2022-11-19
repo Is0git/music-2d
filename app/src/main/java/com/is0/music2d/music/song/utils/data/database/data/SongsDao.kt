@@ -12,9 +12,6 @@ interface SongsDao {
     @Query("SELECT * FROM SongEntity")
     fun watchSongs(): Flow<List<SongEntity>>
 
-    @Query("SELECT * FROM SongEntity")
-    suspend fun getSongs(): List<SongEntity>
-
     @Query("SELECT * FROM SongEntity WHERE songId IN (:songIds)")
     suspend fun getSongsByIds(songIds: List<String>): List<SongEntity>
 

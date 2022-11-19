@@ -10,7 +10,7 @@ import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.
 import com.is0.music2d.music.song.utils.data.database.data.SongsDao
 import com.is0.music2d.music.song.utils.data.database.data.entity.SongEntity
 
-@Database(entities = [SongEntity::class, AlbumEntity::class, FilesystemSongEntity::class], version = 1)
+@Database(entities = [SongEntity::class, AlbumEntity::class, FilesystemSongEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun songsDao(): SongsDao
 

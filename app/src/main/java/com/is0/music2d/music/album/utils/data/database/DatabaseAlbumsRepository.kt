@@ -44,4 +44,6 @@ class DatabaseAlbumsRepository @Inject constructor(
             }
         }
     }
+
+    override suspend fun exists(): Boolean = appDatabase.albumDao().exists()
 }
