@@ -12,4 +12,4 @@ data class FilesystemSongEntity(
 
 fun FilesystemSongEntity.toDomain() = SavedSong(songId)
 
-fun SavedSong.toEntity() = FilesystemSongEntity(songId)
+fun SavedSong.toFilesystemSongEntity() = FilesystemSongEntity(songId)

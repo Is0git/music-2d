@@ -3,7 +3,7 @@ package com.is0.music2d.music.song.storage.filesystem.utils.data
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.dao.FilesystemSongsDao
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.FilesystemSongEntity
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.toDomain
-import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.toEntity
+import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.toFilesystemSongEntity
 import com.is0.music2d.music.song.storage.utils.data.SavedSongsRepository
 import com.is0.music2d.music.song.storage.utils.data.domain.SavedSong
 import com.is0.music2d.utils.di.qualifier.IO
@@ -27,7 +27,7 @@ class FilesystemSongsRepository @Inject constructor(
 
     override suspend fun addSavedSong(savedSong: SavedSong) {
         withContext(dispatcher) {
-            filesystemSongsDao.addSong(savedSong.toEntity())
+            filesystemSongsDao.addSong(savedSong.toFilesystemSongEntity())
         }
     }
 }
