@@ -30,4 +30,8 @@ class FilesystemSongsRepository @Inject constructor(
             filesystemSongsDao.addSong(savedSong.toFilesystemSongEntity())
         }
     }
+
+    override suspend fun toggleSavedSong(songId: String) {
+
+    }
 }

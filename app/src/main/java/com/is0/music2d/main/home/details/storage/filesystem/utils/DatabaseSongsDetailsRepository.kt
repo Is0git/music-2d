@@ -12,9 +12,8 @@ class DatabaseSongsDetailsRepository @Inject constructor(
     private val songsDao: SongsDao,
 ) : StorageSongsDetailsRepository {
     override suspend fun getStorageDetailsSongs(): List<StorageDetailsSong> =
-        songsDao.getSongs().filter { it.isSaved }.map { songEntity ->
+        songsDao.getSongs().map { songEntity ->
             StorageDetailsSong(
-                id = songEntity.songId,
                 song = songEntity.toSong(),
                 isSaved = songEntity.isSaved,
             )

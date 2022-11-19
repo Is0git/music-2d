@@ -10,5 +10,4 @@ data class InMemorySong(
     val artist: Artist,
     val durationMillis: Long,
     val imageUrl: String,
-    val isSaved: Boolean,
 )

@@ -7,4 +7,6 @@ interface SavedSongsRepository {
     fun watchSavedSongs(): Flow<List<SavedSong>>
 
     suspend fun addSavedSong(savedSong: SavedSong)
+
+    suspend fun toggleSavedSong(songId: String)
 }

@@ -6,7 +6,7 @@ import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 
-typealias OnSongSaveClick = (songId: String, isSaved: Boolean) -> Unit
+typealias OnSongSaveClick = (songId: String) -> Unit
 
 @Composable
 fun StorageSongItemComponent(
@@ -28,7 +28,7 @@ fun StorageSongItemComponent(
             StorageSaveButtonComponent(
                 isSaved = detailsSong.isSaved,
                 storageType = storageType,
-                onSaveClick = { isSaved -> onSongSaveClick(detailsSong.song.id, isSaved) },
+                onSaveClick = { onSongSaveClick(detailsSong.song.id) },
             )
         }
     )

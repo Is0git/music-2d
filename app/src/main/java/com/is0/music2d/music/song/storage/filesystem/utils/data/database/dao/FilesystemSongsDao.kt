@@ -4,16 +4,18 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.FilesystemSongEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilesystemSongsDao {
+    @Query("SELECT * FROM FilesystemSongEntity")
     fun watchSongs(): Flow<List<FilesystemSongEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addSong(filesystemSong: FilesystemSongEntity)
+    suspend fun addSong(song: FilesystemSongEntity)
 
     @Delete
-    suspend fun removeSong(filesystemSong: FilesystemSongEntity)
+    suspend fun deleteSong(song: FilesystemSongEntity)
 }

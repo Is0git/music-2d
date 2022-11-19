@@ -14,7 +14,6 @@ class InMemorySongsMapper @Inject constructor() : SongsMapper<InMemorySong> {
         artist = song.artist,
         durationMillis = song.durationMillis,
         imageUrl = song.imageUrl,
-        songStorageType = SongStorageType.MEMORY,
     )
 
     override fun toSongEntity(song: Song): InMemorySong = InMemorySong(
@@ -24,6 +23,5 @@ class InMemorySongsMapper @Inject constructor() : SongsMapper<InMemorySong> {
         artist = song.artist,
         durationMillis = song.durationMillis,
         imageUrl = song.imageUrl,
-        isSaved = true,
     )
 }

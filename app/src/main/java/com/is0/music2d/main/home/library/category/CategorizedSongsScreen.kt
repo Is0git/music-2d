@@ -26,7 +26,7 @@ import com.is0.music2d.main.home.library.category.utils.component.CategorySongIt
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongCategoryMock
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
 import com.is0.music2d.main.home.utils.OnViewAllClick
-import com.is0.music2d.music.song.utils.data.domain.Song
+import com.is0.music2d.music.song.preview.CategorizedSong
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
@@ -169,7 +169,7 @@ private fun ViewAllButtonComponent(
 @Composable
 private fun CategorySongsListComponent(
     modifier: Modifier = Modifier,
-    songs: List<Song>,
+    songs: List<CategorizedSong>,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
 ) {
@@ -184,7 +184,7 @@ private fun CategorySongsListComponent(
                 HorizontalSpacerComponent(width = AppTheme.dimensions.bodyMargin)
             }
             CategorySongItemComponent(
-                song = song,
+                categorizedSong = song,
                 onSongDurationFormat = onSongDurationFormat,
                 onSongSizeFormat = onSongSizeFormat,
             )

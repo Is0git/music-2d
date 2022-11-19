@@ -14,7 +14,5 @@ interface MemorySongsRepository {
 
     suspend fun removeSong(songId: String)
 
-    suspend fun toggleSavedSong(song: Song)
-
     suspend fun getSongsByIds(songIds: List<String>): List<Song>
 }

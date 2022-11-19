@@ -22,12 +22,9 @@ class InMemorySongsStore @Inject constructor(
 ) {
     private val inMemorySongs = MutableStateFlow<PersistentList<InMemorySong>>(persistentListOf())
 
-    fun getCurrentSongs() = inMemorySongs.value.filter { it.isSaved }
+    fun getCurrentSongs() = inMemorySongs.value
 
-    fun watchSongs() = inMemorySongs.map { inMemorySong ->
-        inMemorySong.filter { it.isSaved }
-            .sortedBy { it.id }
-    }
+    fun watchSongs() = inMemorySongs
 
     suspend fun addSongs(songs: List<InMemorySong>) {
         withContext(dispatcher) {
@@ -51,11 +48,6 @@ class InMemorySongsStore @Inject constructor(
         }
     }
 
-    suspend fun getSongById(songId: String): InMemorySong =
-        withContext(dispatcher) {
-            getCurrentSongs().first { currentSongId -> currentSongId.id == songId }
-        }
-
     suspend fun removeSong(songId: String) {
         withContext(dispatcher) {
             launch {
@@ -68,24 +60,6 @@ class InMemorySongsStore @Inject constructor(
             launch {
                 inMemoryEventSender.sendEvent(InMemorySongEvent.SongDeleted(songId))
             }
-        }
-    }
-
-    suspend fun toggleSavedSong(song: InMemorySong) {
-        withContext(dispatcher) {
-            toggleSong(song = song)
-        }
-    }
-
-    private suspend fun toggleSong(song: InMemorySong) {
-        val songs = inMemorySongs.value
-        val songIndex = songs.indexOfFirst { memorySong -> memorySong.id == song.id }
-
-        if (songIndex != -1) {
-            val newSong = song.copy(isSaved = !song.isSaved)
-            val newSongs = songs.set(songIndex, newSong.copy(isSaved = newSong.isSaved))
-            inMemoryEventSender.sendEvent(InMemorySongEvent.UpdateSong(newSong))
-            inMemorySongs.emit(newSongs)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.is0.music2d.main.home.library.category.use_case
 
+import com.is0.music2d.main.home.library.category.utils.data.mapper.SongsCategoryMapper
 import com.is0.music2d.main.home.library.category.utils.data.presentation.SongsCategory
 import com.is0.music2d.main.home.library.category.utils.data.presentation.toSongCategory
 import com.is0.music2d.music.album.use_case.WatchUserAlbumsUseCase
@@ -19,6 +20,7 @@ class WatchSongsCategoriesUseCase @Inject constructor(
     private val memorySongsRepository: MemorySongsRepository,
     private val filesystemSongsRepository: FilesystemSongsRepository,
     private val savedSongsMerger: SavedSongsMerger,
+    private val songsCategoryMapper: SongsCategoryMapper,
 ) {
     suspend fun watchSongCategories(count: Int): Flow<List<SongsCategory>> =
         combine(
@@ -28,20 +30,20 @@ class WatchSongsCategoriesUseCase @Inject constructor(
         ) { userAlbums, memorySavedSongs, filesystemSavedSongs ->
             userAlbums.map { album ->
                 val allSavedSongs = memorySavedSongs + filesystemSavedSongs
-                mapUserAlbumWithSavedSongs(allSavedSongs, album).toSongCategory()
+                mapAlbumToCategory(allSavedSongs, album)
             }
         }
 
-    private fun mapUserAlbumWithSavedSongs(
+    private fun mapAlbumToCategory(
         allSavedSongs: List<SavedSong>,
         currentAlbum: Album
-    ): Album {
+    ): SongsCategory {
         if (allSavedSongs.isEmpty()) {
-            return currentAlbum
+            return currentAlbum.toSongCategory()
         }
 
-        val newSongs = savedSongsMerger.mergeSavedSongs(currentAlbum.songs, allSavedSongs)
+        val songsMergeResult = savedSongsMerger.mergeSavedSongs(currentAlbum.songs, allSavedSongs)
 
-        return currentAlbum.copy(songs = newSongs)
+        return songsCategoryMapper.toSongsCategory(songsMergeResult, currentAlbum)
     }
 }

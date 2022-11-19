@@ -1,9 +1,9 @@
 package com.is0.music2d.music.song.utils.data.memory.repository
 
-import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
-import com.is0.music2d.music.song.utils.data.memory.store.InMemorySongsStore
 import com.is0.music2d.music.song.utils.data.MemorySongsRepository
 import com.is0.music2d.music.song.utils.data.domain.Song
+import com.is0.music2d.music.song.utils.data.memory.mapper.InMemorySongsMapper
+import com.is0.music2d.music.song.utils.data.memory.store.InMemorySongsStore
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -42,12 +42,6 @@ class InMemorySongsRepository @Inject constructor(
     override suspend fun removeSong(songId: String) {
         withContext(dispatcher) {
             inMemorySongsStore.removeSong(songId)
-        }
-    }
-
-    override suspend fun toggleSavedSong(song: Song) {
-        withContext(dispatcher) {
-            inMemorySongsStore.toggleSavedSong(inMemoryUserSongsMapper.toSongEntity(song))
         }
     }
 

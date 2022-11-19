@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ToggleFilesystemSongsUseCase @Inject constructor(
     private val databaseSongsDetailsRepository: DatabaseSongsDetailsRepository,
 ) : ToggleSavedSongUseCase {
-    override suspend fun toggleSavedSong(
-        song: Song,
-    ) = databaseSongsDetailsRepository.toggleSavedSong(songId = song.id)
+    override suspend fun toggleSavedSong(songId: String) {
+        databaseSongsDetailsRepository.toggleSavedSong(songId = songId)
+    }
 }

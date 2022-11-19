@@ -29,7 +29,6 @@ fun SongEntity.toSong(): Song = Song(
     artist = artist.toArtist(),
     durationMillis = durationMillis,
     imageUrl = imageUrl,
-    songStorageType = SongStorageType.FILESYSTEM,
 )
 
 fun Song.toEntity(albumId: String): SongEntity = SongEntity(

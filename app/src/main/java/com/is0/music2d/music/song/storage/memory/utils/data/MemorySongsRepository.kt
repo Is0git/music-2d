@@ -32,4 +32,8 @@ class MemorySongsRepository @Inject constructor(
             .distinctBy { song -> song.songId }
             .also { newSongs -> memorySongs.emit(newSongs.toPersistentList()) }
     }
+
+    override suspend fun toggleSavedSong(songId: String) {
+        
+    }
 }

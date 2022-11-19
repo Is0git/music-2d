@@ -19,7 +19,7 @@ open class WatchSavedSongsUseCaseImpl @Inject constructor(
             inMemorySongsRepository.getSongsByIds(savedSongs.map(SavedSong::songId))
         }.map { songs ->
             songs.map { song ->
-                song.copy(songStorageType = songStorageType)
+                song
             }
         }
 }

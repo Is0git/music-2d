@@ -75,7 +75,7 @@ fun StorageDetailsContentComponent(
     formatFileSize: FormatFileSize,
     isLoading: Boolean = false,
     storageType: SongStorageType = SongStorageType.NONE,
-    onSongSaveClick: OnSongSaveClick = { _, _ -> },
+    onSongSaveClick: OnSongSaveClick = {},
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         if (songs != null) {

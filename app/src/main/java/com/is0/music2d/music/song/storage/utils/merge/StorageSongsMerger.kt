@@ -1,30 +1,40 @@
 package com.is0.music2d.music.song.storage.utils.merge
 
 import com.is0.music2d.music.song.storage.utils.data.domain.SavedSong
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.data.domain.Song
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
 class SavedSongsMerger @Inject constructor() {
-    fun mergeSavedSongs(songs: List<Song>, savedSongs: List<SavedSong>): List<Song> {
+    fun mergeSavedSongs(songs: List<Song>, savedSongs: List<SavedSong>): SongsMergeResult {
         if (savedSongs.isEmpty()) {
-            return songs
+            return SongsMergeResult.NotMerged
         }
 
-        return songs.map { song -> updateSongsWithStorageType(savedSongs, song) }
+        val mergedSongs = songs.map { song -> getSongsWithStorageType(savedSongs, song) }
+        return SongsMergeResult.Merged(mergedSongs)
     }
 
-    private fun updateSongsWithStorageType(
+    private fun getSongsWithStorageType(
         savedSongs: List<SavedSong>,
         song: Song
-    ): Song {
+    ): Pair<Song, SongStorageType> {
         val savedSongIndex = savedSongs.indexOfFirst { savedSong -> song.id == savedSong.songId }
 
         if (savedSongIndex == -1) {
-            return song
+            return song to SongStorageType.NONE
         }
 
-        return song.copy(songStorageType = savedSongs[savedSongIndex].songStorageType)
+        return song to savedSongs[savedSongIndex].songStorageType
     }
+}
+
+sealed class SongsMergeResult {
+    object NotMerged : SongsMergeResult()
+
+    data class Merged(
+        val songsWithStorageType: List<Pair<Song, SongStorageType>>,
+    ) : SongsMergeResult()
 }
