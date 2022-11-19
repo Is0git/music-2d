@@ -134,5 +134,6 @@ dependencies {
     testImplementation libs.arch.core
     testImplementation libs.mockito.inline
     testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.turbine
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
 }
