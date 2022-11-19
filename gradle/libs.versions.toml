@@ -105,4 +105,5 @@ hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", ve
 room = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-coroutines = { module = "androidx.room:room-coroutines", version.ref = "room" }
-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine"}
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }

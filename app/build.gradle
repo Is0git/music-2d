@@ -110,6 +110,8 @@ dependencies {
     implementation libs.accompanist.pager
     implementation libs.kotlin.immutable.collections
     implementation libs.hilt.android
+    implementation 'androidx.test.ext:junit-ktx:1.1.4'
+
     kapt libs.hilt.compiler
     implementation libs.timber
     implementation libs.runtime.livedata
@@ -136,4 +138,9 @@ dependencies {
     testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.turbine
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+
+    androidTestImplementation libs.turbine
+    androidTestImplementation libs.androidx.test.runner
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.junit
 }
