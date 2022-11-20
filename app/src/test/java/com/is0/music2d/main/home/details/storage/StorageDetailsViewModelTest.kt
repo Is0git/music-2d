@@ -61,7 +61,7 @@ class StorageDetailsViewModelTest {
 
             storageDetailsViewModel.watchStorageSongs()
 
-            assertThat(storageDetailsViewModel.storageDetails.value, `is`(songs))
+            assertThat(storageDetailsViewModel.storageDetails.value?.songs, `is`(songs))
         }
     }
 }
