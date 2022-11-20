@@ -19,14 +19,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
+import com.is0.music2d.music.song.storage.utils.composable.SavedSongsMenuComponent
+import com.is0.music2d.music.song.storage.utils.composable.rememberExpandedState
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
+import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
+import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
+import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.utils.component.ArtistAvatarComponent
 import com.is0.music2d.music.utils.data.domain.Artist
-import com.is0.music2d.music.utils.data.domain.ArtistMock
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.utils.composable.icon.StorageIconComponent
@@ -34,7 +38,6 @@ import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
 import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
-import com.is0.music2d.utils.data.mock.ImageMock
 
 @Composable
 fun CategorySongItemComponent(
@@ -42,6 +45,8 @@ fun CategorySongItemComponent(
     storedSong: StoredSong,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
+    availableSongStorageTypes: List<SongStorageType> = listOf(),
 ) {
     val song = storedSong.song
 
@@ -52,14 +57,17 @@ fun CategorySongItemComponent(
         onSongDurationFormat(song.durationMillis)
     }
 
+    val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
+
     CategorySongItemContentComponent(
         modifier = modifier,
-        songDurationText = formattedSongDuration,
         songSizeText = formattedSongSize,
-        songImageUrl = song.imageUrl,
-        songName = song.title,
-        artist = song.artist,
+        songDurationText = formattedSongDuration,
         songStorageTypes = storedSong.songStorageTypes,
+        formatSongStorageType = songStorageTypeFormatter::formatStorageType,
+        onSongStorageSelected = onSongStorageSelected,
+        availableSongStorageTypes = availableSongStorageTypes,
+        storedSong = storedSong,
     )
 }
 
@@ -67,10 +75,11 @@ fun CategorySongItemComponent(
 private fun CategorySongItemContentComponent(
     modifier: Modifier = Modifier,
     songSizeText: String,
-    songImageUrl: String,
     songDurationText: String,
-    songName: String,
-    artist: Artist,
+    storedSong: StoredSong,
+    availableSongStorageTypes: List<SongStorageType> = listOf(),
+    formatSongStorageType: (storageType: SongStorageType) -> String,
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     songStorageTypes: List<SongStorageType> = emptyList(),
 ) {
     Column(modifier = modifier) {
@@ -79,14 +88,25 @@ private fun CategorySongItemContentComponent(
                 .heightIn(100.dp, 150.dp)
                 .aspectRatio(4 / 3f),
             songSizeText = songSizeText,
-            songImageUrl = songImageUrl,
+            songImageUrl = storedSong.song.imageUrl,
             songDurationText = songDurationText,
             songStorageTypes = songStorageTypes,
+            categoryMenu = {
+                Box {
+                    SavedSongsMenuComponent(
+                        formatSongStorageType = formatSongStorageType,
+                        savedSongStorageTypes = storedSong.songStorageTypes,
+                        availableSongStorageTypes = availableSongStorageTypes,
+                        onSongStorageSelected = onSongStorageSelected,
+                        songId = storedSong.song.id,
+                    )
+                }
+            },
         )
         VerticalSpacerComponent(height = 8.dp)
         SongInfoComponent(
-            songName = songName,
-            artist = artist,
+            songName = storedSong.song.title,
+            artist = storedSong.song.artist,
         )
     }
 }
@@ -98,6 +118,7 @@ private fun CategorySongCoverComponent(
     songImageUrl: String = "",
     songDurationText: String = "",
     songStorageTypes: List<SongStorageType> = emptyList(),
+    categoryMenu: @Composable () -> Unit = {},
 ) {
     SongCoverComponent(
         modifier = modifier,
@@ -111,19 +132,18 @@ private fun CategorySongCoverComponent(
                 songDurationText = songDurationText,
             )
         },
+        menu = categoryMenu,
         icon = {
-            if (songStorageTypes.isNotEmpty()) {
-                Row(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(24.dp))
-                        .background(AppTheme.colors.surfaceColor.copy(alpha = 0.40f))
-                        .padding(6.dp),
-                    horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
-                ) {
-                    songStorageTypes.forEach { type ->
-                        StorageIconComponent(storageType = type)
-                    }
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(AppTheme.colors.surfaceColor.copy(alpha = 0.40f))
+                    .padding(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
+            ) {
+                songStorageTypes.forEach { type ->
+                    StorageIconComponent(storageType = type)
                 }
             }
         }
@@ -241,9 +261,11 @@ private fun CategorySongItemContentComponentPreview() {
         CategorySongItemContentComponent(
             songSizeText = "24.3 MB",
             songDurationText = "3 min 2 s",
-            songImageUrl = ImageMock.randomImage,
-            artist = ArtistMock.randomArtist,
-            songName = "Pieces"
+            storedSong = StoredSong(SongMock.generateRandomSong(), emptyList()),
+            onSongStorageSelected = { _, _ -> },
+            availableSongStorageTypes = allSongStorageTypes(),
+            formatSongStorageType = { "" },
+            songStorageTypes = emptyList(),
         )
     }
 }

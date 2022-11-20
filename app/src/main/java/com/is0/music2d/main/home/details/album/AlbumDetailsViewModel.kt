@@ -40,23 +40,4 @@ class AlbumDetailsViewModel @Inject constructor(
                 this.albumDetails.setValue(albumDetails)
             }
     }
-
-    fun toggleSavedSong(
-        songId: String,
-        songStorageType: SongStorageType,
-    ) {
-        viewModelScope.launch {
-            runCatching {
-                isLoading.postValue(true)
-
-                toggleSavedSongUseCase.toggleSavedSong(
-                    songId = songId,
-                    songStorageType = songStorageType,
-                )
-            }
-                .onFailure { error -> setError(error) }
-
-            isLoading.postValue(false)
-        }
-    }
 }

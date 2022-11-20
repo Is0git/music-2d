@@ -23,10 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.R
 import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
-import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.main.home.library.category.utils.data.domain.SongCategoryMock
 import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
 import com.is0.music2d.main.home.utils.OnViewAllClick
+import com.is0.music2d.music.song.storage.StoredSongsToggleViewModel
+import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
+import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
@@ -43,6 +47,7 @@ import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
 fun CategorizedSongsScreen(
     modifier: Modifier = Modifier,
     categorizedSongsViewModel: CategorizedSongsViewModel = hiltViewModel(),
+    storedSongsToggleViewModel: StoredSongsToggleViewModel = hiltViewModel(),
     onViewAllClick: OnViewAllClick = {},
 ) {
     val songDurationFormatter = LocalDurationFormatter.current
@@ -50,17 +55,22 @@ fun CategorizedSongsScreen(
 
     val songsCategories by categorizedSongsViewModel.songsCategories.observeAsState(emptyList())
     val isLoading by categorizedSongsViewModel.isLoading.observeAsState(false)
+    val songsToggleLoading by storedSongsToggleViewModel.isLoading.observeAsState(false)
 
     categorizedSongsViewModel.error.handleSnackbarError()
 
-    CategorizedSongsContentComponent(
-        modifier = modifier,
-        songsCategories = songsCategories,
-        onSongSizeFormat = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
-        onSongDurationFormat = { songDurationFormatter.formatDuration(it, true)},
-        onViewAllClick = onViewAllClick,
-        isLoading = isLoading,
-    )
+    StorageProviders {
+        CategorizedSongsContentComponent(
+            modifier = modifier,
+            songsCategories = songsCategories,
+            onSongSizeFormat = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
+            onSongDurationFormat = { songDurationFormatter.formatDuration(it, true) },
+            onViewAllClick = onViewAllClick,
+            isLoading = isLoading || songsToggleLoading,
+            onSongStorageSelected = storedSongsToggleViewModel::toggleSavedSong,
+            availableSongStorageTypes = storedSongsToggleViewModel.availableSongStorageTypes,
+        )
+    }
 }
 
 @Composable
@@ -70,7 +80,9 @@ private fun CategorizedSongsContentComponent(
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
     onViewAllClick: OnViewAllClick = {},
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     isLoading: Boolean,
+    availableSongStorageTypes: List<SongStorageType> = listOf(),
 ) {
     Box(modifier = modifier) {
         LazyColumn(
@@ -83,6 +95,8 @@ private fun CategorizedSongsContentComponent(
                         onSongDurationFormat = onSongDurationFormat,
                         onSongSizeFormat = onSongSizeFormat,
                         onViewAllClick = onViewAllClick,
+                        onSongStorageSelected = onSongStorageSelected,
+                        availableSongStorageTypes = availableSongStorageTypes,
                     )
                 }
             }
@@ -101,7 +115,9 @@ private fun SongCategoryItemComponent(
     songsCategory: SongsCategory,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     onViewAllClick: OnViewAllClick = {},
+    availableSongStorageTypes: List<SongStorageType> = listOf(),
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.categoryTitleGap)) {
         CategoryRowComponent(
@@ -112,6 +128,8 @@ private fun SongCategoryItemComponent(
             songs = songsCategory.songs,
             onSongSizeFormat = onSongSizeFormat,
             onSongDurationFormat = onSongDurationFormat,
+            onSongStorageSelected = onSongStorageSelected,
+            availableSongStorageTypes = availableSongStorageTypes,
         )
         VerticalSpacerComponent(height = 16.dp)
     }
@@ -173,6 +191,8 @@ private fun CategorySongsListComponent(
     songs: List<StoredSong>,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
+    availableSongStorageTypes: List<SongStorageType> = listOf(),
 ) {
     Row(
         modifier = modifier
@@ -188,6 +208,8 @@ private fun CategorySongsListComponent(
                 storedSong = song,
                 onSongDurationFormat = onSongDurationFormat,
                 onSongSizeFormat = onSongSizeFormat,
+                onSongStorageSelected = onSongStorageSelected,
+                availableSongStorageTypes = availableSongStorageTypes,
             )
         }
     }
@@ -202,6 +224,9 @@ private fun CategorizedSongsContentComponentPreview() {
             onSongDurationFormat = { "2m 2s" },
             onSongSizeFormat = { "5mb" },
             isLoading = false,
+            availableSongStorageTypes = allSongStorageTypes(),
+            onSongStorageSelected = { _, _ -> },
+            onViewAllClick = {},
         )
     }
 }
