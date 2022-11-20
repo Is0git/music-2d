@@ -110,8 +110,6 @@ dependencies {
     implementation libs.accompanist.pager
     implementation libs.kotlin.immutable.collections
     implementation libs.hilt.android
-    implementation 'androidx.test.ext:junit-ktx:1.1.4'
-
     kapt libs.hilt.compiler
     implementation libs.timber
     implementation libs.runtime.livedata
@@ -123,6 +121,7 @@ dependencies {
     implementation libs.kotlinx.collections.immutable
     implementation libs.compose.navigation
     implementation libs.accompanist.navigation.animation
+    implementation libs.accompanist.systemuicontroller
     implementation libs.hilt.navigation.compose
     implementation libs.room
     kapt libs.room.compiler
