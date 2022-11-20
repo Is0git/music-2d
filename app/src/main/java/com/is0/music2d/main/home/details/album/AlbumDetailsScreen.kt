@@ -58,7 +58,7 @@ fun AlbumDetailsScreen(
                 modifier = Modifier.padding(padding),
                 albumDetails = albumDetails,
                 formatSongSize = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
-                formatSongDuration = songDurationFormatter::formatDuration,
+                formatDuration = songDurationFormatter::formatDuration,
                 formatSongStorage = songStorageTypeFormatter::formatStorageType,
                 availableSongStorageTypes = viewModel.availableSongStorageTypes,
                 onSongStorageSelected = viewModel::toggleSavedSong,
@@ -71,7 +71,7 @@ fun AlbumDetailsScreen(
 private fun AlbumDetailsContentComponent(
     modifier: Modifier = Modifier,
     albumDetails: AlbumDetails,
-    formatSongDuration: (duration: Long) -> String,
+    formatDuration: (duration: Long) -> String,
     formatSongSize: (size: SongSize) -> String,
     formatSongStorage: (storageType: SongStorageType) -> String,
     availableSongStorageTypes: List<SongStorageType> = emptyList(),
@@ -84,7 +84,7 @@ private fun AlbumDetailsContentComponent(
             HorizontalSongItemComponent(
                 modifier = Modifier.fillMaxWidth(),
                 song = storedSong.song,
-                songDurationText = formatSongDuration(storedSong.song.durationMillis),
+                songDurationText = formatDuration(storedSong.song.durationMillis),
                 songSizeText = formatSongSize(storedSong.song.songSize),
                 songImageUrl = storedSong.song.imageUrl,
                 action = {
@@ -100,6 +100,8 @@ private fun AlbumDetailsContentComponent(
         },
         headerTitle = albumDetails.name,
         images = albumDetails.albumPreviewImages,
+        durationText = formatDuration(albumDetails.totalDuration),
+        songCount = albumDetails.albumSongsCount,
     )
 }
 
@@ -156,7 +158,7 @@ private fun AlbumDetailsContentComponentPreview() {
             onSongStorageSelected = { _, _ -> },
             formatSongSize = { "25.4 MB" },
             formatSongStorage = { "Memory" },
-            formatSongDuration = { "24m 2s" },
+            formatDuration = { "24m 2s" },
         )
     }
 }

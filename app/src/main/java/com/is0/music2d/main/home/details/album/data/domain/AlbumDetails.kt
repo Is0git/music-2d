@@ -11,6 +11,7 @@ data class AlbumDetails(
     val storedSongs: List<StoredSong>,
     val albumPreviewImages: List<String> = emptyList(),
     val totalDuration: Long = 0,
+    val albumSongsCount: Int = 0,
 ) {
     companion object {
         fun empty() = AlbumDetails(
@@ -34,5 +35,6 @@ fun StoredSongsAlbum.toDetails(): AlbumDetails = AlbumDetails(
     name = album.name,
     storedSongs = storedSongs,
     totalDuration = album.songs.sumOf { song -> song.durationMillis },
-    albumPreviewImages = album.songs.take(DETAILS_HEADER_IMAGES_COUNT).map { song -> song.imageUrl }
+    albumPreviewImages = album.songs.take(DETAILS_HEADER_IMAGES_COUNT).map { song -> song.imageUrl },
+    albumSongsCount = album.songs.size,
 )
