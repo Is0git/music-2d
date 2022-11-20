@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.LibraryMusic
+import androidx.compose.material.icons.outlined.Storage
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
@@ -174,6 +178,16 @@ private fun SongContentTypeTabRowComponent(
             Tab(
                 selectedContentColor = AppTheme.colors.secondaryColor,
                 unselectedContentColor = AppTheme.colors.onSurfaceColor,
+                icon = {
+                    Icon(
+                        imageVector =
+                        when (songContentType) {
+                            SongsContentType.ALBUMS -> Icons.Outlined.LibraryMusic
+                            SongsContentType.STORAGE -> Icons.Outlined.Storage
+                        },
+                        contentDescription = "",
+                    )
+                },
                 text = {
                     TitleSmallTextComponent(
                         modifier = Modifier.scale(scaleAnimation),
