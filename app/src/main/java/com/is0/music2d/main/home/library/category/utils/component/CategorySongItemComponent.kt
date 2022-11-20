@@ -133,16 +133,18 @@ private fun CategorySongCoverComponent(
         },
         menu = categoryMenu,
         icon = {
-            Row(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(AppTheme.colors.surfaceColor.copy(alpha = 0.40f))
-                    .padding(6.dp),
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
-            ) {
-                songStorageTypes.forEach { type ->
-                    StorageIconComponent(storageType = type)
+            if (songStorageTypes.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(AppTheme.colors.surfaceColor.copy(alpha = 0.40f))
+                        .padding(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
+                ) {
+                    songStorageTypes.forEach { type ->
+                        StorageIconComponent(storageType = type)
+                    }
                 }
             }
         }
