@@ -1,5 +1,6 @@
 package com.is0.music2d.main.home.details.utils.component
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,20 +12,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.image.avatar.ImageComponent
-import com.is0.music2d.utils.composable.text.HeadlineLargeTextComponent
 import com.is0.music2d.utils.data.mock.ImageMock
 
 @Composable
@@ -37,7 +34,7 @@ fun SongsDetailsHeaderComponent(
 ) {
     val imagesChunked: List<List<String>> = images.chunked(columnCount)
 
-    Box(Modifier.aspectRatio(16f / 12)) {
+    Box(Modifier.aspectRatio(4 / 3f)) {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -65,26 +62,10 @@ fun SongsDetailsHeaderComponent(
             }
         }
         HeaderOverlayComponent()
-        AlbumTitleComponent(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .scale(4f),
+        AnimatedDetailsTitleComponent(
             title = title,
         )
     }
-}
-
-@Composable
-private fun AlbumTitleComponent(
-    modifier: Modifier = Modifier,
-    title: String,
-) {
-    HeadlineLargeTextComponent(
-        modifier = modifier.padding(AppTheme.dimensions.bodyMargin),
-        text = title.uppercase(),
-        color = AppTheme.colors.onSurfaceColor.copy(0.1f),
-        textAlign = TextAlign.Center,
-    )
 }
 
 @Composable
@@ -135,6 +116,7 @@ private fun HeaderOverlayTintComponent(
     )
 }
 
+@ExperimentalAnimationApi
 @Composable
 @Preview
 fun AlbumHeaderComponentPreview() {
