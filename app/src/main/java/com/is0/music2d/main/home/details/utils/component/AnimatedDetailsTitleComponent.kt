@@ -78,10 +78,12 @@ private fun BoxScope.PrimaryAnimatedTitleComponent(title: String) {
 
 @Composable
 private fun BoxScope.SecondaryAnimatedTitleComponent(title: String) {
-    val verticalBiases: List<Float> = (VerticalBiasInRange step (200 / SecondaryAnimatedTitleCount))
-        .map { verticalBias -> verticalBias / VerticalBiasInRange.last.toFloat() }
+    val verticalBiases: List<Float> = remember {
+        (VerticalBiasInRange step (200 / SecondaryAnimatedTitleCount))
+            .map { verticalBias -> verticalBias / VerticalBiasInRange.last.toFloat() }
+    }
 
-    val translationsX = remember(verticalBiases) {
+    val translationsX = remember {
         verticalBiases.map { bias ->
             lerp(
                 start = SecondaryTitleTranslationXRange.start,
@@ -100,8 +102,13 @@ private fun BoxScope.SecondaryAnimatedTitleComponent(title: String) {
             easing = EaseInOutBack,
         )
 
+        val scale = remember { (50..120).random() / 100f }
+
         SongsDetailsTitleComponent(
-            alignment = BiasAlignment(0f, verticalBiases[repeatIndex]),
+            modifier = Modifier.scale(scale),
+            alignment = BiasAlignment(
+                0f, verticalBiases[repeatIndex]
+            ),
             title = title,
             translationX = translationsX[repeatIndex] + translationXInfiniteAnimation,
         )
@@ -124,7 +131,7 @@ private fun animateInfiniteTranslationFloat(
         targetValue = if (index % 2 == 0) targetValue else -targetValue,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationRange.getRandomDuration(),
+                durationRange.getRandomValue(),
                 easing = easing,
             ),
             repeatMode = RepeatMode.Reverse,
@@ -133,7 +140,7 @@ private fun animateInfiniteTranslationFloat(
 }
 
 @Composable
-private fun IntRange.getRandomDuration() =
+private fun IntRange.getRandomValue() =
     Math.random().toInt() * (first - last) + first
 
 @Composable
