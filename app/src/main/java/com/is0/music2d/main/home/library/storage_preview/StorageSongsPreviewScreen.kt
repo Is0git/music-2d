@@ -34,7 +34,7 @@ fun StorageSongSelectionScreen(
         StorageSongSelectionContentComponent(
             modifier = modifier,
             storageSongsPreview = storageSongsPreviews,
-            onTotalDurationFormat = durationFormatter::formatDuration,
+            onTotalDurationFormat = { durationFormatter.formatDuration(it, true) },
             onSongStorageClick = onSongStorageClick,
         )
     }

@@ -58,7 +58,7 @@ fun AlbumDetailsScreen(
                 modifier = Modifier.padding(padding),
                 albumDetails = albumDetails,
                 formatSongSize = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
-                formatDuration = songDurationFormatter::formatDuration,
+                formatDuration = { duration -> songDurationFormatter.formatDuration(duration, true) },
                 formatSongStorage = songStorageTypeFormatter::formatStorageType,
                 availableSongStorageTypes = viewModel.availableSongStorageTypes,
                 onSongStorageSelected = viewModel::toggleSavedSong,

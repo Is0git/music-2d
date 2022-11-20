@@ -57,7 +57,7 @@ fun CategorizedSongsScreen(
         modifier = modifier,
         songsCategories = songsCategories,
         onSongSizeFormat = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
-        onSongDurationFormat = songDurationFormatter::formatDuration,
+        onSongDurationFormat = { songDurationFormatter.formatDuration(it, true)},
         onViewAllClick = onViewAllClick,
         isLoading = isLoading,
     )
