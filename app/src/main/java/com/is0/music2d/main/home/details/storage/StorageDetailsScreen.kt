@@ -34,9 +34,10 @@ fun StorageDetailsScreen(
 
     val songDurationFormatter = LocalDurationFormatter.current
     val songSizeFormatter = LocalSizeFormatter.current
-    val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
 
     StorageProviders {
+        val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
+
         BaseScaffoldComponent(
             modifier = modifier,
             baseViewModel = viewModel,
@@ -46,7 +47,7 @@ fun StorageDetailsScreen(
             StorageDetailsContentComponent(
                 modifier = Modifier.padding(padding),
                 storageDetails = storageDetails,
-                formatSongDuration = { duration -> songDurationFormatter.formatDuration(duration) },
+                formatDuration = { duration -> songDurationFormatter.formatDuration(duration) },
                 formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
                 onSongSaveClick = viewModel::toggleSavedSong,
                 isLoading = isLoading,
@@ -61,7 +62,7 @@ fun StorageDetailsScreen(
 fun StorageDetailsContentComponent(
     modifier: Modifier = Modifier,
     storageDetails: StorageDetails?,
-    formatSongDuration: FormatSongDuration,
+    formatDuration: FormatSongDuration,
     formatFileSize: FormatFileSize,
     isLoading: Boolean = false,
     storageType: SongStorageType = SongStorageType.NONE,
@@ -74,11 +75,13 @@ fun StorageDetailsContentComponent(
         images = storageDetails?.previewImages.orEmpty(),
         headerTitle = title,
         isLoading = isLoading,
+        durationText = storageDetails?.totalDuration?.let { formatDuration(it) }.orEmpty(),
+        songCount = storageDetails?.songCount ?: 0,
         itemContent = { detailsSong ->
             StorageSongItemComponent(
                 modifier = Modifier.fillMaxWidth(),
                 detailsSong = detailsSong,
-                songDurationText = formatSongDuration(detailsSong.song.durationMillis),
+                songDurationText = formatDuration(detailsSong.song.durationMillis),
                 songSizeText = formatFileSize(detailsSong.song.songSize.toSize()),
                 songImageUrl = detailsSong.song.imageUrl,
                 onSongSaveClick = onSongSaveClick,

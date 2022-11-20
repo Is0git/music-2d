@@ -6,6 +6,7 @@ import com.is0.music2d.main.home.details.storage.use_case.ToggleSavedSongUseCase
 import com.is0.music2d.main.home.details.storage.use_case.WatchStorageSongsDetailsUseCase
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetails
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
+import com.is0.music2d.main.home.details.storage.utils.data.toStorageDetails
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -32,14 +33,7 @@ open class StorageDetailsViewModel(
                     if (storageDetails.value == null) {
                         isLoading.postValue(false)
                     }
-                    storageDetails.postValue(
-                        StorageDetails(
-                            songs = storageDetailsSongs,
-                            previewImages = storageDetailsSongs.take(DETAILS_HEADER_IMAGES_COUNT).map {
-                                it.song.imageUrl
-                            }
-                        )
-                    )
+                    storageDetails.postValue(storageDetailsSongs.toStorageDetails())
                 }
         }
     }
