@@ -4,4 +4,6 @@ enum class SongStorageType {
     NONE, MEMORY, FILESYSTEM
 }
 
-fun SongStorageType.isSaved(): Boolean = this != SongStorageType.NONE
+fun allSongStorageTypes() = SongStorageType.values().filter { storageType -> storageType != SongStorageType.NONE }
+
+

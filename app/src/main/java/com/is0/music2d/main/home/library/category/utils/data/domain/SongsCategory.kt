@@ -15,7 +15,7 @@ fun Album.toSongCategory(): SongsCategory = SongsCategory(
     songs = songs.map { song ->
         StoredSong(
             song = song,
-            songStorageType = emptyList(),
+            songStorageTypes = emptyList(),
         )
     }
 )

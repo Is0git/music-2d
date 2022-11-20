@@ -21,7 +21,7 @@ class SongsCategoryMapper @Inject constructor() {
                 songs = songsMergeResult.songsWithStorageType.map { songStorageTypePair ->
                     StoredSong(
                         song = songStorageTypePair.first,
-                        songStorageType = songStorageTypePair.second,
+                        songStorageTypes = songStorageTypePair.second,
                     )
                 }
             )

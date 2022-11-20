@@ -8,6 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.is0.music2d.music.song.storage.utils.composable.SaveStorageIconButtonComponent
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.CheckmarkIconComponent
@@ -26,29 +27,6 @@ fun StorageSaveButtonComponent(
         onSaveClick = onSaveClick,
         storageType = storageType,
     )
-}
-
-@Composable
-private fun SaveStorageIconButtonComponent(
-    modifier: Modifier = Modifier,
-    onSaveClick: (isSaved: Boolean) -> Unit,
-    storageType: SongStorageType,
-    isSaved: Boolean,
-) {
-    IconButton(
-        modifier = modifier,
-        onClick = { onSaveClick(isSaved) },
-    ) {
-        AnimatedContent(targetState = isSaved) { saved ->
-            if (saved) {
-                CheckmarkIconComponent()
-            } else {
-                StorageIconComponent(
-                    storageType = storageType,
-                )
-            }
-        }
-    }
 }
 
 @Composable

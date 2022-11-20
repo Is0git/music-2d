@@ -59,7 +59,7 @@ fun CategorySongItemComponent(
         songImageUrl = song.imageUrl,
         songName = song.title,
         artist = song.artist,
-        songStorageTypes = storedSong.songStorageType,
+        songStorageTypes = storedSong.songStorageTypes,
     )
 }
 

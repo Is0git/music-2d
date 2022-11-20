@@ -21,7 +21,7 @@ fun AlbumWithSongsEntity.toDetails(): AlbumDetails = AlbumDetails(
     storedSong = this.songs.map { songsEntity ->
         StoredSong(
             song = songsEntity.toSong(),
-            songStorageType = emptyList(),
+            songStorageTypes = emptyList(),
         )
     },
 )
