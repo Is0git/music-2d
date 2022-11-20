@@ -22,11 +22,8 @@ open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
             savedSongsRepository.watchSavedSongs(),
             databaseSongsRepository.watchSongs()
         ) { savedSongs, databaseSongs ->
-            val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)
-
-            when (mergeResult) {
+            when (val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)) {
                 is SongsMergeResult.Merged -> {
-                    Timber.d("savedSongs: $savedSongs")
                     mergeResult.songsWithStorageType.onEach {
                         Timber.d("id ${it.key.id}, size: ${it.value.size}")
                     }
