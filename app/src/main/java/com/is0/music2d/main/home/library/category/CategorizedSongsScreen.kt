@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.R
 import com.is0.music2d.main.home.library.category.utils.component.CategorySongItemComponent
-import com.is0.music2d.main.home.library.category.utils.data.domain.CategorizedSong
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.main.home.library.category.utils.data.domain.SongCategoryMock
 import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
 import com.is0.music2d.main.home.utils.OnViewAllClick
@@ -170,7 +170,7 @@ private fun ViewAllButtonComponent(
 @Composable
 private fun CategorySongsListComponent(
     modifier: Modifier = Modifier,
-    songs: List<CategorizedSong>,
+    songs: List<StoredSong>,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
 ) {
@@ -185,7 +185,7 @@ private fun CategorySongsListComponent(
                 HorizontalSpacerComponent(width = AppTheme.dimensions.bodyMargin)
             }
             CategorySongItemComponent(
-                categorizedSong = song,
+                storedSong = song,
                 onSongDurationFormat = onSongDurationFormat,
                 onSongSizeFormat = onSongSizeFormat,
             )

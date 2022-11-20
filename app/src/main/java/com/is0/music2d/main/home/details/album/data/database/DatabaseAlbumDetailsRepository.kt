@@ -4,7 +4,6 @@ import com.is0.music2d.main.home.details.album.data.AlbumDetailsRepository
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.main.home.details.album.data.domain.toDetails
 import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
-import com.is0.music2d.music.album.utils.data.database.entity.toAlbum
 import com.is0.music2d.utils.di.qualifier.IO
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,6 +19,6 @@ class DatabaseAlbumDetailsRepository @Inject constructor(
 ) : AlbumDetailsRepository {
     override suspend fun watchAlbumDetails(albumId: String): Flow<AlbumDetails> =
         withContext(dispatcher) {
-            albumsDao.watchAlbumWithSongs(albumId).map { album -> album.toAlbum().toDetails() }
+            albumsDao.watchAlbumWithSongs(albumId).map { album -> album.toDetails() }
         }
 }

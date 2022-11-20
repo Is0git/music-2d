@@ -1,6 +1,6 @@
 package com.is0.music2d.main.home.library.category.utils.data.mapper
 
-import com.is0.music2d.main.home.library.category.utils.data.domain.CategorizedSong
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.main.home.library.category.utils.data.domain.SongsCategory
 import com.is0.music2d.main.home.library.category.utils.data.domain.toSongCategory
 import com.is0.music2d.music.album.utils.data.domain.Album
@@ -19,7 +19,7 @@ class SongsCategoryMapper @Inject constructor() {
                 id = album.id,
                 name = album.name,
                 songs = songsMergeResult.songsWithStorageType.map { songStorageTypePair ->
-                    CategorizedSong(
+                    StoredSong(
                         song = songStorageTypePair.first,
                         songStorageType = songStorageTypePair.second,
                     )

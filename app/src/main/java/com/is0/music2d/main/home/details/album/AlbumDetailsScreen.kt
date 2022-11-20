@@ -14,11 +14,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.main.home.details.utils.component.SongsDetailsHeaderComponent
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.music.song.utils.formatter.FormatSongDuration
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.icon.OverflowIconButtonComponent
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
@@ -62,17 +64,18 @@ private fun AlbumDetailsContentComponent(
     ) {
         item {
             SongsDetailsHeaderComponent(
-                images = albumDetails.songs.take(5).map { it.imageUrl },
+                images = albumDetails.storedSong.take(5).map { it.song.imageUrl },
                 title = albumDetails.name
             )
         }
-        items(albumDetails.songs) { song ->
+        items(albumDetails.storedSong) { storedSong ->
             HorizontalSongItemComponent(
                 modifier = Modifier.fillMaxWidth(),
-                song = song,
-                songDurationText = formatSongDuration(song.durationMillis),
-                songSizeText = formatFileSize(song.songSize.toSize()),
-                songImageUrl = song.imageUrl,
+                song = storedSong.song,
+                songDurationText = formatSongDuration(storedSong.song.durationMillis),
+                songSizeText = formatFileSize(storedSong.song.songSize.toSize()),
+                songImageUrl = storedSong.song.imageUrl,
+                action = { OverflowIconButtonComponent() },
             )
         }
     }
@@ -85,7 +88,7 @@ private fun AlbumDetailsContentComponentPreview() {
         AlbumDetailsContentComponent(
             albumDetails = AlbumDetails(
                 "Test",
-                songs = SongMock.generateSongs(40),
+                storedSong = SongMock.generateSongs(40).map { StoredSong(it, emptyList()) },
             ),
             formatSongDuration = { "2h 3m" },
             formatFileSize = { "12MB" },

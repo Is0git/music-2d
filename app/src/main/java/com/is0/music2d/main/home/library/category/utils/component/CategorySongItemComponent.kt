@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.is0.music2d.main.home.library.category.utils.data.domain.CategorizedSong
+import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
@@ -39,11 +39,11 @@ import com.is0.music2d.utils.data.mock.ImageMock
 @Composable
 fun CategorySongItemComponent(
     modifier: Modifier = Modifier,
-    categorizedSong: CategorizedSong,
+    storedSong: StoredSong,
     onSongSizeFormat: (songSize: SongSize) -> String,
     onSongDurationFormat: (durationMillis: Long) -> String,
 ) {
-    val song = categorizedSong.song
+    val song = storedSong.song
 
     val formattedSongSize = remember(song.songSize) {
         onSongSizeFormat(song.songSize)
@@ -59,7 +59,7 @@ fun CategorySongItemComponent(
         songImageUrl = song.imageUrl,
         songName = song.title,
         artist = song.artist,
-        songStorageTypes = categorizedSong.songStorageType,
+        songStorageTypes = storedSong.songStorageType,
     )
 }
 
