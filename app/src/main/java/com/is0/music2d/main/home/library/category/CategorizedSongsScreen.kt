@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -49,6 +51,7 @@ fun CategorizedSongsScreen(
     categorizedSongsViewModel: CategorizedSongsViewModel = hiltViewModel(),
     storedSongsToggleViewModel: StoredSongsToggleViewModel = hiltViewModel(),
     onViewAllClick: OnViewAllClick = {},
+    listState: LazyListState = rememberLazyListState(),
 ) {
     val songDurationFormatter = LocalDurationFormatter.current
     val songSizeFormatter = LocalSizeFormatter.current
@@ -69,6 +72,7 @@ fun CategorizedSongsScreen(
             isLoading = isLoading || songsToggleLoading,
             onSongStorageSelected = storedSongsToggleViewModel::toggleSavedSong,
             availableSongStorageTypes = storedSongsToggleViewModel.availableSongStorageTypes,
+            listState = listState,
         )
     }
 }
@@ -83,9 +87,11 @@ private fun CategorizedSongsContentComponent(
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     isLoading: Boolean,
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    listState: LazyListState = rememberLazyListState(),
 ) {
     Box(modifier = modifier) {
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(vertical = 32.dp),
         ) {
             items(songsCategories) { songsCategory ->
