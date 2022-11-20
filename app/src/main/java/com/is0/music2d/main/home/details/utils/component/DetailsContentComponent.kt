@@ -29,7 +29,7 @@ fun <T> DetailsScreenComponent(
         LazyColumn {
             item {
                 SongsDetailsHeaderComponent(
-                    images = images.take(5),
+                    images = images,
                     title = headerTitle,
                     durationText = durationText,
                     songCount = songCount,

@@ -35,6 +35,6 @@ fun StoredSongsAlbum.toDetails(): AlbumDetails = AlbumDetails(
     name = album.name,
     storedSongs = storedSongs,
     totalDuration = album.songs.sumOf { song -> song.durationMillis },
-    albumPreviewImages = album.songs.take(DETAILS_HEADER_IMAGES_COUNT).map { song -> song.imageUrl },
+    albumPreviewImages = storedSongs.take(DETAILS_HEADER_IMAGES_COUNT).map { storedSong -> storedSong.song.imageUrl },
     albumSongsCount = album.songs.size,
 )
