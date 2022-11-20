@@ -2,6 +2,7 @@
 
 package com.is0.music2d.main.home
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Tab
@@ -11,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -107,7 +109,7 @@ private fun SongsContentTypePagerComponent(
         modifier = modifier,
         count = contentTypes.size,
         state = pagerState,
-        userScrollEnabled = false,
+        userScrollEnabled = true,
     ) { page ->
         val contentType = contentTypes[page]
         if (contentType == SongsContentType.ALBUMS) {
@@ -135,15 +137,22 @@ private fun SongContentTypeTabRowComponent(
         selectedTabIndex = pagerState.currentPage,
     ) {
         songContentTypes.forEach { songContentType ->
+            val selected = selectedSongContentType == songContentType
+
+            val scaleAnimation by animateFloatAsState(
+                targetValue = if (selected) 1.2f else 1f,
+            )
+
             Tab(
                 selectedContentColor = AppTheme.colors.secondaryColor,
                 unselectedContentColor = AppTheme.colors.onSurfaceColor,
                 text = {
                     TitleSmallTextComponent(
+                        modifier = Modifier.scale(scaleAnimation),
                         text = songContentType.name,
                     )
                 },
-                selected = selectedSongContentType == songContentType,
+                selected = selected,
                 onClick = { onSongContentTypeSelect(songContentType) },
             )
         }
