@@ -18,6 +18,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -105,26 +106,44 @@ fun ScaffoldComponent(
             }
         },
         topBar = {
-            val icon: @Composable () -> Unit = {
-                if (onBackClick != null) {
-                    BackButtonComponent(onClick = onBackClick)
-                } else {
-                    navigationIcon()
-                }
-            }
-            if (isAppBarCollapsable) {
-                LargeTopAppBar(
-                    navigationIcon = icon,
-                    title = { Text(text = title) },
-                    scrollBehavior = scrollBehavior,
-                )
-            } else {
-                SmallTopAppBar(
-                    modifier = Modifier.verticalGradientScrim(Color.Red),
-                    navigationIcon = icon,
-                    title = { Text(text = title) },
-                )
-            }
+            TopBarComponent(
+                onBackClick = onBackClick,
+                navigationIcon = navigationIcon,
+                isAppBarCollapsable = isAppBarCollapsable,
+                title = title,
+                scrollBehavior = scrollBehavior,
+            )
         },
     )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun TopBarComponent(
+    onBackClick: (() -> Unit)?,
+    navigationIcon: @Composable () -> Unit,
+    isAppBarCollapsable: Boolean,
+    title: String,
+    scrollBehavior: TopAppBarScrollBehavior
+) {
+    val icon: @Composable () -> Unit = {
+        if (onBackClick != null) {
+            BackButtonComponent(onClick = onBackClick)
+        } else {
+            navigationIcon()
+        }
+    }
+    if (isAppBarCollapsable) {
+        LargeTopAppBar(
+            navigationIcon = icon,
+            title = { Text(text = title) },
+            scrollBehavior = scrollBehavior,
+        )
+    } else {
+        SmallTopAppBar(
+            modifier = Modifier.verticalGradientScrim(Color.Red),
+            navigationIcon = icon,
+            title = { Text(text = title) },
+        )
+    }
 }
