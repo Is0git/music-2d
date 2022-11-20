@@ -80,6 +80,12 @@ private fun SongsLibraryPagerComponent(
     onViewAllClick: OnViewAllClick = {},
     onSongStorageClick: OnSongStorageClick = {},
 ) {
+    LaunchedEffect(pagerState.currentPage) {
+        onSongContentTypeSelect(
+            contentTypes[pagerState.currentPage]
+        )
+    }
+
     Column(modifier = modifier) {
         SongContentTypeTabRowComponent(
             songContentTypes = contentTypes,
