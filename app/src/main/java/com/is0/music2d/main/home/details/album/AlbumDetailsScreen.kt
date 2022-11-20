@@ -3,8 +3,6 @@ package com.is0.music2d.main.home.details.album
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
@@ -18,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
-import com.is0.music2d.main.home.details.utils.component.SongsDetailsHeaderComponent
+import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
 import com.is0.music2d.music.song.storage.utils.composable.SaveStorageIconButtonComponent
 import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
@@ -27,15 +25,14 @@ import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
 import com.is0.music2d.music.song.utils.component.HorizontalSongItemComponent
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.music.song.utils.data.domain.SongMock
+import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
-import com.is0.music2d.music.song.utils.formatter.FormatSongDuration
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.OverflowIconButtonComponent
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
 import com.is0.music2d.utils.composable.text.TitleSmallTextComponent
-import com.is0.music2d.utils.size.FormatFileSize
 
 @Composable
 fun AlbumDetailsScreen(
@@ -60,11 +57,11 @@ fun AlbumDetailsScreen(
             AlbumDetailsContentComponent(
                 modifier = Modifier.padding(padding),
                 albumDetails = albumDetails,
-                formatSongDuration = { duration -> songDurationFormatter.formatDuration(duration) },
-                formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
-                onSongStorageSelected = viewModel::toggleSavedSong,
+                formatSongSize = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
+                formatSongDuration = songDurationFormatter::formatDuration,
+                formatSongStorage = songStorageTypeFormatter::formatStorageType,
                 availableSongStorageTypes = viewModel.availableSongStorageTypes,
-                formatSongStorageType = songStorageTypeFormatter::formatStorageType,
+                onSongStorageSelected = viewModel::toggleSavedSong,
             )
         }
     }
@@ -74,44 +71,36 @@ fun AlbumDetailsScreen(
 private fun AlbumDetailsContentComponent(
     modifier: Modifier = Modifier,
     albumDetails: AlbumDetails,
-    formatSongDuration: FormatSongDuration,
-    formatFileSize: FormatFileSize,
+    formatSongDuration: (duration: Long) -> String,
+    formatSongSize: (size: SongSize) -> String,
+    formatSongStorage: (storageType: SongStorageType) -> String,
     availableSongStorageTypes: List<SongStorageType> = emptyList(),
-    formatSongStorageType: (storageType: SongStorageType) -> String = { "" },
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
 ) {
-    LazyColumn(
+    DetailsScreenComponent(
         modifier = modifier,
-    ) {
-        item {
-            SongsDetailsHeaderComponent(
-                images = albumDetails.storedSong.take(5).map { it.song.imageUrl },
-                title = albumDetails.name
-            )
-        }
-        items(albumDetails.storedSong) { storedSong ->
+        items = albumDetails.storedSongs,
+        itemContent = { storedSong ->
             HorizontalSongItemComponent(
                 modifier = Modifier.fillMaxWidth(),
                 song = storedSong.song,
                 songDurationText = formatSongDuration(storedSong.song.durationMillis),
-                songSizeText = formatFileSize(storedSong.song.songSize.toSize()),
+                songSizeText = formatSongSize(storedSong.song.songSize),
                 songImageUrl = storedSong.song.imageUrl,
                 action = {
                     OverflowActionComponent(
-                        formatSongStorageType = formatSongStorageType,
+                        formatSongStorageType = formatSongStorage,
                         savedSongStorageTypes = storedSong.songStorageTypes,
                         availableSongStorageTypes = availableSongStorageTypes,
-                        onSongStorageSelected = { songStorageType ->
-                            onSongStorageSelected(
-                                storedSong.song.id,
-                                songStorageType,
-                            )
-                        },
+                        onSongStorageSelected = onSongStorageSelected,
+                        songId = storedSong.song.id,
                     )
                 },
             )
-        }
-    }
+        },
+        headerTitle = albumDetails.name,
+        images = albumDetails.albumPreviewImages,
+    )
 }
 
 @Composable
@@ -120,7 +109,8 @@ private fun OverflowActionComponent(
     availableSongStorageTypes: List<SongStorageType> = listOf(),
     savedSongStorageTypes: List<SongStorageType> = listOf(),
     formatSongStorageType: (storageType: SongStorageType) -> String,
-    onSongStorageSelected: (storageType: SongStorageType) -> Unit,
+    onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
+    songId: String,
 ) {
     Box(modifier = modifier) {
         val isExpanded = remember {
@@ -139,10 +129,10 @@ private fun OverflowActionComponent(
             availableSongStorageTypes.forEach { songStorageType ->
                 DropdownMenuItem(
                     text = { TitleSmallTextComponent(text = formatSongStorageType(songStorageType)) },
-                    onClick = { onSongStorageSelected(songStorageType) },
+                    onClick = { onSongStorageSelected(songId, songStorageType) },
                     trailingIcon = {
                         SaveStorageIconButtonComponent(
-                            onSaveClick = { onSongStorageSelected(songStorageType) },
+                            onSaveClick = { onSongStorageSelected(songId, songStorageType) },
                             storageType = songStorageType, isSaved = savedSongStorageTypes.contains(songStorageType),
                         )
                     }
@@ -152,6 +142,7 @@ private fun OverflowActionComponent(
     }
 }
 
+
 @Composable
 @Preview
 private fun AlbumDetailsContentComponentPreview() {
@@ -159,13 +150,13 @@ private fun AlbumDetailsContentComponentPreview() {
         AlbumDetailsContentComponent(
             albumDetails = AlbumDetails(
                 "Test",
-                storedSong = SongMock.generateSongs(40).map { StoredSong(it, allSongStorageTypes()) },
+                storedSongs = SongMock.generateSongs(40).map { StoredSong(it, allSongStorageTypes()) },
             ),
-            formatSongDuration = { "2h 3m" },
-            formatFileSize = { "12MB" },
             availableSongStorageTypes = allSongStorageTypes(),
-            formatSongStorageType = { "Storage type example" },
-            onSongStorageSelected = { _, _ -> }
+            onSongStorageSelected = { _, _ -> },
+            formatSongSize = { "25.4 MB" },
+            formatSongStorage = { "Memory" },
+            formatSongDuration = { "24m 2s" },
         )
     }
 }

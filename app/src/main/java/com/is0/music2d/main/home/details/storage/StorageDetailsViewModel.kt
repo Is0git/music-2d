@@ -1,8 +1,10 @@
 package com.is0.music2d.main.home.details.storage
 
 import androidx.lifecycle.viewModelScope
+import com.is0.music2d.main.home.details.album.data.DETAILS_HEADER_IMAGES_COUNT
 import com.is0.music2d.main.home.details.storage.use_case.ToggleSavedSongUseCase
 import com.is0.music2d.main.home.details.storage.use_case.WatchStorageSongsDetailsUseCase
+import com.is0.music2d.main.home.details.storage.utils.data.StorageDetails
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.catch
@@ -12,7 +14,7 @@ open class StorageDetailsViewModel(
     private val watchStorageSongsDetailsUseCase: WatchStorageSongsDetailsUseCase,
     private val toggleSavedSongUseCase: ToggleSavedSongUseCase,
 ) : BaseViewModel() {
-    val storageSongs = createMutableLiveData<List<StorageDetailsSong>?>(null)
+    val storageDetails = createMutableLiveData<StorageDetails?>(null)
 
     init {
         viewModelScope.launch {
@@ -26,11 +28,18 @@ open class StorageDetailsViewModel(
 
             watchStorageSongsDetailsUseCase.watchStorageSongsDetails()
                 .catch { error -> setError(error) }
-                .collect { storageDetailsSongs ->
-                    if (storageSongs.value == null) {
+                .collect { storageDetailsSongs: List<StorageDetailsSong> ->
+                    if (storageDetails.value == null) {
                         isLoading.postValue(false)
                     }
-                    storageSongs.postValue(storageDetailsSongs)
+                    storageDetails.postValue(
+                        StorageDetails(
+                            songs = storageDetailsSongs,
+                            previewImages = storageDetailsSongs.take(DETAILS_HEADER_IMAGES_COUNT).map {
+                                it.song.imageUrl
+                            }
+                        )
+                    )
                 }
         }
     }
