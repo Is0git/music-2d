@@ -8,7 +8,10 @@ import javax.inject.Singleton
 
 @Singleton
 class SongDurationFormatter @Inject constructor() : DurationFormatter {
-    override fun formatDuration(durationMillis: Long): String = runCatching {
+    override fun formatDuration(durationMillis: Long, showZero: Boolean): String = runCatching {
+        if (durationMillis == 0L && !showZero) {
+            return ""
+        }
         when {
             durationMillis >= DateUtils.HOUR_IN_MILLIS -> {
                 val hours: Long = durationMillis / DateUtils.HOUR_IN_MILLIS
