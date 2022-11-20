@@ -22,11 +22,11 @@ class WatchSongsCategoriesUseCase @Inject constructor(
     private val savedSongsMerger: SavedSongsMerger,
     private val songsCategoryMapper: SongsCategoryMapper,
 ) {
-    suspend fun watchSongCategories(count: Int): Flow<List<SongsCategory>> =
+    suspend fun watchSongsCategories(count: Int): Flow<List<SongsCategory>> =
         combine(
             watchUserAlbumsUseCase.watchUserAlbums(count),
             memorySongsRepository.watchSavedSongs(),
-            filesystemSongsRepository.watchSavedSongs()
+            filesystemSongsRepository.watchSavedSongs(),
         ) { userAlbums, memorySavedSongs, filesystemSavedSongs ->
             userAlbums.map { album ->
                 val allSavedSongs = memorySavedSongs + filesystemSavedSongs
