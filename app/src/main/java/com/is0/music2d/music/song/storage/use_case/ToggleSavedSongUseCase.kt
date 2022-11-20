@@ -12,7 +12,7 @@ class ToggleSavedSongUseCase @Inject constructor(
     private val toggleFilesystemSongsUseCase: ToggleFilesystemSongsUseCase,
     private val toggleMemorySavedSongUseCase: ToggleMemorySavedSongUseCase,
 ) {
-    suspend fun toggleSavedSongUseCase(
+    suspend fun toggleSavedSong(
         songId: String,
         songStorageType: SongStorageType,
     ) {

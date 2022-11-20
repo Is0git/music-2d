@@ -16,4 +16,3 @@ fun List<StorageDetailsSong>.toStorageDetails() =
         totalDuration = this.sumOf { detailsSong -> detailsSong.song.durationMillis },
         songCount = this.size,
     )
-

@@ -49,7 +49,7 @@ class AlbumDetailsViewModel @Inject constructor(
             runCatching {
                 isLoading.postValue(true)
 
-                toggleSavedSongUseCase.toggleSavedSongUseCase(
+                toggleSavedSongUseCase.toggleSavedSong(
                     songId = songId,
                     songStorageType = songStorageType,
                 )

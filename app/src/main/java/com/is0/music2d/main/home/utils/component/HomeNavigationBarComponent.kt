@@ -58,8 +58,7 @@ fun HomeNavigationBarComponent(
             modifier = Modifier.align(Alignment.Center),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-        )
-        {
+        ) {
             IconButton(
                 modifier = Modifier.background(
                     color = AppTheme.colors.surfaceColor.copy(alpha = 0.9f),

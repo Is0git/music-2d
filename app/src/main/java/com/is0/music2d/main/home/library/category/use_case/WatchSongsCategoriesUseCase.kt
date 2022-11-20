@@ -19,5 +19,4 @@ class WatchSongsCategoriesUseCase @Inject constructor(
                 songsCategoryMapper.toSongsCategory(storedSongsAlbum)
             }
         }
-
 }
