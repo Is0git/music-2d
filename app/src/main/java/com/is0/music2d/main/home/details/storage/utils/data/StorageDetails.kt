@@ -9,10 +9,14 @@ data class StorageDetails(
     val songCount: Int = 0,
 )
 
-fun List<StorageDetailsSong>.toStorageDetails() =
-    StorageDetails(
+// TODO(Daniel: Execute this in use case or repository)
+fun List<StorageDetailsSong>.toStorageDetails(): StorageDetails {
+    val savedSongs = this.filter { song -> song.isSaved }
+
+    return StorageDetails(
         songs = this,
         previewImages = this.take(DETAILS_HEADER_IMAGES_COUNT).map { it.song.imageUrl },
-        totalDuration = this.sumOf { detailsSong -> detailsSong.song.durationMillis },
-        songCount = this.size,
+        totalDuration = savedSongs.sumOf { detailsSong -> detailsSong.song.durationMillis },
+        songCount = savedSongs.size,
     )
+}

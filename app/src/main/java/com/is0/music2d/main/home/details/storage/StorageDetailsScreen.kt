@@ -47,7 +47,7 @@ fun StorageDetailsScreen(
             StorageDetailsContentComponent(
                 modifier = Modifier.padding(padding),
                 storageDetails = storageDetails,
-                formatDuration = { duration -> songDurationFormatter.formatDuration(duration) },
+                formatDuration = { duration -> songDurationFormatter.formatDuration(duration, false) },
                 formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
                 onSongSaveClick = viewModel::toggleSavedSong,
                 isLoading = isLoading,
