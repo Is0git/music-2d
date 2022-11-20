@@ -43,7 +43,6 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
                             album = album,
                         )
                     }
-
             }
 
     private suspend fun mergeSongs(
@@ -63,4 +62,3 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
         }
     }
 }
-
