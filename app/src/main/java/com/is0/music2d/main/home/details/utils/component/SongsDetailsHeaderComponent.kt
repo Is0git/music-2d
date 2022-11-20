@@ -57,7 +57,6 @@ private fun HeaderOverlayComponent(
     val startColorValue = AppTheme.colors.onSurfaceColorVariant.copy(0.9f)
     val endColorValue = AppTheme.colors.secondaryColor.copy(0.7f)
 
-
     val startColor = overlayTransition.animateColor(
         initialColor = startColorValue,
         targetColor = endColorValue,

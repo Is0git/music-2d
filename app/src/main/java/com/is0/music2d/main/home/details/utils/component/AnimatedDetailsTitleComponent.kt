@@ -112,7 +112,6 @@ private fun BoxScope.SecondaryAnimatedTitleComponent(title: String) {
             title = title,
             translationX = translationsX[repeatIndex] + translationXInfiniteAnimation,
         )
-
     }
 }
 
