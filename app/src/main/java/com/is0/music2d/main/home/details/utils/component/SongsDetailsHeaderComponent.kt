@@ -11,19 +11,28 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.is0.music2d.R
+import com.is0.music2d.music.song.utils.component.icon.SongDurationIconComponent
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.icon.SongIconComponent
 import com.is0.music2d.utils.composable.image.avatar.ChunkedImagesComponent
 import com.is0.music2d.utils.data.mock.ImageMock
 
@@ -36,6 +45,8 @@ fun SongsDetailsHeaderComponent(
     modifier: Modifier = Modifier,
     images: List<String>,
     title: String = "",
+    durationText: String = "",
+    songCount: Int = 0,
 ) {
     Box(modifier.aspectRatio(HeaderAspectRatio)) {
         ChunkedImagesComponent(
@@ -44,6 +55,11 @@ fun SongsDetailsHeaderComponent(
         HeaderOverlayComponent()
         AnimatedDetailsTitleComponent(
             title = title,
+        )
+        SongHeaderInfoComponent(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            durationText = durationText,
+            songCount = songCount,
         )
     }
 }
@@ -150,6 +166,34 @@ private fun InfiniteTransition.animateColor(
     return color
 }
 
+@Composable
+private fun SongHeaderInfoComponent(
+    modifier: Modifier = Modifier,
+    durationText: String,
+    songCount: Int,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (durationText.isNotEmpty()) {
+            SongHeaderInfoElementComponent(
+                text = durationText,
+                icon = { SongDurationIconComponent() },
+            )
+        }
+        if (songCount > 0) {
+            SongHeaderInfoElementComponent(
+                text = stringResource(
+                    R.string.songs_details_header_songs_count_text,
+                    songCount,
+                ),
+                icon = { SongIconComponent() },
+            )
+        }
+    }
+}
+
 @ExperimentalAnimationApi
 @Composable
 @Preview
@@ -157,7 +201,9 @@ private fun AlbumHeaderComponentPreview() {
     AppTheme {
         SongsDetailsHeaderComponent(
             images = (0..4).map { ImageMock.image },
-            title = "Best album ever"
+            title = "Best album ever",
+            songCount = 10,
+            durationText = "24h 23min",
         )
     }
 }

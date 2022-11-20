@@ -21,16 +21,18 @@ fun <T> DetailsScreenComponent(
     images: List<String>,
     headerTitle: String,
     isLoading: Boolean = false,
+    durationText: String = "",
+    songCount: Int = 0,
     itemContent: @Composable (item: T) -> Unit = {},
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = modifier,
-        ) {
+        LazyColumn {
             item {
                 SongsDetailsHeaderComponent(
                     images = images.take(5),
-                    title = headerTitle
+                    title = headerTitle,
+                    durationText = durationText,
+                    songCount = songCount,
                 )
             }
             items?.forEach {

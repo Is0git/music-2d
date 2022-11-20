@@ -9,4 +9,5 @@
     <string name="error_unknown">Oops! Something went wrong</string>
     <string name="storage_details_no_content_message">There are no songs in the storage</string>
     <string name="categorized_songs_view_all_button_label">VIEW ALL</string>
+    <string name="songs_details_header_songs_count_text">%d songs</string>
 </resources>
