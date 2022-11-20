@@ -25,6 +25,7 @@ import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
 import com.is0.music2d.main.home.library.storage_preview.StorageSongSelectionScreen
 import com.is0.music2d.main.home.utils.OnSongStorageClick
 import com.is0.music2d.main.home.utils.OnViewAllClick
+import com.is0.music2d.main.home.utils.component.HomeNavigationBarComponent
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.theme.AppTheme
@@ -52,6 +53,7 @@ fun HomeScreen(
         baseViewModel = homeViewModel,
         title = stringResource(R.string.home_screen_title, username.orEmpty()),
         navigationIcon = { AppIconComponent() },
+        bottomBar = { HomeNavigationBarComponent() },
         isAppBarCollapsable = true,
     ) { padding ->
         SongsLibraryPagerComponent(

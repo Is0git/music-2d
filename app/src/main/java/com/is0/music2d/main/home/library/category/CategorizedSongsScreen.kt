@@ -86,6 +86,7 @@ private fun CategorizedSongsContentComponent(
                     )
                 }
             }
+            item { VerticalSpacerComponent(height = 78.dp) }
         }
         if (isLoading) {
             ProgressComponent(

@@ -22,6 +22,7 @@ fun BaseScaffoldComponent(
     snackbarHostState: SnackbarHostState = rememberSnackBarHostState(),
     onNavigateUp: (() -> Unit)? = null,
     navigationIcon: @Composable () -> Unit = {},
+    bottomBar: (@Composable () -> Unit)? = null,
     isAppBarCollapsable: Boolean = false,
     content: @Composable (paddingValues: PaddingValues) -> Unit = {},
 ) {
@@ -48,6 +49,7 @@ fun BaseScaffoldComponent(
             snackbarHostState = snackbarHostState,
             title = title,
             isAppBarCollapsable = isAppBarCollapsable,
+            bottomBar = bottomBar,
             onBackClick = if (isBackButtonEnabled) baseViewModel::onBackSelected else null,
             isLoading = isLoading,
             navigationIcon = navigationIcon,
