@@ -51,8 +51,11 @@ class WatchStorageSongsDetailsUseCaseImplTest {
             given(databaseSongsRepository.watchSongs()).willReturn(flowOf(songs))
             given(savedSongsRepository.watchSavedSongs()).willReturn(flowOf(savedSongs))
             given(savedSongsMerger.mergeSavedSongs(songs, savedSongs)).willReturn(
-                SongsMergeResult.Merged(listOf(songs.first() to listOf(savedSongs.first().songStorageType)))
+                SongsMergeResult.Merged(
+                    mapOf(songs.first() to listOf(savedSongs.first().songStorageType)),
+                )
             )
+
 
             watchStorageSongsDetailsUseCaseImpl.watchStorageSongsDetails().test {
                 val storageDetailsSongs = awaitItem()

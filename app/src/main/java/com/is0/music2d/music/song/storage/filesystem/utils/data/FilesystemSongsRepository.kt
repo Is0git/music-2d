@@ -47,4 +47,12 @@ class FilesystemSongsRepository @Inject constructor(
             }
         }
     }
+
+    override suspend fun watchCount(): Flow<Int> =
+        filesystemSongsDao.watchCount().flowOn(dispatcher)
+
+    override suspend fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>> =
+        filesystemSongsDao.watchSongsByIds(songsIds)
+            .map { songs -> songs.map(FilesystemSongEntity::toDomain) }
+            .flowOn(dispatcher)
 }

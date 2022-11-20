@@ -8,6 +8,7 @@ import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSo
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import timber.log.Timber
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -21,12 +22,20 @@ open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
             savedSongsRepository.watchSavedSongs(),
             databaseSongsRepository.watchSongs()
         ) { savedSongs, databaseSongs ->
-            when (val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)) {
-                is SongsMergeResult.Merged -> mergeResult.songsWithStorageType.map { songStorageTypePair ->
-                    StorageDetailsSong(
-                        song = songStorageTypePair.first,
-                        isSaved = songStorageTypePair.second.isNotEmpty(),
-                    )
+            val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)
+
+            when (mergeResult) {
+                is SongsMergeResult.Merged -> {
+                    Timber.d("savedSongs: $savedSongs")
+                    mergeResult.songsWithStorageType.onEach {
+                        Timber.d("id ${it.key.id}, size: ${it.value.size}")
+                    }
+                    mergeResult.songsWithStorageType.map { (song, songStorageTypes) ->
+                        StorageDetailsSong(
+                            song = song,
+                            isSaved = songStorageTypes.isNotEmpty(),
+                        )
+                    }
                 }
                 else -> databaseSongs.map { song ->
                     StorageDetailsSong(

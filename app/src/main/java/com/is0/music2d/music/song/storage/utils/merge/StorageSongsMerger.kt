@@ -10,31 +10,37 @@ import javax.inject.Inject
 class SavedSongsMerger @Inject constructor() {
     fun mergeSavedSongs(songs: List<Song>, savedSongs: List<SavedSong>): SongsMergeResult {
         if (savedSongs.isEmpty()) {
-            return SongsMergeResult.NotMerged
+            return SongsMergeResult.NotMerged(songs)
         }
 
-        val mergedSongs = songs.map { song -> getSongsWithStorageType(savedSongs, song) }
-        return SongsMergeResult.Merged(mergedSongs)
-    }
+        var didMergeSongs = false
 
-    private fun getSongsWithStorageType(
-        savedSongs: List<SavedSong>,
-        song: Song
-    ): Pair<Song, List<SongStorageType>> {
-        val savedSongsGrouped = savedSongs.groupBy { savedSong -> savedSong.songId }
+        val songsWithStorageType: Map<Song, List<SongStorageType>> =
+            songs.associateWith { song ->
+                val songsStorageTypes = savedSongs
+                    .filter { savedSong -> savedSong.songId == song.id }
+                    .map { storedSong -> storedSong.songStorageType }
 
-        if (savedSongsGrouped.isEmpty()) {
-            return song to emptyList()
+                if (songsStorageTypes.isNotEmpty()) {
+                    didMergeSongs = true
+                }
+                songsStorageTypes
+            }
+
+        if (didMergeSongs) {
+            return SongsMergeResult.Merged(songsWithStorageType)
         }
 
-        return song to savedSongsGrouped[song.id]?.map { savedSong -> savedSong.songStorageType }.orEmpty()
+        return SongsMergeResult.NotMerged(songs)
     }
 }
 
 sealed class SongsMergeResult {
-    object NotMerged : SongsMergeResult()
+    data class NotMerged(
+        val songs: List<Song>,
+    ) : SongsMergeResult()
 
     data class Merged(
-        val songsWithStorageType: List<Pair<Song, List<SongStorageType>>>,
+        val songsWithStorageType: Map<Song, List<SongStorageType>>,
     ) : SongsMergeResult()
 }

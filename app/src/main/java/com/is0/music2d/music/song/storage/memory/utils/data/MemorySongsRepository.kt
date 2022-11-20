@@ -12,6 +12,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -24,9 +25,10 @@ class MemorySongsRepository @Inject constructor(
 ) : SavedSongsRepository {
     private val memorySongs: MutableStateFlow<PersistentList<MemorySongEntity>> = MutableStateFlow(persistentListOf())
 
-    override fun watchSavedSongs(): Flow<List<SavedSong>> = memorySongs
-        .map { songs -> songs.map(MemorySongEntity::toDomain) }
-        .flowOn(dispatcher)
+    override fun watchSavedSongs(): Flow<List<SavedSong>> =
+        memorySongs
+            .map { songs -> songs.map(MemorySongEntity::toDomain) }
+            .flowOn(dispatcher)
 
     override suspend fun addSavedSong(savedSong: SavedSong) {
         withContext(dispatcher) {
@@ -48,4 +50,16 @@ class MemorySongsRepository @Inject constructor(
             }.also { newSongs -> memorySongs.emit(newSongs) }
         }
     }
+
+    override suspend fun watchCount(): Flow<Int> =
+        memorySongs.map {
+            memorySongs.value.size
+        }.flowOn(dispatcher)
+
+    override suspend fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>> =
+        memorySongs.map { songs ->
+            songs.filter { songs -> songsIds.contains(songs.songId) }
+        }
+            .map { songs -> songs.map(MemorySongEntity::toDomain) }
+            .flowOn(dispatcher)
 }

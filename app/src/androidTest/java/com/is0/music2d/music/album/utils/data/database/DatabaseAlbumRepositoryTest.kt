@@ -10,6 +10,7 @@ import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.music.album.utils.data.domain.AlbumMock
 import com.is0.music2d.music.song.utils.data.database.data.SongsDao
 import com.is0.music2d.utils.database.AppDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.*
@@ -40,6 +41,7 @@ class DatabaseAlbumRepositoryTest {
             albumsDao = albumsDao,
             songsDao = songsDao,
             appDatabase = database,
+            dispatcher = Dispatchers.IO,
         )
     }
 

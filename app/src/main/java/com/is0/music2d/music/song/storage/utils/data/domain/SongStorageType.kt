@@ -5,5 +5,3 @@ enum class SongStorageType {
 }
 
 fun allSongStorageTypes() = SongStorageType.values().filter { storageType -> storageType != SongStorageType.NONE }
-
-

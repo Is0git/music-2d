@@ -13,6 +13,9 @@ interface FilesystemSongsDao {
     @Query("SELECT * FROM FilesystemSongEntity")
     fun watchSongs(): Flow<List<FilesystemSongEntity>>
 
+    @Query("SELECT * FROM FilesystemSongEntity WHERE songId IN (:songsIds)")
+    fun watchSongsByIds(songsIds: List<String>): Flow<List<FilesystemSongEntity>>
+
     @Query("SELECT EXISTS(SELECT * FROM FilesystemSongEntity WHERE songId = :songId)")
     suspend fun exists(songId: String): Boolean
 
@@ -21,4 +24,7 @@ interface FilesystemSongsDao {
 
     @Delete
     suspend fun deleteSong(song: FilesystemSongEntity)
+
+    @Query("SELECT COUNT(songId) FROM FilesystemSongEntity")
+    fun watchCount(): Flow<Int>
 }

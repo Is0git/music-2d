@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumsRepository {
     suspend fun watchAlbums(count: Int): Flow<List<Album>>
 
+    suspend fun watchAlbum(albumId: String): Flow<Album>
+
     suspend fun addAlbums(albums: List<Album>)
 
     suspend fun exists(): Boolean
