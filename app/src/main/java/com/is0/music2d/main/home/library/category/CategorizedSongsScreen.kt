@@ -207,9 +207,10 @@ private fun CategorySongsListComponent(
         horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumComponentGap),
     ) {
         songs.forEachIndexed { index, song ->
-            if (index == 0 || index == songs.size - 1) {
-                HorizontalSpacerComponent(width = AppTheme.dimensions.bodyMargin)
+            if (index == 0) {
+                BodySpacerComponent()
             }
+
             CategorySongItemComponent(
                 storedSong = song,
                 onSongDurationFormat = onSongDurationFormat,
@@ -217,8 +218,21 @@ private fun CategorySongsListComponent(
                 onSongStorageSelected = onSongStorageSelected,
                 availableSongStorageTypes = availableSongStorageTypes,
             )
+
+            if (index == songs.size - 1) {
+                BodySpacerComponent()
+            }
+
         }
     }
+}
+
+@Composable
+private fun BodySpacerComponent(modifier: Modifier = Modifier) {
+    HorizontalSpacerComponent(
+        modifier = modifier,
+        width = AppTheme.dimensions.bodyMargin,
+    )
 }
 
 @Composable
