@@ -90,23 +90,25 @@ private fun CategorizedSongsContentComponent(
     listState: LazyListState = rememberLazyListState(),
 ) {
     Box(modifier = modifier) {
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(vertical = 32.dp),
-        ) {
-            items(songsCategories) { songsCategory ->
-                if (songsCategory.songs.isNotEmpty()) {
-                    SongCategoryItemComponent(
-                        songsCategory = songsCategory,
-                        onSongDurationFormat = onSongDurationFormat,
-                        onSongSizeFormat = onSongSizeFormat,
-                        onViewAllClick = onViewAllClick,
-                        onSongStorageSelected = onSongStorageSelected,
-                        availableSongStorageTypes = availableSongStorageTypes,
-                    )
+        if (songsCategories.isNotEmpty()) {
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(vertical = 32.dp),
+            ) {
+                items(songsCategories) { songsCategory ->
+                    if (songsCategory.songs.isNotEmpty()) {
+                        SongCategoryItemComponent(
+                            songsCategory = songsCategory,
+                            onSongDurationFormat = onSongDurationFormat,
+                            onSongSizeFormat = onSongSizeFormat,
+                            onViewAllClick = onViewAllClick,
+                            onSongStorageSelected = onSongStorageSelected,
+                            availableSongStorageTypes = availableSongStorageTypes,
+                        )
+                    }
                 }
+                item { VerticalSpacerComponent(height = 78.dp) }
             }
-            item { VerticalSpacerComponent(height = 78.dp) }
         }
         if (isLoading) {
             ProgressComponent(
