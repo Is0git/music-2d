@@ -27,7 +27,7 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
     private val savedSongsMerger: SavedSongsMerger,
     private val storedAlbumSongsMapper: StoredAlbumSongsMapper,
 ) {
-    suspend fun watchAlbumWithStoredSongs(albumId: String): Flow<StoredSongsAlbum> =
+    fun watchAlbumWithStoredSongs(albumId: String): Flow<StoredSongsAlbum> =
         combine(
             memorySongsRepository.watchCount(),
             filesystemSongsRepository.watchCount()
@@ -45,7 +45,7 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
                     }
             }
 
-    private suspend fun mergeSongs(
+    private fun mergeSongs(
         songIds: List<String>,
         album: Album
     ) = combine(
