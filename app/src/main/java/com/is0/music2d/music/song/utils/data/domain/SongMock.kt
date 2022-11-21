@@ -67,7 +67,7 @@ object SongMock {
             )
         }
 
-    fun generateSongs(count: Int = 5): List<Song> = (1..count).map { index -> generateRandomSong() }
+    fun generateSongs(count: Int = 5): List<Song> = (1..count).map { generateRandomSong() }
 
     fun generateRandomSong() = Song(
         id = UUID.randomUUID().toString(),

@@ -8,8 +8,8 @@ import com.is0.music2d.music.album.utils.data.database.entity.AlbumWithSongsEnti
 import com.is0.music2d.music.album.utils.data.database.entity.toAlbum
 import com.is0.music2d.music.album.utils.data.database.entity.toEntity
 import com.is0.music2d.music.album.utils.data.domain.Album
-import com.is0.music2d.music.song.utils.data.database.data.SongsDao
-import com.is0.music2d.music.song.utils.data.database.data.entity.toEntity
+import com.is0.music2d.music.song.utils.data.database.SongsDao
+import com.is0.music2d.music.song.utils.data.database.entity.toEntity
 import com.is0.music2d.utils.database.AppDatabase
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.coroutines.CoroutineDispatcher

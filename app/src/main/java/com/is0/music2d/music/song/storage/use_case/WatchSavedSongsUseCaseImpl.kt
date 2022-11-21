@@ -2,7 +2,7 @@ package com.is0.music2d.music.song.storage.use_case
 
 import com.is0.music2d.music.song.storage.utils.data.SavedSongsRepository
 import com.is0.music2d.music.song.storage.utils.data.domain.SavedSong
-import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSongsRepository
+import com.is0.music2d.music.song.utils.data.database.repository.DatabaseSongsRepository
 import com.is0.music2d.music.song.utils.data.domain.Song
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

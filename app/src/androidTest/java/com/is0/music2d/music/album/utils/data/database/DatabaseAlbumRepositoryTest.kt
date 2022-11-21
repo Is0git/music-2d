@@ -8,7 +8,7 @@ import app.cash.turbine.test
 import com.is0.music2d.music.album.utils.data.database.dao.AlbumsDao
 import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.music.album.utils.data.domain.AlbumMock
-import com.is0.music2d.music.song.utils.data.database.data.SongsDao
+import com.is0.music2d.music.song.utils.data.database.SongsDao
 import com.is0.music2d.utils.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

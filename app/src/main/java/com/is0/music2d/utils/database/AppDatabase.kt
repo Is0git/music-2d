@@ -7,8 +7,8 @@ import com.is0.music2d.music.album.utils.data.database.dao.AlbumsWithSongsDao
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumEntity
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.dao.FilesystemSongsDao
 import com.is0.music2d.music.song.storage.filesystem.utils.data.database.entity.FilesystemSongEntity
-import com.is0.music2d.music.song.utils.data.database.data.SongsDao
-import com.is0.music2d.music.song.utils.data.database.data.entity.SongEntity
+import com.is0.music2d.music.song.utils.data.database.SongsDao
+import com.is0.music2d.music.song.utils.data.database.entity.SongEntity
 
 @Database(entities = [SongEntity::class, AlbumEntity::class, FilesystemSongEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {

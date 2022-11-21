@@ -3,7 +3,7 @@ package com.is0.music2d.main.home.library.storage_preview.use_case
 import com.is0.music2d.main.home.library.storage_preview.utils.data.domain.StorageSongsPreview
 import com.is0.music2d.music.song.storage.utils.data.SavedSongsRepository
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
-import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSongsRepository
+import com.is0.music2d.music.song.utils.data.database.repository.DatabaseSongsRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

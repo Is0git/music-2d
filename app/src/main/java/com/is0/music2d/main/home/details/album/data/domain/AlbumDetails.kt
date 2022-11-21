@@ -4,7 +4,7 @@ import com.is0.music2d.main.home.details.album.data.DETAILS_HEADER_IMAGES_COUNT
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumWithSongsEntity
 import com.is0.music2d.music.album.utils.data.domain.StoredSongsAlbum
 import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
-import com.is0.music2d.music.song.utils.data.database.data.entity.toSong
+import com.is0.music2d.music.song.utils.data.database.entity.toSong
 
 data class AlbumDetails(
     val name: String,

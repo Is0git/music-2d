@@ -6,7 +6,7 @@ import com.is0.music2d.music.song.storage.utils.data.domain.SavedSong
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.storage.utils.merge.SavedSongsMerger
 import com.is0.music2d.music.song.storage.utils.merge.SongsMergeResult
-import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSongsRepository
+import com.is0.music2d.music.song.utils.data.database.repository.DatabaseSongsRepository
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf

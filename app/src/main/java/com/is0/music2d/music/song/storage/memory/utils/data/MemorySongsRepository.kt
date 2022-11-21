@@ -58,7 +58,7 @@ class MemorySongsRepository @Inject constructor(
 
     override suspend fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>> =
         memorySongs.map { songs ->
-            songs.filter { songs -> songsIds.contains(songs.songId) }
+            songs.filter { song -> songsIds.contains(song.songId) }
         }
             .map { songs -> songs.map(MemorySongEntity::toDomain) }
             .flowOn(dispatcher)

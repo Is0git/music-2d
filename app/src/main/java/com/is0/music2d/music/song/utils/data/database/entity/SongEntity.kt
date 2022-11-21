@@ -1,4 +1,4 @@
-package com.is0.music2d.music.song.utils.data.database.data.entity
+package com.is0.music2d.music.song.utils.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
