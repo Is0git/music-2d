@@ -65,7 +65,7 @@ fun HomeNavigationBarComponent(
                     color = AppTheme.colors.surfaceColor.copy(alpha = 0.9f),
                     shape = CircleShape,
                 ),
-                onClick =  onClick,
+                onClick = onClick,
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = AppTheme.colors.primaryColor,
                 )

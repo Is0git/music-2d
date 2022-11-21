@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 interface SavedSongsRepository {
     fun watchSavedSongs(): Flow<List<SavedSong>>
 
+    fun watchCount(): Flow<Int>
+
+    fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>>
+
     suspend fun addSavedSong(savedSong: SavedSong)
 
     suspend fun toggleSavedSong(songId: String)
-
-    suspend fun watchCount(): Flow<Int>
-
-    suspend fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>>
 }

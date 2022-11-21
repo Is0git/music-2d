@@ -15,7 +15,7 @@ open class WatchStorageSongsPreviewUseCaseImpl @Inject constructor(
     private val savedSongsRepository: SavedSongsRepository,
     private val songStorageType: SongStorageType,
 ) : WatchStorageSongsPreviewUseCase {
-    override suspend fun watchStorageSongsPreview(): Flow<StorageSongsPreview> =
+    override fun watchStorageSongsPreview(): Flow<StorageSongsPreview> =
         combine(
             databaseSongsRepository.watchSongs(),
             savedSongsRepository.watchSavedSongs()

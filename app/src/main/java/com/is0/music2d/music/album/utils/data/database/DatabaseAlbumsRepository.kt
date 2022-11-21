@@ -14,8 +14,8 @@ import com.is0.music2d.utils.database.AppDatabase
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +27,7 @@ class DatabaseAlbumsRepository @Inject constructor(
     private val appDatabase: AppDatabase,
     @IO private val dispatcher: CoroutineDispatcher,
 ) : AlbumsRepository {
-    override suspend fun watchAlbums(count: Int): Flow<List<Album>> =
+    override fun watchAlbums(count: Int): Flow<List<Album>> =
         albumsWithSongsDao.watchAlbumsWithSongs().map { albumsWithSongs ->
             albumsWithSongs.map { album ->
                 if (count > 0) {
@@ -38,12 +38,12 @@ class DatabaseAlbumsRepository @Inject constructor(
             }
         }.map { albumWithSongs ->
             albumWithSongs.map(AlbumWithSongsEntity::toAlbum)
-        }
+        }.flowOn(dispatcher)
 
-    override suspend fun watchAlbum(albumId: String): Flow<Album> =
-        withContext(dispatcher) {
-            albumsWithSongsDao.watchAlbumWithSongs(albumId).map(AlbumWithSongsEntity::toAlbum)
-        }
+    override fun watchAlbum(albumId: String): Flow<Album> =
+        albumsWithSongsDao.watchAlbumWithSongs(albumId)
+            .map(AlbumWithSongsEntity::toAlbum)
+            .flowOn(dispatcher)
 
     override suspend fun addAlbums(albums: List<Album>) {
         appDatabase.withTransaction {

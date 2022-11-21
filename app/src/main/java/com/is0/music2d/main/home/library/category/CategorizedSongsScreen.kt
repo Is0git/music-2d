@@ -224,7 +224,6 @@ private fun CategorySongsListComponent(
             if (index == songs.size - 1) {
                 BodySpacerComponent()
             }
-
         }
     }
 }

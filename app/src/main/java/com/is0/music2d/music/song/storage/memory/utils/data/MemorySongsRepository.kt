@@ -24,9 +24,20 @@ class MemorySongsRepository @Inject constructor(
     @IO private val dispatcher: CoroutineDispatcher,
 ) : SavedSongsRepository {
     private val memorySongs: MutableStateFlow<PersistentList<MemorySongEntity>> = MutableStateFlow(persistentListOf())
-
     override fun watchSavedSongs(): Flow<List<SavedSong>> =
         memorySongs
+            .map { songs -> songs.map(MemorySongEntity::toDomain) }
+            .flowOn(dispatcher)
+
+    override fun watchCount(): Flow<Int> =
+        memorySongs.map {
+            memorySongs.value.size
+        }.flowOn(dispatcher)
+
+    override fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>> =
+        memorySongs.map { songs ->
+            songs.filter { song -> songsIds.contains(song.songId) }
+        }
             .map { songs -> songs.map(MemorySongEntity::toDomain) }
             .flowOn(dispatcher)
 
@@ -50,16 +61,4 @@ class MemorySongsRepository @Inject constructor(
             }.also { newSongs -> memorySongs.emit(newSongs) }
         }
     }
-
-    override suspend fun watchCount(): Flow<Int> =
-        memorySongs.map {
-            memorySongs.value.size
-        }.flowOn(dispatcher)
-
-    override suspend fun watchSongsByIds(songsIds: List<String>): Flow<List<SavedSong>> =
-        memorySongs.map { songs ->
-            songs.filter { song -> songsIds.contains(song.songId) }
-        }
-            .map { songs -> songs.map(MemorySongEntity::toDomain) }
-            .flowOn(dispatcher)
 }
