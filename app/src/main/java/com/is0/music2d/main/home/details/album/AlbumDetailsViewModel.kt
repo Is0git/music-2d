@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package com.is0.music2d.main.home.details.album
 
 import androidx.lifecycle.SavedStateHandle
@@ -15,8 +17,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
-
-@FlowPreview
 @HiltViewModel
 class AlbumDetailsViewModel @Inject constructor(
     private val watchAlbumDetailsUseCase: WatchAlbumDetailsUseCase,
