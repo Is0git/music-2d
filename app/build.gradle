@@ -9,6 +9,7 @@ plugins {
 }
 
 apply from: "detekt.gradle"
+apply from: 'versioning.gradle'
 
 android {
     namespace 'com.is0.music2d'
@@ -18,8 +19,8 @@ android {
         applicationId "com.is0.music2d"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode gitVersionCode
+        versionName gitVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
