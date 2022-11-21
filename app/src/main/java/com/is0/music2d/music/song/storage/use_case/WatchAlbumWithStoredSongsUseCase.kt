@@ -32,8 +32,7 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
             memorySongsRepository.watchCount(),
             filesystemSongsRepository.watchCount()
         ) { memorySongsCount, filesystemSongsCount -> memorySongsCount + filesystemSongsCount }
-            .scan(-1) { first, second -> if (first != second) second else first }
-            .distinctUntilChanged()
+            .distinctUntilChanged { old, new -> old == new }
             .flatMapLatest {
                 databaseAlbumsRepository.watchAlbum(albumId)
                     .flatMapLatest { album ->
