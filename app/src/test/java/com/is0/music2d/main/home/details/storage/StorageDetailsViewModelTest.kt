@@ -7,6 +7,7 @@ import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.test.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -34,6 +35,8 @@ class StorageDetailsViewModelTest {
     fun setUp() {
         watchStorageSongsDetailsUseCase = mock()
         toggleSavedSongUseCase = mock()
+
+        given(watchStorageSongsDetailsUseCase.watchStorageSongsDetails()).willReturn(emptyFlow())
 
         storageDetailsViewModel = StorageDetailsViewModel(
             watchStorageSongsDetailsUseCase = watchStorageSongsDetailsUseCase,
