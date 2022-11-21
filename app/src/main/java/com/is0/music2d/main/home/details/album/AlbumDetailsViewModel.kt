@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+
 @HiltViewModel
 class AlbumDetailsViewModel @Inject constructor(
     private val watchAlbumDetailsUseCase: WatchAlbumDetailsUseCase,
