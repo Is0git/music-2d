@@ -1,5 +1,5 @@
 # music-2d
-Clean architecture, MVVM, Compose, Coroutines/Flow, Hilt
+Clean architecture, MVVM, Coroutines/Flow, Hilt, Compose, Material 3
 
 App for storing your music in the memory
 
