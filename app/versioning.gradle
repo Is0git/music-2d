@@ -1,0 +1,17 @@
+ext {
+    try {
+        def commitCount = "git rev-list --first-parent --count origin/master".execute().text.trim()
+        def missingCommitCount = "git rev-list --first-parent --count origin/master...HEAD HEAD..origin/master".execute().text.trim()
+        gitVersionCode = Integer.parseInt(commitCount) - Integer.parseInt(missingCommitCount)
+
+        gitVersionName = "git describe --tags --always".execute().text.trim()
+    } catch (Throwable throwable) {
+        throwable.printStackTrace()
+        gitVersionCode = 1
+        gitVersionName = "1.0.0"
+    }
+}
+task appVersion() {
+    println "versionName:" + gitVersionName
+    println "versionCode:" + gitVersionCode
+}

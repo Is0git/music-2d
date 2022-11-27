@@ -13,7 +13,7 @@ import javax.inject.Inject
 class WatchAlbumDetailsUseCase @Inject constructor(
     private val watchAlbumWithStoredSongsUseCase: WatchAlbumWithStoredSongsUseCase,
 ) {
-    suspend fun watchAlbumDetails(albumId: String): Flow<AlbumDetails> =
+    fun watchAlbumDetails(albumId: String): Flow<AlbumDetails> =
         watchAlbumWithStoredSongsUseCase.watchAlbumWithStoredSongs(albumId)
             .map(StoredSongsAlbum::toDetails)
 }

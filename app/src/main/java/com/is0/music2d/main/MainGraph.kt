@@ -1,6 +1,6 @@
 package com.is0.music2d.main
 
-import okhttp3.internal.format
+import java.lang.String.format
 
 sealed class MainGraph {
     abstract val routePattern: String

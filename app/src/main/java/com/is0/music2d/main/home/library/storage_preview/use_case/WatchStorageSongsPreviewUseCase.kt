@@ -4,5 +4,5 @@ import com.is0.music2d.main.home.library.storage_preview.utils.data.domain.Stora
 import kotlinx.coroutines.flow.Flow
 
 interface WatchStorageSongsPreviewUseCase {
-    suspend fun watchStorageSongsPreview(): Flow<StorageSongsPreview>
+    fun watchStorageSongsPreview(): Flow<StorageSongsPreview>
 }

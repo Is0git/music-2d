@@ -29,6 +29,7 @@ private val BottomNavigationShape = RoundedCornerShape(24.dp)
 @Composable
 fun HomeNavigationBarComponent(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -64,7 +65,7 @@ fun HomeNavigationBarComponent(
                     color = AppTheme.colors.surfaceColor.copy(alpha = 0.9f),
                     shape = CircleShape,
                 ),
-                onClick = { },
+                onClick = onClick,
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = AppTheme.colors.primaryColor,
                 )

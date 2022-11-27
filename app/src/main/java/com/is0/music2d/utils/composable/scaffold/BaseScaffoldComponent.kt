@@ -24,10 +24,11 @@ fun BaseScaffoldComponent(
     navigationIcon: @Composable () -> Unit = {},
     bottomBar: (@Composable () -> Unit)? = null,
     isAppBarCollapsable: Boolean = false,
+    isLoading: Boolean = false,
     content: @Composable (paddingValues: PaddingValues) -> Unit = {},
 ) {
     val isBackButtonEnabled = onNavigateUp != null
-    val isLoading by baseViewModel.isLoading.observeAsState(false)
+    val isLoadingInternal by baseViewModel.isLoading.observeAsState(false)
 
     val errorFormatter = LocalErrorFormatter.current
 
@@ -51,7 +52,7 @@ fun BaseScaffoldComponent(
             isAppBarCollapsable = isAppBarCollapsable,
             bottomBar = bottomBar,
             onBackClick = if (isBackButtonEnabled) baseViewModel::onBackSelected else null,
-            isLoading = isLoading,
+            isLoading = isLoadingInternal || isLoading,
             navigationIcon = navigationIcon,
             content = content
         )

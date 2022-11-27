@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.is0.music2d.utils.observer.SingleLiveData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.util.concurrent.CancellationException
 
@@ -45,6 +50,28 @@ abstract class BaseViewModel : ViewModel() {
         this.error.postValue(error)
         Timber.e(error)
     }
+
+    protected fun <T> Flow<T>.handleErrors(): Flow<T> =
+        catch { error ->
+            setError(error)
+        }
+
+    protected fun <T> Flow<T>.showLoading(): Flow<T> =
+        onStart {
+            showLoading(true)
+        }
+
+    protected fun <T> Flow<T>.hideLoading(): Flow<T> =
+        onEach {
+            showLoading(false)
+        }.onCompletion {
+            showLoading(false)
+        }
+
+    protected fun <T> Flow<T>.withStateHandler(): Flow<T> =
+        showLoading()
+            .handleErrors()
+            .hideLoading()
 
     protected fun showLoading(isLoading: Boolean) {
         this.isLoading.postValue(isLoading)

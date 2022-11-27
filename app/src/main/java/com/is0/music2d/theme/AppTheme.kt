@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.is0.music2d.theme.color.AppColors
 import com.is0.music2d.theme.color.defaultAppColors
 import com.is0.music2d.theme.typograhpy.AppTypography
@@ -27,6 +28,13 @@ fun AppTheme(content: @Composable () -> Unit) {
         shapes = defaultAppShapes(),
         dimension = defaultAppDimension(),
     )
+
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setSystemBarsColor(
+        color = appThemeData.colors.backgroundColor,
+    )
+
     MaterialTheme(
         colorScheme = MaterialTheme.colorScheme.copy(
             primary = appThemeData.colors.primaryColor,

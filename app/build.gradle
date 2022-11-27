@@ -9,6 +9,7 @@ plugins {
 }
 
 apply from: "detekt.gradle"
+apply from: 'versioning.gradle'
 
 android {
     namespace 'com.is0.music2d'
@@ -18,8 +19,8 @@ android {
         applicationId "com.is0.music2d"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode gitVersionCode
+        versionName gitVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -110,8 +111,6 @@ dependencies {
     implementation libs.accompanist.pager
     implementation libs.kotlin.immutable.collections
     implementation libs.hilt.android
-    implementation 'androidx.test.ext:junit-ktx:1.1.4'
-
     kapt libs.hilt.compiler
     implementation libs.timber
     implementation libs.runtime.livedata
@@ -123,6 +122,7 @@ dependencies {
     implementation libs.kotlinx.collections.immutable
     implementation libs.compose.navigation
     implementation libs.accompanist.navigation.animation
+    implementation libs.accompanist.systemuicontroller
     implementation libs.accompanist.placeholder
     implementation libs.hilt.navigation.compose
     implementation libs.room
@@ -144,4 +144,5 @@ dependencies {
     androidTestImplementation libs.androidx.test.runner
     androidTestImplementation libs.androidx.test.rules
     androidTestImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
 }

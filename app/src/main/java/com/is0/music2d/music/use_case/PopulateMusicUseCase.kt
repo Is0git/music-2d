@@ -12,14 +12,10 @@ class PopulateMusicUseCase @Inject constructor(
     private val databaseAlbumsRepository: DatabaseAlbumsRepository,
 ) {
     suspend fun populateMusic(albumsCount: Long = 10) {
-        coroutineScope {
-            launch {
-                if (!databaseAlbumsRepository.exists()) {
-                    val albums = AlbumMock.getRandomAlbums(albumsCount)
+        if (!databaseAlbumsRepository.exists()) {
+            val albums = AlbumMock.getRandomAlbums(albumsCount)
 
-                    databaseAlbumsRepository.addAlbums(albums)
-                }
-            }
+            databaseAlbumsRepository.addAlbums(albums)
         }
     }
 }

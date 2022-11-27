@@ -13,7 +13,7 @@ class WatchSongsPreviewsUseCase @Inject constructor(
     private val watchMemorySongsPreviewUseCase: WatchMemorySongsPreviewUseCase,
     private val watchFilesystemSongsPreviewUseCase: WatchFilesystemSongsPreviewUseCase,
 ) {
-    suspend fun watchSongsPreviews(): Flow<List<StorageSongsPreview>> = combine(
+    fun watchSongsPreviews(): Flow<List<StorageSongsPreview>> = combine(
         watchMemorySongsPreviewUseCase.watchStorageSongsPreview(),
         watchFilesystemSongsPreviewUseCase.watchStorageSongsPreview()
     ) { memorySongsPreviews, filesystemSongsPreviews ->

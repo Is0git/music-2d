@@ -16,6 +16,7 @@ fun SongCoverComponent(
     modifier: Modifier = Modifier,
     songImageUrl: String = "",
     songInfoComponent: @Composable BoxScope.() -> Unit = {},
+    menu: @Composable () -> Unit = {},
     icon: @Composable () -> Unit = {},
 ) {
     Box(
@@ -29,6 +30,9 @@ fun SongCoverComponent(
         songInfoComponent()
         Box(modifier = Modifier.align(Alignment.TopEnd)) {
             icon()
+        }
+        Box(modifier = Modifier.align(Alignment.TopStart)) {
+            menu()
         }
     }
 }

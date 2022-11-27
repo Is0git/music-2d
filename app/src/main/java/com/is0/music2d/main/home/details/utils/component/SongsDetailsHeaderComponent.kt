@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,7 +54,7 @@ fun SongsDetailsHeaderComponent(
             title = title,
         )
         SongHeaderInfoComponent(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomStart),
             durationText = durationText,
             songCount = songCount,
         )
@@ -171,24 +170,22 @@ private fun SongHeaderInfoComponent(
     songCount: Int,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (durationText.isNotEmpty()) {
-            SongHeaderInfoElementComponent(
-                text = durationText,
-                icon = { SongDurationIconComponent() },
-            )
-        }
-        if (songCount > 0) {
-            SongHeaderInfoElementComponent(
-                text = stringResource(
-                    R.string.songs_details_header_songs_count_text,
-                    songCount,
-                ),
-                icon = { SongIconComponent() },
-            )
-        }
+        SongHeaderInfoElementComponent(
+            isVisible = durationText.isNotEmpty(),
+            text = durationText,
+            icon = { SongDurationIconComponent() },
+        )
+        SongHeaderInfoElementComponent(
+            isVisible = songCount > 0,
+            text = stringResource(
+                R.string.songs_details_header_songs_count_text,
+                songCount,
+            ),
+            icon = { SongIconComponent() },
+        )
     }
 }
 

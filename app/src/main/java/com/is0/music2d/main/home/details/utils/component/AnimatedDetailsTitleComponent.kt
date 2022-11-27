@@ -70,9 +70,21 @@ private fun BoxScope.PrimaryAnimatedTitleComponent(title: String) {
         SongsDetailsTitleComponent(
             modifier = Modifier.scale(4f),
             title = word.uppercase(),
-            alignment = if (index % 2 == 0) Alignment.TopCenter else Alignment.BottomCenter,
+            alignment = getTitleAlignment(titleWords, index),
             translationX = translationX,
         )
+    }
+}
+
+@Composable
+private fun getTitleAlignment(
+    titleWords: List<String>,
+    index: Int
+): Alignment {
+    return if (titleWords.size == 1) {
+        Alignment.Center
+    } else {
+        if (index % 2 == 0) Alignment.TopCenter else Alignment.BottomCenter
     }
 }
 

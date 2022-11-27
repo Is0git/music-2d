@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.scan
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -27,12 +26,11 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
     private val savedSongsMerger: SavedSongsMerger,
     private val storedAlbumSongsMapper: StoredAlbumSongsMapper,
 ) {
-    suspend fun watchAlbumWithStoredSongs(albumId: String): Flow<StoredSongsAlbum> =
+    fun watchAlbumWithStoredSongs(albumId: String): Flow<StoredSongsAlbum> =
         combine(
             memorySongsRepository.watchCount(),
             filesystemSongsRepository.watchCount()
         ) { memorySongsCount, filesystemSongsCount -> memorySongsCount + filesystemSongsCount }
-            .scan(-1) { first, second -> if (first != second) second else first }
             .distinctUntilChanged()
             .flatMapLatest {
                 databaseAlbumsRepository.watchAlbum(albumId)
@@ -45,7 +43,7 @@ class WatchAlbumWithStoredSongsUseCase @Inject constructor(
                     }
             }
 
-    private suspend fun mergeSongs(
+    private fun mergeSongs(
         songIds: List<String>,
         album: Album
     ) = combine(

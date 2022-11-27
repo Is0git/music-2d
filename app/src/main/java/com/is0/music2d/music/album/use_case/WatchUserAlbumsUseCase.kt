@@ -10,7 +10,7 @@ import javax.inject.Inject
 class WatchUserAlbumsUseCase @Inject constructor(
     private val databaseAlbumsRepository: DatabaseAlbumsRepository,
 ) {
-    suspend fun watchUserAlbums(
+    fun watchUserAlbums(
         count: Int = -1,
     ): Flow<List<Album>> = databaseAlbumsRepository.watchAlbums(count)
 }

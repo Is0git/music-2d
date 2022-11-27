@@ -4,11 +4,10 @@ import com.is0.music2d.main.home.details.storage.utils.data.StorageDetailsSong
 import com.is0.music2d.music.song.storage.utils.data.SavedSongsRepository
 import com.is0.music2d.music.song.storage.utils.merge.SavedSongsMerger
 import com.is0.music2d.music.song.storage.utils.merge.SongsMergeResult
-import com.is0.music2d.music.song.utils.data.database.data.repository.DatabaseSongsRepository
+import com.is0.music2d.music.song.utils.data.database.repository.DatabaseSongsRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import timber.log.Timber
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -17,25 +16,17 @@ open class WatchStorageSongsDetailsUseCaseImpl @Inject constructor(
     private val savedSongsRepository: SavedSongsRepository,
     private val savedSongsMerger: SavedSongsMerger,
 ) : WatchStorageSongsDetailsUseCase {
-    override suspend fun watchStorageSongsDetails(): Flow<List<StorageDetailsSong>> {
+    override fun watchStorageSongsDetails(): Flow<List<StorageDetailsSong>> {
         return combine(
             savedSongsRepository.watchSavedSongs(),
             databaseSongsRepository.watchSongs()
         ) { savedSongs, databaseSongs ->
-            val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)
-
-            when (mergeResult) {
-                is SongsMergeResult.Merged -> {
-                    Timber.d("savedSongs: $savedSongs")
-                    mergeResult.songsWithStorageType.onEach {
-                        Timber.d("id ${it.key.id}, size: ${it.value.size}")
-                    }
-                    mergeResult.songsWithStorageType.map { (song, songStorageTypes) ->
-                        StorageDetailsSong(
-                            song = song,
-                            isSaved = songStorageTypes.isNotEmpty(),
-                        )
-                    }
+            when (val mergeResult: SongsMergeResult = savedSongsMerger.mergeSavedSongs(databaseSongs, savedSongs)) {
+                is SongsMergeResult.Merged -> mergeResult.songsWithStorageType.map { (song, songStorageTypes) ->
+                    StorageDetailsSong(
+                        song = song,
+                        isSaved = songStorageTypes.isNotEmpty(),
+                    )
                 }
                 else -> databaseSongs.map { song ->
                     StorageDetailsSong(

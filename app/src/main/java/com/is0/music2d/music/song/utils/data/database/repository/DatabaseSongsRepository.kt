@@ -1,8 +1,8 @@
-package com.is0.music2d.music.song.utils.data.database.data.repository
+package com.is0.music2d.music.song.utils.data.database.repository
 
-import com.is0.music2d.music.song.utils.data.database.data.SongsDao
-import com.is0.music2d.music.song.utils.data.database.data.entity.SongEntity
-import com.is0.music2d.music.song.utils.data.database.data.entity.toSong
+import com.is0.music2d.music.song.utils.data.database.SongsDao
+import com.is0.music2d.music.song.utils.data.database.entity.SongEntity
+import com.is0.music2d.music.song.utils.data.database.entity.toSong
 import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.utils.di.qualifier.IO
 import kotlinx.coroutines.CoroutineDispatcher

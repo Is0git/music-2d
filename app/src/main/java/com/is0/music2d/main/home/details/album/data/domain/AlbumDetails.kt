@@ -4,7 +4,7 @@ import com.is0.music2d.main.home.details.album.data.DETAILS_HEADER_IMAGES_COUNT
 import com.is0.music2d.music.album.utils.data.database.entity.AlbumWithSongsEntity
 import com.is0.music2d.music.album.utils.data.domain.StoredSongsAlbum
 import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
-import com.is0.music2d.music.song.utils.data.database.data.entity.toSong
+import com.is0.music2d.music.song.utils.data.database.entity.toSong
 
 data class AlbumDetails(
     val name: String,
@@ -35,6 +35,6 @@ fun StoredSongsAlbum.toDetails(): AlbumDetails = AlbumDetails(
     name = album.name,
     storedSongs = storedSongs,
     totalDuration = album.songs.sumOf { song -> song.durationMillis },
-    albumPreviewImages = album.songs.take(DETAILS_HEADER_IMAGES_COUNT).map { song -> song.imageUrl },
+    albumPreviewImages = storedSongs.take(DETAILS_HEADER_IMAGES_COUNT).map { storedSong -> storedSong.song.imageUrl },
     albumSongsCount = album.songs.size,
 )

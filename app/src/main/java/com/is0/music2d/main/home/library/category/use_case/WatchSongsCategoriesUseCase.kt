@@ -13,7 +13,7 @@ class WatchSongsCategoriesUseCase @Inject constructor(
     private val watchAlbumsWithStoredSongsUseCase: WatchAlbumsWithStoredSongsUseCase,
     private val songsCategoryMapper: SongsCategoryMapper,
 ) {
-    suspend fun watchSongsCategories(count: Int): Flow<List<SongsCategory>> =
+    fun watchSongsCategories(count: Int): Flow<List<SongsCategory>> =
         watchAlbumsWithStoredSongsUseCase.watchAlbumsWithStoredSongs(count).map { storedSongsAlbums ->
             storedSongsAlbums.map { storedSongsAlbum ->
                 songsCategoryMapper.toSongsCategory(storedSongsAlbum)
