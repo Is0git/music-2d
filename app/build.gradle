@@ -129,6 +129,7 @@ dependencies {
     kapt libs.room.compiler
 
     debugImplementation libs.androidx.compose.ui.tooling
+    debugImplementation libs.androidx.compose.ui.test.manifest
 
     testImplementation libs.mockito.core
     testImplementation libs.hamcrest
@@ -145,4 +146,5 @@ dependencies {
     androidTestImplementation libs.androidx.test.rules
     androidTestImplementation libs.junit
     androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.compose.ui.test.junit4
 }
