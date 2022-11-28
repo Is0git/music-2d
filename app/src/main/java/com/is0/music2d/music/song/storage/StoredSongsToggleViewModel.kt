@@ -7,6 +7,8 @@ import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
 import com.is0.music2d.utils.const.ACTION_LOADING_DELAY_MILLIS
 import com.is0.music2d.utils.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,11 +19,15 @@ class StoredSongsToggleViewModel @Inject constructor(
 ) : BaseViewModel() {
     val availableSongStorageTypes: List<SongStorageType> = allSongStorageTypes()
 
+    private var toggleSavedSongJob: Job? = Job()
+
     fun toggleSavedSong(
         songId: String,
         songStorageType: SongStorageType,
     ) {
-        viewModelScope.launch {
+        toggleSavedSongJob?.cancel()
+
+        toggleSavedSongJob = viewModelScope.launch {
             runCatching {
                 isLoading.postValue(true)
 
