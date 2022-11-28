@@ -2,8 +2,6 @@ package com.is0.music2d.music.use_case
 
 import com.is0.music2d.music.album.utils.data.database.DatabaseAlbumsRepository
 import com.is0.music2d.music.album.utils.data.domain.AlbumMock
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
