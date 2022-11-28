@@ -6,14 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.is0.music2d.main.home.details.storage.filesystem.FileSystemStorageDetailsViewModel
+import com.is0.music2d.main.home.details.storage.memory.MemoryStorageDetailsViewModel
 import com.is0.music2d.main.home.details.storage.utils.component.OnSongSaveClick
 import com.is0.music2d.main.home.details.storage.utils.component.StorageSongItemComponent
 import com.is0.music2d.main.home.details.storage.utils.data.StorageDetails
 import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
-import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
+import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.music.song.utils.formatter.FormatSongDuration
@@ -25,8 +28,8 @@ import com.is0.music2d.utils.size.FormatFileSize
 @Composable
 fun StorageDetailsScreen(
     modifier: Modifier = Modifier,
-    viewModel: StorageDetailsViewModel,
     storageType: SongStorageType,
+    viewModel: StorageDetailsViewModel = createStorageDetailsViewModel(storageType),
     navController: NavController = rememberNavController(),
 ) {
     val storageDetails by viewModel.storageDetails.observeAsState(null)
@@ -90,3 +93,12 @@ fun StorageDetailsContentComponent(
         }
     )
 }
+
+
+@Composable
+private fun createStorageDetailsViewModel(songStorageType: SongStorageType) =
+    when (songStorageType) {
+        SongStorageType.MEMORY -> hiltViewModel<MemoryStorageDetailsViewModel>()
+        SongStorageType.FILESYSTEM -> hiltViewModel<FileSystemStorageDetailsViewModel>()
+        SongStorageType.NONE -> error("ViewModel does not exist for this storage type: $songStorageType")
+    }

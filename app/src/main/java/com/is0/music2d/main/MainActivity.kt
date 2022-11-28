@@ -111,21 +111,11 @@ class MainActivity : ComponentActivity() {
             val storageTypeString = navBackStackEntry.arguments?.getString(MainGraph.StorageDetails.STORAGE_TYPE)
             if (storageTypeString != null) {
                 val songStorageType: SongStorageType = SongStorageType.valueOf(storageTypeString)
-
                 StorageDetailsScreen(
-                    viewModel = createStorageDetailsViewModel(songStorageType),
                     navController = navController,
                     storageType = songStorageType,
                 )
             }
         }
     }
-
-    @Composable
-    private fun createStorageDetailsViewModel(songStorageType: SongStorageType) =
-        when (songStorageType) {
-            SongStorageType.MEMORY -> hiltViewModel<MemoryStorageDetailsViewModel>()
-            SongStorageType.FILESYSTEM -> hiltViewModel<FileSystemStorageDetailsViewModel>()
-            SongStorageType.NONE -> error("Song storage type not provided")
-        }
 }
