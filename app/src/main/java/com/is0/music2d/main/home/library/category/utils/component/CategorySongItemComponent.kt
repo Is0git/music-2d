@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
@@ -37,6 +35,7 @@ import com.is0.music2d.music.utils.data.domain.Artist
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
 import com.is0.music2d.utils.composable.icon.StorageIconComponent
+import com.is0.music2d.utils.composable.modifier.placeholder
 import com.is0.music2d.utils.composable.padding.HorizontalSpacerComponent
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
@@ -50,6 +49,7 @@ fun CategorySongItemComponent(
     onSongDurationFormat: (durationMillis: Long) -> String,
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    isLoading: Boolean,
 ) {
     val song = storedSong.song
 
@@ -71,6 +71,7 @@ fun CategorySongItemComponent(
         onSongStorageSelected = onSongStorageSelected,
         availableSongStorageTypes = availableSongStorageTypes,
         storedSong = storedSong,
+        isLoading = isLoading,
     )
 }
 
@@ -84,12 +85,14 @@ private fun CategorySongItemContentComponent(
     formatSongStorageType: (storageType: SongStorageType) -> String,
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     songStorageTypes: List<SongStorageType> = emptyList(),
+    isLoading: Boolean = false,
 ) {
     Column(modifier = modifier.width(IntrinsicSize.Min)) {
         CategorySongCoverComponent(
             modifier = Modifier
                 .requiredHeight(150.dp)
                 .aspectRatio(4 / 3f),
+            isLoading = isLoading,
             songSizeText = songSizeText,
             songImageUrl = storedSong.song.imageUrl,
             songDurationText = songDurationText,
@@ -110,6 +113,7 @@ private fun CategorySongItemContentComponent(
         SongInfoComponent(
             songName = storedSong.song.title,
             artist = storedSong.song.artist,
+            isLoading = isLoading,
         )
     }
 }
@@ -121,11 +125,13 @@ private fun CategorySongCoverComponent(
     songImageUrl: String = "",
     songDurationText: String = "",
     songStorageTypes: List<SongStorageType> = emptyList(),
+    isLoading: Boolean = false,
     categoryMenu: @Composable () -> Unit = {},
 ) {
     SongCoverComponent(
         modifier = modifier,
         songImageUrl = songImageUrl,
+        isLoading = isLoading,
         songInfoComponent = {
             SongCoverInfoComponent(
                 modifier = Modifier
@@ -186,6 +192,7 @@ private fun SongInfoComponent(
     modifier: Modifier = Modifier,
     songName: String,
     artist: Artist,
+    isLoading: Boolean,
 ) {
     Row(
         modifier = modifier,
@@ -194,11 +201,13 @@ private fun SongInfoComponent(
         SongArtistAvatarComponent(
             aristImageUrl = artist.artistImageUrl,
             artistId = artist.id,
+            isLoading = isLoading,
         )
         HorizontalSpacerComponent(width = AppTheme.dimensions.smallComponentGap)
         SongInfoLiteralComponent(
             songName = songName,
             songArtistName = artist.name,
+            isLoading = isLoading,
         )
     }
 }
@@ -208,11 +217,13 @@ private fun SongArtistAvatarComponent(
     modifier: Modifier = Modifier,
     aristImageUrl: String,
     artistId: String,
+    isLoading: Boolean,
 ) {
     ArtistAvatarComponent(
         modifier = modifier,
         artistImageUrl = aristImageUrl,
         key = aristImageUrl + artistId,
+        isLoading = isLoading,
     )
 }
 
@@ -221,13 +232,20 @@ private fun SongInfoLiteralComponent(
     modifier: Modifier = Modifier,
     songName: String,
     songArtistName: String,
+    isLoading: Boolean,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
     ) {
-        SongNameComponent(name = songName)
-        SongAristNameComponent(artistName = songArtistName)
+        SongNameComponent(
+            name = songName,
+            isLoading = isLoading,
+        )
+        SongAristNameComponent(
+            artistName = songArtistName,
+            isLoading = isLoading,
+        )
     }
 }
 
@@ -235,9 +253,13 @@ private fun SongInfoLiteralComponent(
 private fun SongNameComponent(
     modifier: Modifier = Modifier,
     name: String,
+    isLoading: Boolean,
 ) {
     LabelLargeTextComponent(
-        modifier = modifier,
+        modifier = modifier.placeholder(
+            visible = isLoading,
+            shape = AppTheme.shapes.songCoverShape,
+        ),
         text = name,
         lines = 2,
         color = AppTheme.colors.onBackgroundColor,
@@ -249,9 +271,13 @@ private fun SongNameComponent(
 private fun SongAristNameComponent(
     modifier: Modifier = Modifier,
     artistName: String,
+    isLoading: Boolean,
 ) {
     LabelMediumTextComponent(
-        modifier = modifier,
+        modifier = modifier.placeholder(
+            visible = isLoading,
+            shape = AppTheme.shapes.songCoverShape,
+        ),
         text = artistName,
         color = AppTheme.colors.onSurfaceColor,
         lines = 1,

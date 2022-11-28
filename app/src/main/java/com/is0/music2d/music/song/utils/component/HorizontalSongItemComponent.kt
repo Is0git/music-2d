@@ -20,6 +20,7 @@ import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.duration.DurationComponent
+import com.is0.music2d.utils.composable.modifier.placeholder
 import com.is0.music2d.utils.composable.text.LabelLargeTextComponent
 import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
 import com.is0.music2d.utils.data.mock.ImageMock
@@ -31,6 +32,7 @@ fun HorizontalSongItemComponent(
     songDurationText: String,
     songSizeText: String,
     songImageUrl: String,
+    isLoading: Boolean = false,
     action: @Composable () -> Unit = {},
 ) {
     HorizontalSongItemContentComponent(
@@ -40,6 +42,7 @@ fun HorizontalSongItemComponent(
         songSizeText = songSizeText,
         songImageUrl = songImageUrl,
         action = action,
+        isLoading = isLoading,
     )
 }
 
@@ -51,6 +54,7 @@ private fun HorizontalSongItemContentComponent(
     songSizeText: String,
     songImageUrl: String,
     action: @Composable () -> Unit = {},
+    isLoading: Boolean,
 ) {
     Surface(modifier = modifier) {
         Row(
@@ -62,6 +66,7 @@ private fun HorizontalSongItemContentComponent(
         ) {
             SmallSongCoverComponent(
                 songImageUrl = songImageUrl,
+                isLoading = isLoading,
             )
             SongItemInfoComponent(
                 modifier = Modifier
@@ -71,6 +76,7 @@ private fun HorizontalSongItemContentComponent(
                 artistName = song.artist.name,
                 songDurationText = songDurationText,
                 songSizeText = songSizeText,
+                isLoading = isLoading,
             )
             action()
         }
@@ -81,10 +87,12 @@ private fun HorizontalSongItemContentComponent(
 private fun SmallSongCoverComponent(
     modifier: Modifier = Modifier,
     songImageUrl: String = "",
+    isLoading: Boolean,
 ) {
     SongCoverComponent(
         modifier = modifier.requiredSize(AppTheme.dimensions.smallImageSize),
         songImageUrl = songImageUrl,
+        isLoading = isLoading,
     )
 }
 
@@ -95,16 +103,24 @@ private fun SongItemInfoComponent(
     songName: String,
     songDurationText: String,
     songSizeText: String,
+    isLoading: Boolean,
 ) {
+    val placeholderModifier = Modifier.placeholder(
+        visible = isLoading,
+        shape = AppTheme.shapes.songCoverShape,
+    )
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.smallComponentGap),
     ) {
         SongItemLabelComponent(
+            modifier = placeholderModifier,
             songName = songName,
             artistName = artistName,
         )
         SongItemSubtitleComponent(
+            modifier = placeholderModifier,
             durationText = songDurationText,
             sizeText = songSizeText,
         )
@@ -171,6 +187,7 @@ fun HorizontalSongItemContentComponentPreview() {
             songDurationText = "3 h 2m",
             songSizeText = "43.2MB",
             songImageUrl = ImageMock.randomImage,
+            isLoading = false,
         )
     }
 }

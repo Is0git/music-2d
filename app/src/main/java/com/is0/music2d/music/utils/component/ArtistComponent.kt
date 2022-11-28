@@ -11,13 +11,15 @@ fun ArtistAvatarComponent(
     modifier: Modifier = Modifier,
     artistImageUrl: String,
     key: String? = null,
+    isLoading: Boolean = false,
 ) {
     CircleAvatarComponent(
         modifier = modifier,
         imageUrl = artistImageUrl,
+        key = key,
         size = AppTheme.dimensions.avatarSize,
         borderColor = AppTheme.colors.secondaryColor,
         borderSize = 2.dp,
-        key = key,
+        isLoading = isLoading,
     )
 }

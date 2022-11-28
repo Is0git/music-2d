@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.modifier.placeholder
 import com.is0.music2d.utils.data.mock.ImageMock
 
 @Composable
@@ -21,10 +22,15 @@ fun CircleAvatarComponent(
     borderSize: Dp = Dp.Unspecified,
     borderColor: Color = Color.Unspecified,
     key: String? = null,
+    isLoading: Boolean = false,
 ) {
     ImageComponent(
         modifier = modifier
             .size(size)
+            .placeholder(
+                visible = isLoading,
+                shape = CircleShape,
+            )
             .clip(CircleShape)
             .border(borderSize, borderColor, CircleShape),
         imageUrl = imageUrl,
