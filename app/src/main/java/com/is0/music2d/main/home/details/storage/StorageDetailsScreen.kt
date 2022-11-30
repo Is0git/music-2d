@@ -87,7 +87,6 @@ fun StorageDetailsContentComponent(
     }
 }
 
-
 @Composable
 private fun createStorageDetailsViewModel(songStorageType: SongStorageType) =
     when (songStorageType) {

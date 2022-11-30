@@ -82,7 +82,6 @@ fun AlbumDetailsScreen(
             }
         }
     }
-
 }
 
 @Composable
