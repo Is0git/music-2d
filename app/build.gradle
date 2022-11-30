@@ -111,6 +111,7 @@ dependencies {
     implementation libs.accompanist.pager
     implementation libs.kotlin.immutable.collections
     implementation libs.hilt.android
+    implementation libs.me.onebone.toolbar.compose
     kapt libs.hilt.compiler
     implementation libs.timber
     implementation libs.runtime.livedata
