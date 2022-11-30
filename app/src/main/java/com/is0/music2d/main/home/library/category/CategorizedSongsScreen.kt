@@ -132,7 +132,7 @@ private fun CategorizedSongsContentComponent(
 }
 
 private fun LazyListScope.loadingSongCategoriesComponent() {
-    val songsCategories = SongCategoryMock.getCategories(4)
+    val songsCategories = SongCategoryMock.getCategories(2)
 
     items(songsCategories) { songsCategory ->
         if (songsCategory.songs.isNotEmpty()) {
