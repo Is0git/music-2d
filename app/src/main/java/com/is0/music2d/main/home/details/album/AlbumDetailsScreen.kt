@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
+import com.is0.music2d.main.home.details.utils.component.SongsDetailsHeaderComponent
 import com.is0.music2d.music.song.storage.StoredSongsToggleViewModel
 import com.is0.music2d.music.song.storage.utils.composable.SavedSongsMenuComponent
 import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
@@ -27,6 +28,7 @@ import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
+import com.is0.music2d.utils.composable.scaffold.CollapsableScaffoldComponent
 
 @Composable
 fun AlbumDetailsScreen(
@@ -44,24 +46,43 @@ fun AlbumDetailsScreen(
     StorageProviders {
         val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
 
-        BaseScaffoldComponent(
-            modifier = modifier,
-            baseViewModel = viewModel,
-            title = albumDetails.name,
-            isLoading = isLoading,
-            onNavigateUp = navController::popBackStack,
-        ) { padding ->
-            AlbumDetailsContentComponent(
-                modifier = Modifier.padding(padding),
-                albumDetails = albumDetails,
-                formatSongSize = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
-                formatDuration = { duration -> songDurationFormatter.formatDuration(duration, true) },
-                formatSongStorage = songStorageTypeFormatter::formatStorageType,
-                availableSongStorageTypes = viewModel.availableSongStorageTypes,
-                onSongStorageSelected = savedSongsToggleViewModel::toggleSavedSong,
+        val formatDuration = { duration: Long ->
+            songDurationFormatter.formatDuration(
+                durationMillis = duration,
+                showZero = true,
             )
         }
+
+        CollapsableScaffoldComponent(
+            title = albumDetails.name,
+            background = {
+                SongsDetailsHeaderComponent(
+                    title = albumDetails.name,
+                    images = albumDetails.albumPreviewImages,
+                    durationText = formatDuration(albumDetails.totalDuration),
+                    songCount = albumDetails.albumSongsCount,
+                )
+            },
+            onNavigateUp = navController::popBackStack,
+        ) {
+            BaseScaffoldComponent(
+                modifier = modifier,
+                baseViewModel = viewModel,
+                isLoading = isLoading,
+            ) { padding ->
+                AlbumDetailsContentComponent(
+                    modifier = Modifier.padding(padding),
+                    albumDetails = albumDetails,
+                    formatSongSize = { songSize -> songSizeFormatter.formatSize(songSize.toSize()) },
+                    formatDuration = formatDuration,
+                    formatSongStorage = songStorageTypeFormatter::formatStorageType,
+                    availableSongStorageTypes = viewModel.availableSongStorageTypes,
+                    onSongStorageSelected = savedSongsToggleViewModel::toggleSavedSong,
+                )
+            }
+        }
     }
+
 }
 
 @Composable
@@ -77,29 +98,24 @@ private fun AlbumDetailsContentComponent(
     DetailsScreenComponent(
         modifier = modifier,
         items = albumDetails.storedSongs,
-        itemContent = { storedSong ->
-            HorizontalSongItemComponent(
-                modifier = Modifier.fillMaxWidth(),
-                song = storedSong.song,
-                songDurationText = formatDuration(storedSong.song.durationMillis),
-                songSizeText = formatSongSize(storedSong.song.songSize),
-                songImageUrl = storedSong.song.imageUrl,
-                action = {
-                    SavedSongsMenuComponent(
-                        formatSongStorageType = formatSongStorage,
-                        savedSongStorageTypes = storedSong.songStorageTypes,
-                        availableSongStorageTypes = availableSongStorageTypes,
-                        onSongStorageSelected = onSongStorageSelected,
-                        songId = storedSong.song.id,
-                    )
-                },
-            )
-        },
-        headerTitle = albumDetails.name,
-        images = albumDetails.albumPreviewImages,
-        durationText = formatDuration(albumDetails.totalDuration),
-        songCount = albumDetails.albumSongsCount,
-    )
+    ) { storedSong ->
+        HorizontalSongItemComponent(
+            modifier = Modifier.fillMaxWidth(),
+            song = storedSong.song,
+            songDurationText = formatDuration(storedSong.song.durationMillis),
+            songSizeText = formatSongSize(storedSong.song.songSize),
+            songImageUrl = storedSong.song.imageUrl,
+            action = {
+                SavedSongsMenuComponent(
+                    formatSongStorageType = formatSongStorage,
+                    savedSongStorageTypes = storedSong.songStorageTypes,
+                    availableSongStorageTypes = availableSongStorageTypes,
+                    onSongStorageSelected = onSongStorageSelected,
+                    songId = storedSong.song.id,
+                )
+            },
+        )
+    }
 }
 
 @Composable

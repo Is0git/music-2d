@@ -18,23 +18,11 @@ import com.is0.music2d.utils.composable.text.HeadlineMediumTextComponent
 fun <T> DetailsScreenComponent(
     modifier: Modifier = Modifier,
     items: List<T>?,
-    images: List<String>,
-    headerTitle: String,
     isLoading: Boolean = false,
-    durationText: String = "",
-    songCount: Int = 0,
     itemContent: @Composable (item: T) -> Unit = {},
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         LazyColumn {
-            item {
-                SongsDetailsHeaderComponent(
-                    images = images,
-                    title = headerTitle,
-                    durationText = durationText,
-                    songCount = songCount,
-                )
-            }
             items?.forEach {
                 item { itemContent(it) }
             }
