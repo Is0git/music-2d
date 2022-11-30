@@ -54,7 +54,7 @@ firebase-crashlytics-gradle = { id = "com.google.firebase.crashlytics", version.
 
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "androidMaterial" }
-androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
+androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity-compose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
