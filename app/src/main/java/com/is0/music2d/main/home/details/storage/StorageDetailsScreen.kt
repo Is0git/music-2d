@@ -52,10 +52,9 @@ fun StorageDetailsScreen(
                 storageDetails = storageDetails,
                 formatDuration = { duration -> songDurationFormatter.formatDuration(duration, false) },
                 formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
-                onSongSaveClick = viewModel::toggleSavedSong,
                 isLoading = isLoading,
                 storageType = storageType,
-                title = songStorageTypeFormatter.formatStorageType(storageType),
+                onSongSaveClick = viewModel::toggleSavedSong,
             )
         }
     }
@@ -69,29 +68,23 @@ fun StorageDetailsContentComponent(
     formatFileSize: FormatFileSize,
     isLoading: Boolean = false,
     storageType: SongStorageType = SongStorageType.NONE,
-    title: String,
     onSongSaveClick: OnSongSaveClick = {},
 ) {
     DetailsScreenComponent(
         modifier = modifier,
         items = storageDetails?.songs,
-        images = storageDetails?.previewImages.orEmpty(),
-        headerTitle = title,
-        isLoading = isLoading,
-        durationText = storageDetails?.totalDuration?.let { formatDuration(it) }.orEmpty(),
-        songCount = storageDetails?.songCount ?: 0,
-        itemContent = { detailsSong ->
-            StorageSongItemComponent(
-                modifier = Modifier.fillMaxWidth(),
-                detailsSong = detailsSong,
-                songDurationText = formatDuration(detailsSong.song.durationMillis),
-                songSizeText = formatFileSize(detailsSong.song.songSize.toSize()),
-                songImageUrl = detailsSong.song.imageUrl,
-                onSongSaveClick = onSongSaveClick,
-                storageType = storageType,
-            )
-        }
-    )
+        isLoading = isLoading
+    ) { detailsSong ->
+        StorageSongItemComponent(
+            modifier = Modifier.fillMaxWidth(),
+            detailsSong = detailsSong,
+            songDurationText = formatDuration(detailsSong.song.durationMillis),
+            songSizeText = formatFileSize(detailsSong.song.songSize.toSize()),
+            songImageUrl = detailsSong.song.imageUrl,
+            onSongSaveClick = onSongSaveClick,
+            storageType = storageType,
+        )
+    }
 }
 
 
