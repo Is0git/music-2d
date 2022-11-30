@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +18,7 @@ class CategorizedSongsViewModel @Inject constructor(
     private val watchSongsCategoriesUseCase: WatchSongsCategoriesUseCase,
 ) : BaseViewModel() {
     val songsCategories = createMutableLiveData<List<SongsCategory>>(emptyList())
+    val isRefreshing = createMutableLiveData<Boolean>()
 
     init {
         watchSongCategories()
@@ -28,6 +30,17 @@ class CategorizedSongsViewModel @Inject constructor(
             .withStateHandler()
             .onEach { newSongCategories -> songsCategories.setValue(newSongCategories) }
             .launchIn(viewModelScope)
+    }
+
+    // Used only for cosmetic purposes
+    fun refresh() {
+        viewModelScope.launch {
+            isRefreshing.setValue(true)
+
+            delay(LOADING_DELAY_MILLIS)
+
+            isRefreshing.setValue(false)
+        }
     }
 
     companion object {
