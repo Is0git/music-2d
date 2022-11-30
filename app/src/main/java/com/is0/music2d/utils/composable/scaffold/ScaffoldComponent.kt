@@ -106,13 +106,15 @@ fun ScaffoldComponent(
             }
         },
         topBar = {
-            TopBarComponent(
-                onBackClick = onBackClick,
-                navigationIcon = navigationIcon,
-                isAppBarCollapsable = isAppBarCollapsable,
-                title = title,
-                scrollBehavior = scrollBehavior,
-            )
+            if (title.isNotEmpty()) {
+                TopBarComponent(
+                    onBackClick = onBackClick,
+                    navigationIcon = navigationIcon,
+                    isAppBarCollapsable = isAppBarCollapsable,
+                    title = title,
+                    scrollBehavior = scrollBehavior,
+                )
+            }
         },
     )
 }
