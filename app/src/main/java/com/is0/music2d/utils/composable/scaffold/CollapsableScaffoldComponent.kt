@@ -60,7 +60,7 @@ fun CollapsableScaffoldComponent(
                 onBackClick = onNavigateUp,
             )
         },
-        scrollStrategy = ScrollStrategy.EnterAlwaysCollapsed,
+        scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
         state = collapsingToolbarState,
     ) {
         content()
