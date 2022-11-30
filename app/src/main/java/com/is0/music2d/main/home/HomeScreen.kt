@@ -166,6 +166,7 @@ private fun SongContentTypeTabRowComponent(
 ) {
     TabRow(
         modifier = modifier,
+        containerColor = AppTheme.colors.backgroundColor,
         selectedTabIndex = pagerState.currentPage,
     ) {
         songContentTypes.forEach { songContentType ->
