@@ -40,7 +40,7 @@ fun CollapsableScaffoldComponent(
     val collapsingToolbarState = rememberCollapsingToolbarScaffoldState()
 
     val alpha by animateFloatAsState(
-        targetValue = if (collapsingToolbarState.toolbarState.progress < 0.2f) 0.1f else 1f,
+        targetValue = if (collapsingToolbarState.toolbarState.progress < 0.2f) 0.3f else 1f,
         animationSpec = tween(1000),
     )
 
