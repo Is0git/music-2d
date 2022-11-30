@@ -33,7 +33,7 @@ private val TopBarHorizontalPadding: Dp = 4.dp
 fun CollapsableScaffoldComponent(
     modifier: Modifier = Modifier,
     title: String = "",
-    background: @Composable () -> Unit = {},
+    toolBarBackground: @Composable () -> Unit = {},
     onNavigateUp: () -> Unit = {},
     content: @Composable () -> Unit = {},
 ) {
@@ -52,7 +52,7 @@ fun CollapsableScaffoldComponent(
                     .background(color = AppTheme.colors.backgroundColor)
                     .alpha(alpha),
             ) {
-                background()
+                toolBarBackground()
             }
             ToolbarComponent(
                 modifier = modifier.pin(),

@@ -55,7 +55,7 @@ fun AlbumDetailsScreen(
 
         CollapsableScaffoldComponent(
             title = albumDetails.name,
-            background = {
+            toolBarBackground = {
                 SongsDetailsHeaderComponent(
                     title = albumDetails.name,
                     images = albumDetails.albumPreviewImages,
