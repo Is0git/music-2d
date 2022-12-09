@@ -1,15 +1,10 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.is0.music2d.utils.composable.scaffold
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
@@ -21,28 +16,26 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.app_bar.collapse.CollapsableBarComponent
+import com.is0.music2d.utils.composable.app_bar.collapse.CollapsableBarScope
 import com.is0.music2d.utils.composable.button.BackButtonComponent
 import com.is0.music2d.utils.composable.gradient.scrim.ScrimComponent
 import com.is0.music2d.utils.composable.gradient.scrim.verticalGradientScrim
 import com.is0.music2d.utils.composable.progress.ProgressComponent
+import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldComponent(
     modifier: Modifier = Modifier,
     title: String = "",
     isLoading: Boolean = false,
     onBackClick: (() -> Unit)? = null,
-    bottomBar: (@Composable () -> Unit)? = null,
+    bottomBar: (@Composable CollapsableBarScope.() -> Unit)? = null,
     snackbarHostState: SnackbarHostState = rememberSnackBarHostState(),
     navigationIcon: @Composable () -> Unit = {},
     content: @Composable (paddingValues: PaddingValues) -> Unit = {},
@@ -50,6 +43,7 @@ fun ScaffoldComponent(
 ) {
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topBarState)
+
     Scaffold(
         modifier = modifier.then(
             if (isAppBarCollapsable) {
@@ -69,35 +63,12 @@ fun ScaffoldComponent(
                 )
                 content(paddingValues)
                 bottomBar?.let { bottomBar ->
-                    val previousOffset = remember {
-                        mutableStateOf(0f)
-                    }
-                    val isVisibleState = remember {
-                        mutableStateOf(true)
-                    }
-
-                    SideEffect {
-                        if (previousOffset.value != topBarState.collapsedFraction) {
-                            val isScrollingUp = previousOffset.value >= topBarState.collapsedFraction
-                            previousOffset.value = topBarState.collapsedFraction
-
-                            if (isScrollingUp != isVisibleState.value) {
-                                isVisibleState.value = isScrollingUp
-                            }
-                        }
-                    }
-
-                    AnimatedVisibility(
-                        modifier = Modifier
-                            .padding(horizontal = 64.dp, vertical = 18.dp)
-                            .requiredHeight(60.dp)
-                            .align(Alignment.BottomCenter),
-                        visible = isVisibleState.value,
-                        enter = fadeIn() + slideInVertically(initialOffsetY = { it * 2 }),
-                        exit = fadeOut() + slideOutVertically(targetOffsetY = { it * 2 })
-                    ) {
-                        bottomBar()
-                    }
+                    CollapsableBarComponent(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        collapsedFraction = topBarState.collapsedFraction,
+                        bottomBar = bottomBar,
+                        scrollPosition = topBarState.contentOffset.absoluteValue,
+                    )
                 }
 
                 if (isLoading) {
