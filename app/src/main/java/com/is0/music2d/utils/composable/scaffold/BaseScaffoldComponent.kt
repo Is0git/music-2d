@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.is0.music2d.utils.composable.app_bar.collapse.CollapsableBarScope
 import com.is0.music2d.utils.composable.error.LocalErrorFormatter
 import com.is0.music2d.utils.composable.local.LocalSnackBarHostState
 import com.is0.music2d.utils.observer.observe
@@ -22,7 +23,7 @@ fun BaseScaffoldComponent(
     snackbarHostState: SnackbarHostState = rememberSnackBarHostState(),
     onNavigateUp: (() -> Unit)? = null,
     navigationIcon: @Composable () -> Unit = {},
-    bottomBar: (@Composable () -> Unit)? = null,
+    bottomBar: (@Composable CollapsableBarScope.() -> Unit)? = null,
     isAppBarCollapsable: Boolean = false,
     isLoading: Boolean = false,
     content: @Composable (paddingValues: PaddingValues) -> Unit = {},

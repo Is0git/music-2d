@@ -39,8 +39,6 @@ fun StorageDetailsScreen(
     val songSizeFormatter = LocalSizeFormatter.current
 
     StorageProviders {
-        val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
-
         BaseScaffoldComponent(
             modifier = modifier,
             baseViewModel = viewModel,

@@ -1,6 +1,15 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.is0.music2d.main.home.utils.component
 
 import android.os.Build
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +40,8 @@ private val BottomNavigationShape = RoundedCornerShape(24.dp)
 fun HomeNavigationBarComponent(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    onScrollUpClick: () -> Unit = {},
+    indicateScrollUp: Boolean = false,
 ) {
     Box(
         modifier = modifier
@@ -65,15 +77,36 @@ fun HomeNavigationBarComponent(
                     color = AppTheme.colors.surfaceColor.copy(alpha = 0.9f),
                     shape = CircleShape,
                 ),
-                onClick = onClick,
+                onClick = {
+                    if (indicateScrollUp) {
+                        onScrollUpClick()
+                    } else {
+                        onClick()
+                    }
+                },
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = AppTheme.colors.primaryColor,
                 )
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Home,
-                    contentDescription = "",
-                )
+                AnimatedContent(
+                    targetState = indicateScrollUp,
+                    transitionSpec = {
+                        slideInVertically { height -> height } + fadeIn() with
+                                slideOutVertically { height -> -height } + fadeOut()
+                    }
+                ) { scrollUp ->
+                    if (scrollUp) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowUpward,
+                            contentDescription = "",
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Home,
+                            contentDescription = "",
+                        )
+                    }
+                }
             }
         }
     }

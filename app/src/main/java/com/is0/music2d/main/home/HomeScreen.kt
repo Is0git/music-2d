@@ -70,11 +70,14 @@ fun HomeScreen(
         navigationIcon = { AppIconComponent() },
         bottomBar = {
             HomeNavigationBarComponent(
-                onClick = {
+                onClick = {},
+                onScrollUpClick = {
                     coroutineScope.launch {
+                        resetScrollPosition()
                         listState.animateScrollToItem(0)
                     }
-                }
+                },
+                indicateScrollUp = this.indicateScrollUp.value,
             )
         },
         isAppBarCollapsable = true,
@@ -140,7 +143,7 @@ private fun SongsContentTypePagerComponent(
         modifier = modifier,
         count = contentTypes.size,
         state = pagerState,
-        userScrollEnabled = true,
+        userScrollEnabled = false,
     ) { page ->
         val contentType = contentTypes[page]
         if (contentType == SongsContentType.ALBUMS) {
