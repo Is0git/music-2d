@@ -5,6 +5,7 @@ package com.is0.music2d.main.home.utils.component
 import android.os.Build
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -92,7 +93,7 @@ fun HomeNavigationBarComponent(
                     targetState = indicateScrollUp,
                     transitionSpec = {
                         slideInVertically { height -> height } + fadeIn() with
-                                slideOutVertically { height -> -height } + fadeOut()
+                                slideOutVertically { height -> -height } + fadeOut() using SizeTransform(clip = false)
                     }
                 ) { scrollUp ->
                     if (scrollUp) {
