@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 data class AppDimension(
     val categoryTitleGap: Dp = Dp.Unspecified,
     val bodyMargin: Dp = Dp.Unspecified,
+    val bodyMarginMedium: Dp = Dp.Unspecified,
     val containerMargin: Dp = Dp.Unspecified,
     val bodyVerticalMargin: Dp = Dp.Unspecified,
     val largeComponentGap: Dp = Dp.Unspecified,
@@ -20,6 +21,7 @@ data class AppDimension(
 fun defaultAppDimension() = AppDimension(
     categoryTitleGap = 16.dp,
     bodyMargin = 16.dp,
+    bodyMarginMedium = 32.dp,
     containerMargin = 8.dp,
     bodyVerticalMargin = 32.dp,
     largeComponentGap = 16.dp,
