@@ -2,12 +2,13 @@ package com.is0.music2d.music.playback
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,8 +20,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.core.util.toRange
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.text.LabelSmallTextComponent
 
 private val SeekBarHeight = 6.dp
 private val SeekButtonRadius = 14.dp
@@ -41,9 +42,27 @@ fun PlaybackControlsComponent(
 @Composable
 private fun SeekBarComponent(
     modifier: Modifier = Modifier,
-    progress: Float = 0.6f,
+    progress: Float = 0.65f,
 ) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(2.dp),
+    ) {
+        SeekBarHorizontalLineComponent(
+            progress = progress,
+        )
+        SeekBarTimeComponent(
+            startTimeText = "15:20",
+            endTimeText = "22:45",
+        )
+    }
+}
 
+@Composable
+private fun SeekBarHorizontalLineComponent(
+    modifier: Modifier = Modifier,
+    progress: Float,
+) {
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.CenterStart,
@@ -133,6 +152,36 @@ private fun SeekButtonComponent(
     )
 }
 
+@Composable
+private fun SeekBarTimeComponent(
+    modifier: Modifier = Modifier,
+    startTimeText: String,
+    endTimeText: String,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        SeekBarDurationTextComponent(
+            timeText = startTimeText,
+        )
+        SeekBarDurationTextComponent(
+            timeText = endTimeText,
+        )
+    }
+}
+
+@Composable
+private fun SeekBarDurationTextComponent(
+    modifier: Modifier = Modifier,
+    timeText: String,
+) {
+    LabelSmallTextComponent(
+        modifier = modifier,
+        text = timeText,
+        color = AppTheme.colors.secondaryColor.copy(alpha = 0.42f),
+    )
+}
 
 @Composable
 @Preview
