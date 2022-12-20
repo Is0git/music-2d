@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.is0.music2d.music.playback
 
 import androidx.compose.foundation.background
@@ -10,17 +12,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Forward10
+import androidx.compose.material.icons.filled.Replay10
+import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.is0.music2d.theme.AppTheme
+import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelSmallTextComponent
 
 private val SeekBarHeight = 6.dp
@@ -36,6 +51,8 @@ fun PlaybackControlsComponent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         SeekBarComponent()
+        VerticalSpacerComponent(height = AppTheme.dimensions.mediumComponentGap)
+        PlaybackActionsComponent()
     }
 }
 
@@ -179,9 +196,139 @@ private fun SeekBarDurationTextComponent(
     LabelSmallTextComponent(
         modifier = modifier,
         text = timeText,
-        color = AppTheme.colors.secondaryColor.copy(alpha = 0.42f),
+        color = seekBarColor(),
     )
 }
+
+@Composable
+private fun PlaybackActionsComponent(
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumComponentGap),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BackwardActionsComponent(
+            modifier = Modifier.weight(1f)
+        )
+        PlayIconComponent()
+        ForwardActionsComponent(
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun BackwardActionsComponent(
+    modifier: Modifier = Modifier,
+    onSeekClick: () -> Unit = {},
+    onSkipClick: () -> Unit = {},
+) {
+    ActionsComponent(
+        modifier = modifier,
+        firstIcon = Icons.Filled.SkipPrevious,
+        onFirstIconClick = onSkipClick,
+        secondIcon = Icons.Filled.Replay10,
+        onSecondIconClick = onSeekClick,
+    )
+}
+
+@Composable
+private fun ForwardActionsComponent(
+    modifier: Modifier = Modifier,
+    onSeekClick: () -> Unit = {},
+    onSkipClick: () -> Unit = {},
+) {
+    ActionsComponent(
+        modifier = modifier,
+        firstIcon = Icons.Filled.Forward10,
+        onFirstIconClick = onSeekClick,
+        secondIcon = Icons.Filled.SkipNext,
+        onSecondIconClick = onSkipClick,
+    )
+}
+
+
+@Composable
+private fun ActionsComponent(
+    modifier: Modifier = Modifier,
+    firstIcon: ImageVector,
+    onFirstIconClick: () -> Unit = {},
+    secondIcon: ImageVector,
+    onSecondIconClick: () -> Unit = {},
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(
+            space = AppTheme.dimensions.smallComponentGap,
+            alignment = Alignment.CenterHorizontally,
+        ),
+    ) {
+        ActionIconComponent(
+            onActionClick = onFirstIconClick,
+            icon = firstIcon,
+        )
+        ActionIconComponent(
+            icon = secondIcon,
+            onActionClick = onSecondIconClick,
+        )
+    }
+}
+
+@Composable
+private fun ActionIconComponent(
+    modifier: Modifier = Modifier,
+    onActionClick: () -> Unit = {},
+    icon: ImageVector,
+) {
+    IconButton(
+        modifier = modifier,
+        onClick = onActionClick,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = "",
+            tint = seekBarColor(),
+        )
+    }
+}
+
+@Composable
+private fun PlayIconComponent(
+    modifier: Modifier = Modifier,
+    onPlayClick: () -> Unit = {},
+) {
+    Surface(
+        modifier = modifier.size(48.dp),
+        shape = CircleShape,
+        elevation = 4.dp,
+        onClick = onPlayClick,
+    ) {
+        Box(
+            modifier = Modifier.background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        AppTheme.colors.secondaryColor,
+                        AppTheme.colors.primaryColor,
+                    ),
+                    start = Offset.Zero,
+                    end = Offset.Infinite,
+                ),
+            ),
+        ) {
+            Icon(
+                modifier = Modifier.align(Alignment.Center),
+                imageVector = Icons.Rounded.PlayArrow,
+                contentDescription = "",
+                tint = AppTheme.colors.onSurfaceColor,
+            )
+        }
+    }
+}
+
+@Composable
+private fun seekBarColor() = AppTheme.colors.secondaryColor.copy(alpha = 0.42f)
 
 @Composable
 @Preview
