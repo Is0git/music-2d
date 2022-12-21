@@ -2,6 +2,7 @@ package com.is0.music2d.music.song.utils.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +33,7 @@ fun SongCoverComponent(
             modifier = Modifier.placeholder(
                 visible = isLoading,
                 shape = AppTheme.shapes.songCoverShape,
-            ),
+            ).fillMaxSize(),
             songImageUrl = songImageUrl,
         )
         SongCoverScrimComponent()
