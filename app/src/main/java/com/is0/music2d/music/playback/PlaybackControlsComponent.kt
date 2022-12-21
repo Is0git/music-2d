@@ -37,6 +37,10 @@ import androidx.compose.ui.util.lerp
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.LabelSmallTextComponent
+import timber.log.Timber
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 private val SeekBarHeight = 6.dp
 private val SeekButtonRadius = 14.dp
@@ -50,7 +54,10 @@ fun PlaybackControlsComponent(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SeekBarComponent()
+        SeekBarComponent(
+            startDuration = 137.toDuration(DurationUnit.SECONDS),
+            endDuration = 649.toDuration(DurationUnit.SECONDS),
+        )
         VerticalSpacerComponent(height = AppTheme.dimensions.mediumComponentGap)
         PlaybackActionsComponent()
     }
@@ -59,8 +66,15 @@ fun PlaybackControlsComponent(
 @Composable
 private fun SeekBarComponent(
     modifier: Modifier = Modifier,
-    progress: Float = 0.65f,
+    startDuration: Duration,
+    endDuration: Duration,
 ) {
+    assert(startDuration <= endDuration) {
+        "Start duration can't be greater then end duration"
+    }
+
+    val progress: Float = (startDuration / endDuration).toFloat()
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(2.dp),
@@ -69,16 +83,29 @@ private fun SeekBarComponent(
             progress = progress,
         )
         SeekBarTimeComponent(
-            startTimeText = "15:20",
-            endTimeText = "22:45",
+            startTimeText = startDuration.toSeekbarTimeDuration(),
+            endTimeText = endDuration.toSeekbarTimeDuration(),
         )
     }
 }
 
 @Composable
+private fun Duration.toSeekbarTimeDuration(): String {
+    try {
+        val minutes = inWholeMinutes
+        val seconds = inWholeSeconds % 60
+        return "$minutes:$seconds"
+    } catch (error: Throwable) {
+        Timber.e(error)
+    }
+
+    return ""
+}
+
+@Composable
 private fun SeekBarHorizontalLineComponent(
     modifier: Modifier = Modifier,
-    progress: Float,
+    progress: Float = 0f,
 ) {
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -136,7 +163,7 @@ private fun SeekBarLineInactiveComponent(
 @Composable
 private fun SeekBarLineComponent(
     modifier: Modifier = Modifier,
-    widthFraction: Float = 1f,
+    widthFraction: Float = 0f,
 ) {
     Box(
         modifier = Modifier
