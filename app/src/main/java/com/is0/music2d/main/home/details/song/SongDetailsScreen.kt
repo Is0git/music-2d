@@ -64,6 +64,9 @@ private fun SongInfoComponent(
             alignment = Alignment.CenterVertically,
         ),
     ) {
+        SongArtistTitleComponent(
+            artistName = songDetails.artist.name,
+        )
         SongDetailsCoverComponent(
             modifier = Modifier.aspectRatio(1f),
             isLoading = isLoading,
@@ -74,6 +77,18 @@ private fun SongInfoComponent(
             songTitle = songDetails.albumTitle,
         )
     }
+}
+
+@Composable
+private fun SongArtistTitleComponent(
+    modifier: Modifier = Modifier,
+    artistName: String,
+) {
+    LabelMediumTextComponent(
+        modifier = modifier,
+        text = artistName,
+        color = AppTheme.colors.onBackgroundColor,
+    )
 }
 
 @Composable
