@@ -154,7 +154,7 @@ private fun SeekBarLineInactiveComponent(
 ) {
     SeekBarLineComponent(
         modifier = modifier.background(
-            AppTheme.colors.onBackgroundColorVariant,
+            AppTheme.colors.onBackgroundVariantColor,
         ),
     )
 }

@@ -25,7 +25,10 @@ import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
 fun SongDetailsScreen(
     modifier: Modifier = Modifier,
 ) {
-
+    SongDetailsContentComponent(
+        modifier = modifier,
+        songDetails = SongDetailsMock.songDetails,
+    )
 }
 
 @Composable
@@ -132,7 +135,7 @@ private fun SongAlbumComponent(
     LabelMediumTextComponent(
         modifier = modifier,
         text = albumTitle,
-        color = AppTheme.colors.onBackgroundColorVariant,
+        color = AppTheme.colors.onBackgroundVariantColor,
     )
 }
 
@@ -156,7 +159,7 @@ private fun SongDetailsContentComponentPreview() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(AppTheme.colors.backgroundColor),
+                .background(AppTheme.colors.backgroundVariantColor),
         ) {
             SongDetailsContentComponent(
                 songDetails = SongDetailsMock.songDetails,

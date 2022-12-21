@@ -104,7 +104,7 @@ private fun StorageItemDurationComponent(
     modifier: Modifier = Modifier,
     durationText: String,
 ) {
-    val contentColor = AppTheme.colors.onSurfaceColorVariant
+    val contentColor = AppTheme.colors.onSurfaceVariantColor
     CompositionLocalProvider(LocalContentColor provides contentColor) {
         LabelLayoutComponent(
             modifier = modifier,

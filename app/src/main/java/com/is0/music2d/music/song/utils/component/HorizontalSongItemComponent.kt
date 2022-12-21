@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.is0.music2d.music.song.utils.component
 
 import androidx.compose.foundation.layout.Arrangement
@@ -5,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -34,6 +37,7 @@ fun HorizontalSongItemComponent(
     songImageUrl: String,
     isLoading: Boolean = false,
     action: @Composable () -> Unit = {},
+    onSongItemClick: (song: Song) -> Unit = {},
 ) {
     HorizontalSongItemContentComponent(
         modifier = modifier.padding(bottom = 2.dp),
@@ -43,6 +47,7 @@ fun HorizontalSongItemComponent(
         songImageUrl = songImageUrl,
         action = action,
         isLoading = isLoading,
+        onSongItemClick = onSongItemClick,
     )
 }
 
@@ -55,8 +60,12 @@ private fun HorizontalSongItemContentComponent(
     songImageUrl: String,
     action: @Composable () -> Unit = {},
     isLoading: Boolean,
+    onSongItemClick: (song: Song) -> Unit = {},
 ) {
-    Surface(modifier = modifier) {
+    Surface(
+        modifier = modifier,
+        onClick = { onSongItemClick(song) },
+    ) {
         Row(
             modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -143,7 +152,7 @@ private fun SongItemLabelComponent(
         )
         LabelMediumTextComponent(
             modifier = modifier,
-            color = AppTheme.colors.onBackgroundColorVariant,
+            color = AppTheme.colors.onBackgroundVariantColor,
             text = stringResource(
                 id = R.string.horizontal_song_item_artist_format,
                 artistName,
@@ -160,7 +169,7 @@ private fun SongItemSubtitleComponent(
     durationText: String = "",
     sizeText: String = "",
 ) {
-    CompositionLocalProvider(LocalContentColor provides AppTheme.colors.onBackgroundColorVariant) {
+    CompositionLocalProvider(LocalContentColor provides AppTheme.colors.onBackgroundVariantColor) {
         Row(
             modifier = modifier,
             horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumComponentGap),
