@@ -22,6 +22,10 @@ class DatabaseSongsRepository @Inject constructor(
         .map { songs -> songs.map(SongEntity::toSong) }
         .flowOn(dispatcher)
 
+    fun watchSong(songId: String) = songsDao.watchSong(songId)
+        .map(SongEntity::toSong)
+        .flowOn(dispatcher)
+
     suspend fun getSongsByIds(songIds: List<String>): List<Song> =
         withContext(dispatcher) {
             songsDao.getSongsByIds(songIds).map(SongEntity::toSong)

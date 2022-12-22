@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SongsDao {
+    @Query("SELECT * FROM SongEntity WHERE songId == :songId")
+    fun watchSong(songId: String): Flow<SongEntity>
+
     @Query("SELECT * FROM SongEntity")
     fun watchSongs(): Flow<List<SongEntity>>
 

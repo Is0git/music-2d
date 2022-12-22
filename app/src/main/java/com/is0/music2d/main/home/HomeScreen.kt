@@ -30,6 +30,8 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.is0.music2d.R
 import com.is0.music2d.main.MainGraph
+import com.is0.music2d.main.home.details.song.utils.component.SongDetailsBottomSheetComponent
+import com.is0.music2d.main.home.details.song.utils.component.showSongDetails
 import com.is0.music2d.main.home.library.category.CategorizedSongsScreen
 import com.is0.music2d.main.home.library.storage_preview.StorageSongSelectionScreen
 import com.is0.music2d.main.home.utils.OnSongStorageClick
@@ -37,6 +39,7 @@ import com.is0.music2d.main.home.utils.OnViewAllClick
 import com.is0.music2d.main.home.utils.component.HomeNavigationBarComponent
 import com.is0.music2d.main.home.utils.data.SongsContentType
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
+import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.icon.AppIconComponent
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
@@ -63,35 +66,38 @@ fun HomeScreen(
         pagerState.scrollToPage(homeViewModel.songContentTypes.indexOf(selectedContentType))
     }
 
-    BaseScaffoldComponent(
-        modifier = modifier,
-        baseViewModel = homeViewModel,
-        title = stringResource(R.string.home_screen_title, username.orEmpty()),
-        navigationIcon = { AppIconComponent() },
-        bottomBar = {
-            HomeNavigationBarComponent(
-                onClick = {},
-                onScrollUpClick = {
-                    coroutineScope.launch {
-                        resetScrollPosition()
-                        listState.animateScrollToItem(0)
-                    }
-                },
-                indicateScrollUp = this.indicateScrollUp.value,
+    SongDetailsBottomSheetComponent {
+        BaseScaffoldComponent(
+            modifier = modifier,
+            baseViewModel = homeViewModel,
+            title = stringResource(R.string.home_screen_title, username.orEmpty()),
+            navigationIcon = { AppIconComponent() },
+            bottomBar = {
+                HomeNavigationBarComponent(
+                    onClick = {},
+                    onScrollUpClick = {
+                        coroutineScope.launch {
+                            resetScrollPosition()
+                            listState.animateScrollToItem(0)
+                        }
+                    },
+                    indicateScrollUp = this.indicateScrollUp.value,
+                )
+            },
+            isAppBarCollapsable = true,
+        ) { padding ->
+            SongsLibraryPagerComponent(
+                modifier = Modifier.padding(padding),
+                pagerState = pagerState,
+                contentTypes = homeViewModel.songContentTypes,
+                onSongContentTypeSelect = homeViewModel::selectContentType,
+                selectedSongContentType = selectedContentType,
+                onViewAllClick = navController::navigateToAlbumDetails,
+                onSongStorageClick = navController::navigateToStorageDetails,
+                listState = listState,
+                onSongItemClick = ::showSongDetails,
             )
-        },
-        isAppBarCollapsable = true,
-    ) { padding ->
-        SongsLibraryPagerComponent(
-            modifier = Modifier.padding(padding),
-            pagerState = pagerState,
-            contentTypes = homeViewModel.songContentTypes,
-            onSongContentTypeSelect = homeViewModel::selectContentType,
-            selectedSongContentType = selectedContentType,
-            onViewAllClick = navController::navigateToAlbumDetails,
-            onSongStorageClick = navController::navigateToStorageDetails,
-            listState = listState,
-        )
+        }
     }
 }
 
@@ -104,6 +110,7 @@ private fun SongsLibraryPagerComponent(
     onSongContentTypeSelect: (contentType: SongsContentType) -> Unit,
     onViewAllClick: OnViewAllClick = {},
     onSongStorageClick: OnSongStorageClick = {},
+    onSongItemClick: (song: Song) -> Unit = {},
     listState: LazyListState = rememberLazyListState(),
 ) {
     LaunchedEffect(pagerState.currentPage) {
@@ -125,6 +132,7 @@ private fun SongsLibraryPagerComponent(
             pagerState = pagerState,
             onViewAllClick = onViewAllClick,
             onSongStorageClick = onSongStorageClick,
+            onSongItemClick = onSongItemClick,
             listState = listState,
         )
     }
@@ -137,6 +145,7 @@ private fun SongsContentTypePagerComponent(
     pagerState: PagerState,
     onViewAllClick: OnViewAllClick = {},
     onSongStorageClick: OnSongStorageClick = {},
+    onSongItemClick: (song: Song) -> Unit = {},
     listState: LazyListState = rememberLazyListState(),
 ) {
     HorizontalPager(
@@ -149,6 +158,7 @@ private fun SongsContentTypePagerComponent(
         if (contentType == SongsContentType.ALBUMS) {
             CategorizedSongsScreen(
                 onViewAllClick = onViewAllClick,
+                onSongItemClick = onSongItemClick,
                 listState = listState,
             )
         } else {

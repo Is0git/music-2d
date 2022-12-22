@@ -8,21 +8,22 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.is0.music2d.main.home.details.song.utils.data.domain.SongDetails
 import com.is0.music2d.main.home.details.song.utils.data.domain.SongDetailsMock
 import com.is0.music2d.music.playback.PlaybackControlsComponent
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
+import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.theme.AppTheme
 import com.is0.music2d.utils.composable.padding.VerticalSpacerComponent
 import com.is0.music2d.utils.composable.text.HeadlineMediumTextComponent
@@ -31,17 +32,23 @@ import com.is0.music2d.utils.composable.text.LabelMediumTextComponent
 @Composable
 fun SongDetailsScreen(
     modifier: Modifier = Modifier,
+    song: Song,
+    songDetailsViewModel: SongDetailsViewModel = hiltViewModel(),
 ) {
+    songDetailsViewModel.watchSongDetails(song)
+
+    val songDetails by songDetailsViewModel.songDetails.observeAsState()
+
     SongDetailsContentComponent(
         modifier = modifier,
-        songDetails = SongDetailsMock.songDetails,
+        songDetails = songDetails,
     )
 }
 
 @Composable
 private fun SongDetailsContentComponent(
     modifier: Modifier = Modifier,
-    songDetails: SongDetails,
+    songDetails: SongDetails?,
     isLoading: Boolean = false,
 ) {
     Column(
@@ -64,7 +71,7 @@ private fun SongDetailsContentComponent(
 private fun SongInfoComponent(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
-    songDetails: SongDetails
+    songDetails: SongDetails?
 ) {
     Column(
         modifier = modifier,
@@ -75,16 +82,18 @@ private fun SongInfoComponent(
         ),
     ) {
         SongArtistTitleComponent(
-            artistName = songDetails.artist.name,
+            artistName = songDetails?.artist?.name.orEmpty(),
         )
         SongDetailsCoverComponent(
-            modifier = Modifier.aspectRatio(1.2f).weight(1f),
+            modifier = Modifier
+                .aspectRatio(1.2f)
+                .weight(1f),
             isLoading = isLoading,
-            songImageUrl = songDetails.imageUrl,
+            songImageUrl = songDetails?.imageUrl.orEmpty(),
         )
         SongLiteralInfoComponent(
-            albumTitle = songDetails.songTitle,
-            songTitle = songDetails.albumTitle,
+            albumTitle = songDetails?.songTitle.orEmpty(),
+            songTitle = songDetails?.albumTitle.orEmpty(),
         )
     }
 }

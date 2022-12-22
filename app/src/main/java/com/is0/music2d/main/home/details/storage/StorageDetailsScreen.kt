@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.is0.music2d.main.home.details.song.utils.component.SongDetailsBottomSheetComponent
+import com.is0.music2d.main.home.details.song.utils.component.showSongDetails
 import com.is0.music2d.main.home.details.storage.filesystem.FileSystemStorageDetailsViewModel
 import com.is0.music2d.main.home.details.storage.memory.MemoryStorageDetailsViewModel
 import com.is0.music2d.main.home.details.storage.utils.component.OnSongSaveClick
@@ -18,6 +20,7 @@ import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
 import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
+import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.music.song.utils.formatter.FormatSongDuration
 import com.is0.music2d.utils.composable.local.LocalDurationFormatter
@@ -39,21 +42,24 @@ fun StorageDetailsScreen(
     val songSizeFormatter = LocalSizeFormatter.current
 
     StorageProviders {
-        BaseScaffoldComponent(
-            modifier = modifier,
-            baseViewModel = viewModel,
-            onNavigateUp = navController::popBackStack,
-            title = LocalSongStorageTypeFormatter.current.formatStorageType(storageType),
-        ) { padding ->
-            StorageDetailsContentComponent(
-                modifier = Modifier.padding(padding),
-                storageDetails = storageDetails,
-                formatDuration = { duration -> songDurationFormatter.formatDuration(duration, false) },
-                formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
-                isLoading = isLoading,
-                storageType = storageType,
-                onSongSaveClick = viewModel::toggleSavedSong,
-            )
+        SongDetailsBottomSheetComponent {
+            BaseScaffoldComponent(
+                modifier = modifier,
+                baseViewModel = viewModel,
+                onNavigateUp = navController::popBackStack,
+                title = LocalSongStorageTypeFormatter.current.formatStorageType(storageType),
+            ) { padding ->
+                StorageDetailsContentComponent(
+                    modifier = Modifier.padding(padding),
+                    storageDetails = storageDetails,
+                    formatDuration = { duration -> songDurationFormatter.formatDuration(duration, false) },
+                    formatFileSize = { size -> songSizeFormatter.formatSize(size = size) },
+                    isLoading = isLoading,
+                    storageType = storageType,
+                    onSongSaveClick = viewModel::toggleSavedSong,
+                    onSongItemClick = ::showSongDetails,
+                )
+            }
         }
     }
 }
@@ -67,6 +73,7 @@ fun StorageDetailsContentComponent(
     isLoading: Boolean = false,
     storageType: SongStorageType = SongStorageType.NONE,
     onSongSaveClick: OnSongSaveClick = {},
+    onSongItemClick: (song: Song) -> Unit = {},
 ) {
     DetailsScreenComponent(
         modifier = modifier,
@@ -81,6 +88,7 @@ fun StorageDetailsContentComponent(
             songImageUrl = detailsSong.song.imageUrl,
             onSongSaveClick = onSongSaveClick,
             storageType = storageType,
+            onSongItemClick = onSongItemClick,
         )
     }
 }

@@ -24,6 +24,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
 import com.is0.music2d.main.home.details.song.SongDetailsScreen
+import com.is0.music2d.main.home.details.song.utils.component.SongDetailsBottomSheetComponent
+import com.is0.music2d.main.home.details.song.utils.component.showSongDetails
 import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
 import com.is0.music2d.main.home.details.utils.component.SongsDetailsHeaderComponent
 import com.is0.music2d.music.song.storage.StoredSongsToggleViewModel
@@ -68,26 +70,8 @@ fun AlbumDetailsScreen(
             )
         }
 
-        ModalSheetComponent<Song>(
+        SongDetailsBottomSheetComponent(
             modifier = modifier,
-            sheetContent = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.9f)
-                        .background(AppTheme.colors.backgroundVariantColor)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(vertical = 16.dp)
-                            .size(width = 48.dp, height = 4.dp)
-                            .clip(CircleShape)
-                            .background(AppTheme.colors.onBackgroundColor.copy(0.33f)),
-                    )
-                    SongDetailsScreen()
-                }
-            },
         ) {
             CollapsableScaffoldComponent(
                 title = albumDetails.name,
@@ -113,7 +97,7 @@ fun AlbumDetailsScreen(
                         formatSongStorage = songStorageTypeFormatter::formatStorageType,
                         availableSongStorageTypes = viewModel.availableSongStorageTypes,
                         onSongStorageSelected = savedSongsToggleViewModel::toggleSavedSong,
-                        onSongItemClick = ::showBottomSheet,
+                        onSongItemClick = ::showSongDetails,
                     )
                 }
             }

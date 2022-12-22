@@ -1,6 +1,7 @@
 package com.is0.music2d.main.home.library.category.utils.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
 import com.is0.music2d.music.song.utils.component.SongCoverComponent
 import com.is0.music2d.music.song.utils.component.SongSizeComponent
 import com.is0.music2d.music.song.utils.component.local.LocalSongStorageTypeFormatter
+import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongMock
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.utils.component.ArtistAvatarComponent
@@ -49,6 +51,7 @@ fun CategorySongItemComponent(
     onSongDurationFormat: (durationMillis: Long) -> String,
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    onClick: (song: Song) -> Unit = {},
     isLoading: Boolean,
 ) {
     val song = storedSong.song
@@ -72,6 +75,7 @@ fun CategorySongItemComponent(
         availableSongStorageTypes = availableSongStorageTypes,
         storedSong = storedSong,
         isLoading = isLoading,
+        onClick = { onClick(song) },
     )
 }
 
@@ -86,12 +90,14 @@ private fun CategorySongItemContentComponent(
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     songStorageTypes: List<SongStorageType> = emptyList(),
     isLoading: Boolean = false,
+    onClick: () -> Unit = {},
 ) {
     Column(modifier = modifier.width(IntrinsicSize.Min)) {
         CategorySongCoverComponent(
             modifier = Modifier
                 .requiredHeight(150.dp)
-                .aspectRatio(4 / 3f),
+                .aspectRatio(4 / 3f)
+                .clickable(onClick = onClick),
             isLoading = isLoading,
             songSizeText = songSizeText,
             songImageUrl = storedSong.song.imageUrl,

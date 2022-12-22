@@ -41,6 +41,7 @@ import com.is0.music2d.music.song.storage.utils.composable.StorageProviders
 import com.is0.music2d.music.song.storage.utils.data.domain.SongStorageType
 import com.is0.music2d.music.song.storage.utils.data.domain.StoredSong
 import com.is0.music2d.music.song.storage.utils.data.domain.allSongStorageTypes
+import com.is0.music2d.music.song.utils.data.domain.Song
 import com.is0.music2d.music.song.utils.data.domain.SongSize
 import com.is0.music2d.music.song.utils.data.domain.toSize
 import com.is0.music2d.theme.AppTheme
@@ -60,6 +61,7 @@ fun CategorizedSongsScreen(
     categorizedSongsViewModel: CategorizedSongsViewModel = hiltViewModel(),
     storedSongsToggleViewModel: StoredSongsToggleViewModel = hiltViewModel(),
     onViewAllClick: OnViewAllClick = {},
+    onSongItemClick: (song: Song) -> Unit = {},
     listState: LazyListState = rememberLazyListState(),
 ) {
     val songDurationFormatter = LocalDurationFormatter.current
@@ -91,6 +93,7 @@ fun CategorizedSongsScreen(
             availableSongStorageTypes = storedSongsToggleViewModel.availableSongStorageTypes,
             listState = listState,
             isToggling = isToggling,
+            onSongItemClick = onSongItemClick,
         )
     }
 }
@@ -108,6 +111,7 @@ private fun CategorizedSongsContentComponent(
     onRefresh: () -> Unit = {},
     isToggling: Boolean = false,
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    onSongItemClick: (song: Song) -> Unit = {},
     listState: LazyListState = rememberLazyListState(),
 ) {
     val pullRefreshState = rememberPullRefreshState(
@@ -130,7 +134,8 @@ private fun CategorizedSongsContentComponent(
                 onSongSizeFormat = onSongSizeFormat,
                 onViewAllClick = onViewAllClick,
                 onSongStorageSelected = onSongStorageSelected,
-                availableSongStorageTypes = availableSongStorageTypes
+                availableSongStorageTypes = availableSongStorageTypes,
+                onSongItemClick = onSongItemClick,
             )
         }
 
@@ -180,7 +185,8 @@ private fun CategoriesListComponent(
     onSongSizeFormat: (songSize: SongSize) -> String,
     onViewAllClick: OnViewAllClick,
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
-    availableSongStorageTypes: List<SongStorageType>
+    availableSongStorageTypes: List<SongStorageType>,
+    onSongItemClick: (song: Song) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -197,6 +203,7 @@ private fun CategoriesListComponent(
                     onSongStorageSelected = onSongStorageSelected,
                     availableSongStorageTypes = availableSongStorageTypes,
                     isLoading = false,
+                    onSongItemClick = onSongItemClick,
                 )
             }
         }
@@ -212,6 +219,7 @@ private fun SongCategoryItemComponent(
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit = { _, _ -> },
     onViewAllClick: OnViewAllClick = {},
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    onSongItemClick: (song: Song) -> Unit = {},
     isLoading: Boolean,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.categoryTitleGap)) {
@@ -227,6 +235,7 @@ private fun SongCategoryItemComponent(
             onSongStorageSelected = onSongStorageSelected,
             availableSongStorageTypes = availableSongStorageTypes,
             isLoading = isLoading,
+            onSongItemClick = onSongItemClick,
         )
         VerticalSpacerComponent(height = 16.dp)
     }
@@ -300,6 +309,7 @@ private fun CategorySongsListComponent(
     onSongDurationFormat: (durationMillis: Long) -> String,
     onSongStorageSelected: (songId: String, storageType: SongStorageType) -> Unit,
     availableSongStorageTypes: List<SongStorageType> = listOf(),
+    onSongItemClick: (song: Song) -> Unit = {},
     isLoading: Boolean,
 ) {
     Row(
@@ -320,6 +330,7 @@ private fun CategorySongsListComponent(
                 onSongStorageSelected = onSongStorageSelected,
                 availableSongStorageTypes = availableSongStorageTypes,
                 isLoading = isLoading,
+                onClick = onSongItemClick,
             )
 
             if (index == songs.size - 1) {

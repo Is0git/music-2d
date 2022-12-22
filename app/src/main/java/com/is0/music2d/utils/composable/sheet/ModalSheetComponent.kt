@@ -17,7 +17,9 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,21 +27,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.is0.music2d.theme.AppTheme
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 
 @Composable
 fun <T> ModalSheetComponent(
     modifier: Modifier = Modifier,
-    sheetContent: @Composable T.() -> Unit = {},
+    sheetContent: @Composable (selectedValue: T) -> Unit = {},
     content: @Composable ModalSheetScope<T>.() -> Unit = {},
 ) {
     val modalSheetScope = remember { ModalSheetScope<T>() }
-    val selectedValue = produceState<T?>(initialValue = null, modalSheetScope.selectedValue.value) {
-        value = modalSheetScope.selectedValue.value
-    }
-
+    val selectedValue = modalSheetScope.selectedValue
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true,
@@ -88,10 +85,9 @@ fun <T> ModalSheetComponent(
     )
 }
 
-@HiltViewModel
 class ModalSheetScope<T> internal constructor() {
-    private val _selectedValue: MutableStateFlow<T?> = MutableStateFlow(null)
-    internal val selectedValue: StateFlow<T?> = _selectedValue
+    private val _selectedValue: MutableState<T?> = mutableStateOf(null)
+    internal val selectedValue: State<T?> = _selectedValue
 
     fun showBottomSheet(selectedValue: T) {
         this._selectedValue.value = selectedValue
