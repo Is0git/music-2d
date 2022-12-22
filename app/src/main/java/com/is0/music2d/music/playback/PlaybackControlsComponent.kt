@@ -154,7 +154,7 @@ private fun SeekBarLineInactiveComponent(
 ) {
     SeekBarLineComponent(
         modifier = modifier.background(
-            AppTheme.colors.onBackgroundVariantColor,
+            AppTheme.colors.secondaryColor.copy(0.33f),
         ),
     )
 }
@@ -163,7 +163,7 @@ private fun SeekBarLineInactiveComponent(
 @Composable
 private fun SeekBarLineComponent(
     modifier: Modifier = Modifier,
-    widthFraction: Float = 0f,
+    widthFraction: Float = 1f,
 ) {
     Box(
         modifier = Modifier

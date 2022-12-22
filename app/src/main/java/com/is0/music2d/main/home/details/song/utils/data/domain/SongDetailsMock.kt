@@ -17,7 +17,7 @@ object SongDetailsMock {
             ),
             artist = ArtistMock.randomArtist,
             durationMillis = 354000,
-            imageUrl = ImageMock.randomImage,
+            imageUrl = "https://i.scdn.co/image/ab67616d0000b2738120d2b107af14b1bf67cd06",
             creationDate = "2000-07-12",
         )
 }

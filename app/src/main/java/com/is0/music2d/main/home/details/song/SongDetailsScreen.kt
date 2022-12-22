@@ -10,8 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.is0.music2d.main.home.details.song.utils.data.domain.SongDetails
 import com.is0.music2d.main.home.details.song.utils.data.domain.SongDetailsMock
 import com.is0.music2d.music.playback.PlaybackControlsComponent
@@ -42,7 +49,7 @@ private fun SongDetailsContentComponent(
             .fillMaxSize()
             .padding(AppTheme.dimensions.bodyMarginMedium),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.largeComponentGap),
+        verticalArrangement = Arrangement.spacedBy(48.dp),
     ) {
         SongInfoComponent(
             modifier = Modifier.weight(1f),
@@ -71,7 +78,7 @@ private fun SongInfoComponent(
             artistName = songDetails.artist.name,
         )
         SongDetailsCoverComponent(
-            modifier = Modifier.aspectRatio(1f),
+            modifier = Modifier.aspectRatio(1.2f).weight(1f),
             isLoading = isLoading,
             songImageUrl = songDetails.imageUrl,
         )
@@ -100,11 +107,26 @@ private fun SongDetailsCoverComponent(
     isLoading: Boolean = false,
     songImageUrl: String = "",
 ) {
-    SongCoverComponent(
-        modifier = modifier,
-        isLoading = isLoading,
-        songImageUrl = songImageUrl,
-    )
+    Box(modifier = modifier) {
+        SongCoverComponent(
+            modifier = Modifier
+                .graphicsLayer {
+                    translationY = 50f
+                    scaleY = 1.3f
+                    scaleX = 1.1f
+                }
+                .blur(
+                    radius = 16.dp,
+                    edgeTreatment = BlurredEdgeTreatment.Unbounded,
+                ),
+            isLoading = isLoading,
+            songImageUrl = songImageUrl,
+        )
+        SongCoverComponent(
+            isLoading = isLoading,
+            songImageUrl = songImageUrl,
+        )
+    }
 }
 
 @Composable

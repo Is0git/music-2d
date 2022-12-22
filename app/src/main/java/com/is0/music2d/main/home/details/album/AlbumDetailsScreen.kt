@@ -105,7 +105,7 @@ fun AlbumDetailsScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.8f)
+                        .fillMaxHeight(0.9f)
                         .background(AppTheme.colors.backgroundVariantColor)
                 ) {
                     Box(
