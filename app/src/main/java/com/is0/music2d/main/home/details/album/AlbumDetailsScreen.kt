@@ -11,21 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -52,6 +43,7 @@ import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
 import com.is0.music2d.utils.composable.scaffold.CollapsableScaffoldComponent
+import com.is0.music2d.utils.composable.sheet.ModalSheetComponent
 
 @Composable
 fun AlbumDetailsScreen(
@@ -66,26 +58,6 @@ fun AlbumDetailsScreen(
     val songDurationFormatter = LocalDurationFormatter.current
     val songSizeFormatter = LocalSizeFormatter.current
 
-    val selectedSong: MutableState<Song?> = remember { mutableStateOf(null) }
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-    )
-
-    LaunchedEffect(modalBottomSheetState.isVisible) {
-        if (!modalBottomSheetState.isVisible) {
-            selectedSong.value = null
-        }
-    }
-
-    LaunchedEffect(selectedSong.value) {
-        if (selectedSong.value == null) {
-            modalBottomSheetState.hide()
-        } else {
-            modalBottomSheetState.show()
-        }
-    }
-
     StorageProviders {
         val songStorageTypeFormatter = LocalSongStorageTypeFormatter.current
 
@@ -96,11 +68,8 @@ fun AlbumDetailsScreen(
             )
         }
 
-        ModalBottomSheetLayout(
+        ModalSheetComponent<Song>(
             modifier = modifier,
-            sheetShape = MaterialTheme.shapes.large,
-            sheetBackgroundColor = Color.Transparent,
-            sheetState = modalBottomSheetState,
             sheetContent = {
                 Column(
                     modifier = Modifier
@@ -144,9 +113,7 @@ fun AlbumDetailsScreen(
                         formatSongStorage = songStorageTypeFormatter::formatStorageType,
                         availableSongStorageTypes = viewModel.availableSongStorageTypes,
                         onSongStorageSelected = savedSongsToggleViewModel::toggleSavedSong,
-                        onSongItemClick = { song ->
-                            selectedSong.value = song
-                        }
+                        onSongItemClick = ::showBottomSheet,
                     )
                 }
             }
