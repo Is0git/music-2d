@@ -2,28 +2,18 @@
 
 package com.is0.music2d.main.home.details.album
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.is0.music2d.main.home.details.album.data.domain.AlbumDetails
-import com.is0.music2d.main.home.details.song.SongDetailsScreen
 import com.is0.music2d.main.home.details.song.utils.component.SongDetailsBottomSheetComponent
 import com.is0.music2d.main.home.details.song.utils.component.showSongDetails
 import com.is0.music2d.main.home.details.utils.component.DetailsScreenComponent
@@ -45,7 +35,6 @@ import com.is0.music2d.utils.composable.local.LocalDurationFormatter
 import com.is0.music2d.utils.composable.local.LocalSizeFormatter
 import com.is0.music2d.utils.composable.scaffold.BaseScaffoldComponent
 import com.is0.music2d.utils.composable.scaffold.CollapsableScaffoldComponent
-import com.is0.music2d.utils.composable.sheet.ModalSheetComponent
 
 @Composable
 fun AlbumDetailsScreen(

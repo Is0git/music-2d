@@ -159,7 +159,6 @@ private fun SeekBarLineInactiveComponent(
     )
 }
 
-
 @Composable
 private fun SeekBarLineComponent(
     modifier: Modifier = Modifier,
@@ -275,7 +274,6 @@ private fun ForwardActionsComponent(
         onSecondIconClick = onSkipClick,
     )
 }
-
 
 @Composable
 private fun ActionsComponent(

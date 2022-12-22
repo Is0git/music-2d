@@ -33,7 +33,6 @@ class SongDetailsViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     private fun setInitialSongDetails(song: Song) {
