@@ -24,9 +24,8 @@ class CategorizedSongsViewModel @Inject constructor(
         watchSongCategories()
     }
 
-    private fun watchSongCategories() {
+    fun watchSongCategories() {
         watchSongsCategoriesUseCase.watchSongsCategories(CATEGORY_SONGS_COUNT)
-            .onStart { delay(LOADING_DELAY_MILLIS) }
             .withStateHandler()
             .onEach { newSongCategories -> songsCategories.setValue(newSongCategories) }
             .launchIn(viewModelScope)
